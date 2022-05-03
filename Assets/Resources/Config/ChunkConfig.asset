@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb4f5c405501e5478c6ab5ea8fab3e7, type: 3}
+  m_Name: ChunkConfig
+  m_EditorClassIdentifier: 
+  _prefabs:
+  - {fileID: 7991555287911481885, guid: 7e09c5cc818acd042962a12b0e4e8abc, type: 3}
+  - {fileID: 6328417353234506659, guid: 1adb428b4a2889147966786232580af1, type: 3}
+  - {fileID: -840939647595525456, guid: 318db1cef752eb047a78c1a5a1af7f31, type: 3}
+  - {fileID: 6406978364637998829, guid: a673f34a113bc0d48911658cddd58050, type: 3}
+  - {fileID: -1471220750757077440, guid: d209540c019e14b40ac489e8239f83e5, type: 3}
+  - {fileID: 7946600438839257562, guid: d32b812a8f915fd4a84c41e46755c1a0, type: 3}
+  - {fileID: -1925305964513043887, guid: 01fe2093536242a42986ac4722490f21, type: 3}
+  _moveSpeed: 1
