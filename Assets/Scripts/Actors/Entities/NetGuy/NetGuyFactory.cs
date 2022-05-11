@@ -11,8 +11,7 @@ namespace Assets.Scripts
             NetGuy netGuy = Object.Instantiate(_config.Prefab);
             netGuy.gameObject.AddComponent<Mover>();
             netGuy.gameObject.AddComponent<Disappearer>().SetDisappearPoint(new Vector3(0, 0, -20));
-            netGuy.AddReaction<CollisionDetector, Quadcopter>(new NetCatchReaction());
-            netGuy.AddReaction<CollisionDetector, AggressiveBird>(new NetCatchReaction());
+            netGuy.AddReaction<CollisionDetector, Quadcopter, AggressiveBird>(new NetCatchReaction());
             RadiusableDetector radiusableDetector = netGuy.AddReaction<RadiusableDetector, Quadcopter>(new LeanOutWindowReaction(netGuy));
             radiusableDetector.SetRadius(_config.DetectionRadius);
             return netGuy;
