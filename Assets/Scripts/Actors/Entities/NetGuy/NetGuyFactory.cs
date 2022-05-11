@@ -13,7 +13,7 @@ namespace Assets.Scripts
             netGuy.gameObject.AddComponent<Disappearer>().SetDisappearPoint(new Vector3(0, 0, -20));
             netGuy.AddReaction<CollisionDetector, Quadcopter, AggressiveBird>(new NetCatchReaction());
             RadiusableDetector radiusableDetector = netGuy.AddReaction<RadiusableDetector, Quadcopter>(new LeanOutWindowReaction(netGuy));
-            radiusableDetector.SetRadius(_config.DetectionRadius);
+            radiusableDetector.SetRadius(_config.DetectionRadius, _config.SemiMajorAxis);
             return netGuy;
         }
     }

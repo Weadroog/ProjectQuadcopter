@@ -20,8 +20,14 @@ namespace Assets.Scripts
         {
             foreach (Window window in _windows)
             {
-                if (Random.Range(0, 100) > density) continue;
+                if (Random.Range(0, 100) > density)
+                {
+                    window.Close();
+                    continue;
+                }
+
                 netGuyPool.Get(window.transform.position);
+                window.Open();
             }
         }
     }

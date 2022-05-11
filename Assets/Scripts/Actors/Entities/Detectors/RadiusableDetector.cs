@@ -9,6 +9,7 @@ namespace Assets.Scripts
         public event Action OnDetectAll;
 
         private float _radius;
+        private float _semiMajorAxis;
         private bool _isDetection = true;
         private Entity _target;
 
@@ -18,7 +19,11 @@ namespace Assets.Scripts
             _target = FindObjectOfType<Quadcopter>();
         }
 
-        public void SetRadius(float radius) => _radius = radius;
+        public void SetRadius(float radius, float semiMajorAxis)
+        {
+            _radius = radius;
+            _semiMajorAxis = semiMajorAxis;
+        }
 
         private void Detect()
         {
@@ -35,9 +40,8 @@ namespace Assets.Scripts
 
         private bool IsTargetInRadius()
         {
-            float semiMajorAxis = 3f;
             float semiMinorAxis = 1f;
-            float distance = (Mathf.Pow(_target.transform.position.z - transform.position.z, 2) / Mathf.Pow(semiMajorAxis, 2) + Mathf.Pow(_target.transform.position.x - transform.position.x, 2) / Mathf.Pow(semiMinorAxis, 2));
+            float distance = (Mathf.Pow(_target.transform.position.z - transform.position.z, 2) / Mathf.Pow(_semiMajorAxis, 2) + Mathf.Pow(_target.transform.position.x - transform.position.x, 2) / Mathf.Pow(semiMinorAxis, 2));
 
             if (distance <= _radius)
                 return true;

@@ -23,8 +23,8 @@ namespace Assets.Scripts
             _entitySpawner.Init(_city);
             _entitySpawner.EnablePlayerCamera();
             _entitySpawner.EnableQuadcopter();
-            _entitySpawner.EnableCarTraffic();
-            _entitySpawner.EnableAggressiveBirds();
+            //_entitySpawner.EnableCarTraffic();
+            //_entitySpawner.EnableAggressiveBirds();
             _chunkGenerator.Init(_city, _entitySpawner);
 
         }
