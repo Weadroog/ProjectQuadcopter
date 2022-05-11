@@ -1,11 +1,18 @@
-﻿namespace Assets.Scripts
+﻿using UnityEngine;
+
+namespace Assets.Scripts
 {
-    public class LeanOutWindowReaction : IReaction
+    public class LeanOutWindowReaction : Reaction
     {
-        private WindowLeanOuter _windowLeanOuter;
+        private NetGuy _netGuy;
+        private Animator _animator;
 
-        public LeanOutWindowReaction(WindowLeanOuter windowLeanOuter) => _windowLeanOuter = windowLeanOuter;
+        public LeanOutWindowReaction(NetGuy netGuy)
+        {
+            _netGuy = netGuy;
+            _animator = netGuy.GetComponent<Animator>();
+        }
 
-        public void React() => _windowLeanOuter.LeanOutWindow();
+        public override void React() => _animator.SetFloat(AnimationService.Parameters.LeanOutingSide, -Mathf.Clamp(_netGuy.transform.position.x, -1, 1));
     }
 }

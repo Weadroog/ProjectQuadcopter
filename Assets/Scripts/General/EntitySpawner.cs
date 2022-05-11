@@ -10,6 +10,7 @@ namespace Assets.Scripts
     {
         private WayMatrix _wayMatrix = new WayMatrix();
         private Dictionary<Type, IPool> _pools = new Dictionary<Type, IPool>();
+        private Quadcopter _quadcopter;
 
         [Header("Configurations")]
         [SerializeField] private QuadcopterConfig _quadcopterConfig;
@@ -36,14 +37,15 @@ namespace Assets.Scripts
         {
             EntitiesContainer = ContainerService.GetCreatedContainer("Entities", city.transform, Vector3.zero);
 
-            Quadcopter quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, EntitiesContainer));
-            GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, EntitiesContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
-
-            _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig, quadcopter), EntitiesContainer, 10);
-            _pools[typeof(Car)] = new Pool<Car>(new CarFactory(_carConfig, quadcopter), EntitiesContainer, 10);
-            _pools[typeof(Clothesline)] = new Pool<Clothesline>(new ClotheslineFactory(_clotheslineConfig, quadcopter), EntitiesContainer, 10);
-            _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig, quadcopter), EntitiesContainer, 10);
+            _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), EntitiesContainer, 10);
+            _pools[typeof(Car)] = new Pool<Car>(new CarFactory(_carConfig), EntitiesContainer, 10);
+            _pools[typeof(Clothesline)] = new Pool<Clothesline>(new ClotheslineFactory(_clotheslineConfig), EntitiesContainer, 10);
+            _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), EntitiesContainer, 10);
         }
+
+        public void EnablePlayerCamera() => GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, EntitiesContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
+
+        public void EnableQuadcopter() => _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, EntitiesContainer));
 
         public void EnableCarTraffic()
         {

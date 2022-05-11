@@ -4,6 +4,7 @@ namespace Assets.Scripts
 {
     public interface IDetector
     {
-        public event Action OnDetect;
+        public event Action<Entity> OnDetect;
+        public event Action OnDetectAll;
     }
 }

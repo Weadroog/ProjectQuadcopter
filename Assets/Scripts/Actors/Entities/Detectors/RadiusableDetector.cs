@@ -1,24 +1,22 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class RadiusableDetector : MonoBehaviour, IDetector
     {
-        public event Action OnDetect;
+        public event Action<Entity> OnDetect;
+        public event Action OnDetectAll;
 
         private float _radius;
-
-        private Entity _target;
         private bool _isDetection = true;
+        private Entity _target;
 
-        public float Radius => _radius;
-        public Entity Target => _target;
-
-        private void OnEnable() => UpdateService.OnUpdate += Detect;
-
-        public void SetTarget(Entity entity) => _target = entity;
+        private void OnEnable()
+        {
+            UpdateService.OnUpdate += Detect;
+            _target = FindObjectOfType<Quadcopter>();
+        }
 
         public void SetRadius(float radius) => _radius = radius;
 
@@ -26,7 +24,8 @@ namespace Assets.Scripts
         {
             if (IsTargetInRadius() && _isDetection)
             {
-                OnDetect?.Invoke();
+                OnDetectAll?.Invoke();
+                OnDetect?.Invoke(_target);
                 _isDetection = false;
             }
 
@@ -36,7 +35,11 @@ namespace Assets.Scripts
 
         private bool IsTargetInRadius()
         {
-            if (Vector3.Distance(transform.position, Target.transform.position) <= Radius)
+            float semiMajorAxis = 2.2f;
+            float semiMinorAxis = 0.8f;
+            float distance = (Mathf.Pow(_target.transform.position.z - transform.position.z, 2) / Mathf.Pow(semiMajorAxis, 2) + Mathf.Pow(_target.transform.position.x - transform.position.x, 2) / Mathf.Pow(semiMinorAxis, 2));
+
+            if (distance <= _radius)
                 return true;
 
             return false;
@@ -44,15 +47,4 @@ namespace Assets.Scripts
 
         private void OnDisable() => UpdateService.OnUpdate -= Detect;
     }
-
-    //[CustomEditor(typeof(RadiusableDetector))]
-    //public class TargetDetectorEditor : Editor
-    //{
-    //    private void OnSceneGUI()
-    //    {
-    //        RadiusableDetector detector = target as RadiusableDetector;
-    //        Handles.color = Color.red;
-    //        Handles.DrawWireArc(detector.transform.position, Vector3.up, Vector3.forward, 360, detector.Radius);
-    //    }
-    //}
 }

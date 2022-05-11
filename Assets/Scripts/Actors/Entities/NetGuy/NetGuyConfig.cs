@@ -7,7 +7,7 @@ namespace Assets.Scripts
     {
         [SerializeField][Range(1, 100)] private float _detectionRange;
 
-        public float DetectionRange => _detectionRange;
+        public float DetectionRadius => _detectionRange;
         
     }
 }
