@@ -13,6 +13,7 @@ namespace Assets.Scripts
             Disappearer disappearer = aggressiveBird.gameObject.AddComponent<Disappearer>();
             aggressiveBird.AddReaction<CollisionDetector, Quadcopter, Car>(new AggressiveBirdKillReaction());
             aggressiveBird.AddReaction<CollisionDetector, NetGuy>(new FreezeReaction());
+            aggressiveBird.AddReaction<FrontDetector>(new AggressiveBirdCryReaction());
             mover.SetSelfSpeed(_config.SelfSpeed);
             disappearer.SetDisappearPoint(new Vector3(0, 0, -20));
             return aggressiveBird;
