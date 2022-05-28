@@ -11,9 +11,8 @@ namespace Assets.Scripts
             AggressiveBird aggressiveBird = Object.Instantiate(_config.Prefab);
             Mover mover = aggressiveBird.gameObject.AddComponent<Mover>();
             Disappearer disappearer = aggressiveBird.gameObject.AddComponent<Disappearer>();
-            aggressiveBird.AddReaction<CollisionDetector, Quadcopter, Car>(new AggressiveBirdKillReaction());
-            aggressiveBird.AddReaction<CollisionDetector, NetGuy>(new FreezeReaction());
-            aggressiveBird.AddReaction<FrontDetector>(new AggressiveBirdCryReaction());
+            aggressiveBird.AddReaction<CollisionDetector, Quadcopter, Car>(new AggressiveBirdKillingReaction());
+            aggressiveBird.AddReaction<CollisionDetector, NetGuy>(new FreezingReaction());
             mover.SetSelfSpeed(_config.SelfSpeed);
             disappearer.SetDisappearPoint(new Vector3(0, 0, -20));
             return aggressiveBird;

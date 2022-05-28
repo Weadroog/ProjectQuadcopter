@@ -11,8 +11,8 @@ namespace Assets.Scripts
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
             SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
             Health health = quadcopter.gameObject.AddComponent<Health>();
-            quadcopter.AddReaction<CollisionDetector, NetGuy>(new FreezeReaction());
-            swipeController.SetStartPosition(MatrixPosition.Center);
+            quadcopter.AddReaction<CollisionDetector, NetGuy>(new FreezingReaction());
+            swipeController.SetStartablePosition(MatrixPosition.Center);
             swipeController.SetMotionDuration(_config.MotionDuration);
             health.SetMaxHP(_config.HP);
             return quadcopter;

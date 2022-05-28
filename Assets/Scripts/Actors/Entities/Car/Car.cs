@@ -1,4 +1,4 @@
 ﻿namespace Assets.Scripts
 {
-    public class Car : ReactableEntity { }
+    public class Car : Entity { }
 }

@@ -1,4 +1,4 @@
 ﻿namespace Assets.Scripts
 {
-    public class Quadcopter : ReactableEntity { }
+    public class Quadcopter : Entity { }
 }

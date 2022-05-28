@@ -1,4 +1,4 @@
 ﻿namespace Assets.Scripts
 {
-    public class Clothesline : ReactableEntity { }
+    public class Clothesline : Entity { }
 }

@@ -1,4 +1,4 @@
 ﻿namespace Assets.Scripts
 {
-    public class NetGuy : ReactableEntity { }
+    public class NetGuy : Entity { }
 }
