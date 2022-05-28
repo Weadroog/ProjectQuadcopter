@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts
 {
-    public class NetCatchReaction : Reaction
+    public class NetCatchingReaction : Reaction
     {
         public override void React() => Debug.Log("Поймал кого-то");
     }

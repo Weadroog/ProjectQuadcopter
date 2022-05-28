@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts
 {
-    public class CarBeepReaction : Reaction
+    public class CarBeepingReaction : Reaction
     {
         public override void React() => Debug.Log("Beeeep");
     }
