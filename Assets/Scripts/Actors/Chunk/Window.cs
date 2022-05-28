@@ -15,8 +15,8 @@ namespace Assets.Scripts
 
         public void Settle(NetGuy netGuy) => _netGuy = netGuy;
 
-        public void Close() => _meshrRenderer.material = Resources.Load<Material>("Art/ClosedWindow");
+        public void Close() => _meshrRenderer.material = _closedMaterial;
 
-        public void Open() => _meshrRenderer.material = Resources.Load<Material>("Art/OpenedWindow");
+        public void Open() => _meshrRenderer.material = _opendMaterial;
     }
 }
