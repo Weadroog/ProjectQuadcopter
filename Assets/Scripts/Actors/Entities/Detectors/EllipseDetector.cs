@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class RadiusableDetector : MonoBehaviour, IDetector
+    public class EllipseDetector : MonoBehaviour, IDetector
     {
         public event Action<Entity> OnDetect;
         public event Action OnDetectAll;
@@ -19,10 +19,11 @@ namespace Assets.Scripts
             _target = FindObjectOfType<Quadcopter>();
         }
 
-        public void SetRadius(float radius, float semiMajorAxis)
+        public EllipseDetector SetRadius(float radius, float semiMajorAxis)
         {
             _radius = radius;
             _semiMajorAxis = semiMajorAxis;
+            return this;
         }
 
         private void Detect()
@@ -41,7 +42,11 @@ namespace Assets.Scripts
         private bool IsTargetInRadius()
         {
             float semiMinorAxis = 1f;
-            float distance = (Mathf.Pow(_target.transform.position.z - transform.position.z, 2) / Mathf.Pow(_semiMajorAxis, 2) + Mathf.Pow(_target.transform.position.x - transform.position.x, 2) / Mathf.Pow(semiMinorAxis, 2));
+            float distance = (Mathf
+                .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf
+                .Pow(_semiMajorAxis, 2) + Mathf
+                .Pow(_target.transform.position.x - transform.position.x, 2) / Mathf
+                .Pow(semiMinorAxis, 2));
 
             if (distance <= _radius)
                 return true;

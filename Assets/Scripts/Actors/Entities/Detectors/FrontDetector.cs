@@ -13,7 +13,11 @@ namespace Assets.Scripts
 
         private void OnEnable() => UpdateService.OnUpdate += Detect;
 
-        public void SetDetectionDistance(float range) => _detectionDistance = range;
+        public FrontDetector SetDetectionDistance(float range)
+        {
+            _detectionDistance = range;
+            return this;
+        }
 
         private void Detect()
         {
@@ -33,10 +37,12 @@ namespace Assets.Scripts
             Ray ray = new Ray(transform.position, Vector3.back);
             Debug.DrawRay(ray.origin, ray.direction * _detectionDistance, Color.red);
 
-            if (Physics.Raycast(ray.origin, ray.direction * _detectionDistance, out RaycastHit detectionInfo) && detectionInfo.collider.TryGetComponent(out target))
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _detectionDistance))
             {
-                Debug.Log($"Впереди {target}");
-                return true;
+                if (detectionInfo.collider.TryGetComponent(out target))
+                {
+                    return true;
+                }
             }
 
             target = null;
