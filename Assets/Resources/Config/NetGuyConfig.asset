@@ -15,4 +15,5 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 5917012183079924583, guid: b1fe09e495ac6734dbd206a74bb44d76, type: 3}
   _detectionRadius: 70
-  _semiMajorAxis: 3
+  _semiMajorAxis: 3.24
+  _leanOutingSpeed: 5
