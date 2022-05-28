@@ -24,7 +24,6 @@ namespace Assets.Scripts
 
             while (currentSide != targetSide)
             {
-                Debug.Log("Leanouting");
                 _animator.SetFloat(AnimationService.Parameters.LeanOutingSide, currentSide);
                 currentSide = Mathf.Lerp(currentSide, targetSide, _leanOutingSpeed);
                 yield return null;
