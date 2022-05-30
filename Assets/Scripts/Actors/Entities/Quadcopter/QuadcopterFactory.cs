@@ -10,11 +10,11 @@ namespace Assets.Scripts
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
             SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
-            Health health = quadcopter.gameObject.AddComponent<Health>();
+            Liver health = quadcopter.gameObject.AddComponent<Liver>();
             quadcopter.AddReaction<CollisionDetector, NetGuy>(new FreezingReaction());
             swipeController.SetStartablePosition(MatrixPosition.Center);
             swipeController.SetMotionDuration(_config.MotionDuration);
-            health.SetMaxHP(_config.HP);
+            health.SetMaxLives(_config.HP);
             return quadcopter;
         }
     }
