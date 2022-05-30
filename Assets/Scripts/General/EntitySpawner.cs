@@ -8,9 +8,8 @@ namespace Assets.Scripts
 {
     public class EntitySpawner : MonoBehaviour
     {
-        private WayMatrix _wayMatrix = new WayMatrix();
         private Dictionary<Type, IPool> _pools = new Dictionary<Type, IPool>();
-        private Quadcopter _quadcopter;
+        private WayMatrix _wayMatrix = new WayMatrix();
 
         [Header("Configurations")]
         [SerializeField] private QuadcopterConfig _quadcopterConfig;
@@ -26,55 +25,48 @@ namespace Assets.Scripts
         [SerializeField][Range(0, 100)] private int _clothesLineDensity;
         [SerializeField][Range(0, 100)] private int _netGuyDensity;
 
-        public int AggressiveBirdDensity => _aggressiveBirdDensity;
-        public int CarDensity => _carDensity;
-        public int ClotheslineDensity => _clothesLineDensity;
-        public int NetGuyDensity => _netGuyDensity;
+        public void EnablePlayerCamera(Container entityContainer) => GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, entityContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
 
-        public Container EntitiesContainer { get; private set; }
+        public void EnableQuadcopter(Container entityContainer) => GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer));
 
-        public void Init(City city)
+        public void EnableCarTraffic(Container entityContainer)
         {
-            EntitiesContainer = ContainerService.GetCreatedContainer("Entities", city.transform, Vector3.zero);
+            _pools[typeof(Car)] = new Pool<Car>(new CarFactory(_carConfig), entityContainer, 10);
 
-            _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), EntitiesContainer, 10);
-            _pools[typeof(Car)] = new Pool<Car>(new CarFactory(_carConfig), EntitiesContainer, 10);
-            _pools[typeof(Clothesline)] = new Pool<Clothesline>(new ClotheslineFactory(_clotheslineConfig), EntitiesContainer, 10);
-            _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), EntitiesContainer, 10);
-        }
-
-        public void EnablePlayerCamera() => GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, EntitiesContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
-
-        public void EnableQuadcopter() => _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, EntitiesContainer));
-
-        public void EnableCarTraffic()
-        {
-            for (int i = 0; i < _wayMatrix.Width; i++)
+            for (int i = 0; i < WayMatrix.Width; i++)
             {
-                StartCoroutine(CarSpawnRoutine(i));
+                StartCoroutine(SpawnCars(i));
             }
         }
 
-        public void EnableAggressiveBirds()
+        public void EnableAggressiveBirds(Container entityContainer)
         {
+            _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), entityContainer, 10);
+
             for (int row = 0; row < 3; row++)
             {
 
-                for (int i = 0; i < _wayMatrix.Width; i++)
+                for (int i = 0; i < WayMatrix.Width; i++)
                 {
-                    StartCoroutine(AggressiveBirdSpawnRoutine(i, row));
+                    StartCoroutine(SpawnAggressiveBirds(i, row));
                 }
             }
         }
 
-        private IEnumerator CarSpawnRoutine(int line)
+        public void EnableNetGuys(Container entityContainer, ChunkGenerator chunkGenerator)
+        {
+            chunkGenerator.OnSpawnChunk += SpawnNetGuy; 
+            _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), entityContainer, 10);
+        }
+
+        private IEnumerator SpawnCars(int line)
         {
             float horizon = 200f;
             float startSpeed = SpeedService.Speed;
 
             while (true)
             {
-                Vector3 position = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, _wayMatrix.Height - 1));
+                Vector3 position = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, WayMatrix.Height - 1));
 
                 if (_carDensity > Random.Range(0, 100))
                 {
@@ -85,7 +77,7 @@ namespace Assets.Scripts
             }
         }
 
-        private IEnumerator AggressiveBirdSpawnRoutine(int line, int row)
+        private IEnumerator SpawnAggressiveBirds(int line, int row)
         {
             float horizon = 200f;
             float startSpeed = SpeedService.Speed;
@@ -103,10 +95,27 @@ namespace Assets.Scripts
             }
         }
 
+        private void SpawnNetGuy(Chunk chunk)
+        {
+            IEnumerable<Window> windows = chunk.GetWindows();
+
+            foreach (Window window in windows)
+            {
+                if (Random.Range(0, 100) > _netGuyDensity)
+                {
+                    window.Close();
+                    continue;
+                }
+
+                GetPool<NetGuy>().Get(window.SpawnPoint.transform.position);
+                window.Open();
+            }
+        }
+
         public Pool<T> GetPool<T>() where T : Actor => _pools[typeof(T)] as Pool<T>;
 
         private E GetCreatedEntity<E>(IFactory<E> entityFactory) where E : Entity => entityFactory.GetCreated();
 
-        private void OnDisable() => StopAllCoroutines();
+        private void OnDestroy() => StopAllCoroutines();
     }
 }
