@@ -4,20 +4,23 @@ using UnityEngine;
 public class Liver : MonoBehaviour
 {
     public event Action OnDeath;
+    public event Action<int> OnChanged;
 
     private int _maxLives;
-    private int _live;
+    private int _lives;
     
     public int Lives
     {
-        get => _live;
+        get => _lives;
         
         private set
         {
             if (value <= 0)
                 OnDeath?.Invoke();
 
-            _live = Mathf.Clamp(value, 0, _maxLives);
+            _lives = Mathf.Clamp(value, 0, _maxLives);
+
+            OnChanged.Invoke(_lives);
         }
     }
 
