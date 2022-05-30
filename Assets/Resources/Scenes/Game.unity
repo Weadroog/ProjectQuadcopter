@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 593717926}
   - component: {fileID: 593717925}
   m_Layer: 5
-  m_Name: Lives
+  m_Name: LifeCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -677,6 +677,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _city: {fileID: 1414658732}
   _startingSpeed: 25
+  _lifeCounter: {fileID: 593717925}
+  _chargeCounter: {fileID: 1785736755}
 --- !u!1 &1348897392
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,7 +955,7 @@ GameObject:
   - component: {fileID: 1785736756}
   - component: {fileID: 1785736755}
   m_Layer: 5
-  m_Name: Charge
+  m_Name: ChargeCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1234,5 +1236,3 @@ MonoBehaviour:
   _carDensity: 50
   _clothesLineDensity: 15
   _netGuyDensity: 10
-  _lifeCounter: {fileID: 593717925}
-  _chargeCounter: {fileID: 1785736755}
