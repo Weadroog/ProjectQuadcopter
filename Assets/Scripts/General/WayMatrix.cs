@@ -5,6 +5,7 @@ public class WayMatrix
     public const int Width = 3;
     public const int Height = 4;
     public const float Spacing = 4;
+    public const float Horizon = 200f;
     public readonly Vector3 DisappearPoint;
 
     private Vector2[,] _matrix;
@@ -136,6 +137,8 @@ public class WayMatrix
 
         return matrixRow;
     }
+
+    public Vector3 GetRandomPosition() => _matrix[Random.Range(0, Height), Random.Range(0, Width)];
 
     private Vector2Int ConvertCoordinates(Vector2Int position) => new Vector2Int(position.y, position.x);
 }
