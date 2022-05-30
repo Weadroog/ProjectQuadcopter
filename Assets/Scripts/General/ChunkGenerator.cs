@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public delegate void SpawnMethod();
-
     public class ChunkGenerator : MonoBehaviour
     {
-        [SerializeField] private ChunkConfig _chunkConfig;
+        public event Action<Chunk> OnSpawnChunk;
+
+        [SerializeField] private ChunkDatabase _chunkDatabase;
         [Space(30)]
         [SerializeField] [Range(1, 100)] private int _startableChunksAmount;
 
@@ -14,18 +15,16 @@ namespace Assets.Scripts
         private Container _chunkContainer;
         private Pool<Chunk> _chunksPool;
         private Chunk _lastSpawnedChunk;
-        private EntitySpawner _entitySpawner;
 
-        public void Init(City city, EntitySpawner entitySpawner)
+        public void EnableChunks(Container chunkContainer)
         {
-            _entitySpawner = entitySpawner;
-            _chunkContainer = ContainerService.GetCreatedContainer("Chunks", city.transform, _wayMatrix.GetPosition(MatrixPosition.Center));
-            ChunkFactory chunkFactory = new ChunkFactory(_chunkConfig, _chunkContainer, SpawnChunk);
-            _chunksPool = new Pool<Chunk>(chunkFactory, _chunkContainer, _chunkConfig.PrefabsCount);
-            GenerateStartableChunks(_startableChunksAmount);
+            _chunkContainer = chunkContainer;
+            ChunkFactory chunkFactory = new ChunkFactory(_chunkDatabase, _chunkContainer, SpawnChunk);
+            _chunksPool = new Pool<Chunk>(chunkFactory, _chunkContainer, _chunkDatabase.PrefabsCount);
+            SpawnStartableChunks(_startableChunksAmount);
         }
 
-        private void GenerateStartableChunks(int amount)
+        private void SpawnStartableChunks(int amount)
         {
             _lastSpawnedChunk = _chunksPool.Get(_wayMatrix.GetPosition(MatrixPosition.Center));
 
@@ -33,14 +32,11 @@ namespace Assets.Scripts
                 _lastSpawnedChunk = _chunksPool.Get(_lastSpawnedChunk.ConnectPosition);
         }
 
-        public Chunk GetGeneratedChunk(Vector3 position)
+        public void SpawnChunk()
         {
-            Chunk spawnedChunk =  _chunksPool.Get(position);
-            spawnedChunk.SettleWindows(_entitySpawner.GetPool<NetGuy>(), _entitySpawner.NetGuyDensity);
+            Chunk spawnedChunk = _chunksPool.Get(_lastSpawnedChunk.ConnectPosition);
             _lastSpawnedChunk = spawnedChunk;
-            return spawnedChunk;
+            OnSpawnChunk?.Invoke(spawnedChunk);
         }
-
-        public void SpawnChunk() => GetGeneratedChunk(_lastSpawnedChunk.ConnectPosition);
     }
 }
