@@ -2,8 +2,8 @@
 
 namespace Assets.Scripts
 {
-    [CreateAssetMenu(menuName = "Config/Chunk", fileName = "New Chunk Config")]
-    public class ChunkConfig : MultiplePrefabActorConfig<Chunk>
+    [CreateAssetMenu(menuName = "ChunkDatabase", fileName = "New Chunk Database")]
+    public class ChunkDatabase : MultiplePrefabActorConfig<Chunk>
     {
         [SerializeField] [Range(1, 10)] private float _moveSpeed;
 
