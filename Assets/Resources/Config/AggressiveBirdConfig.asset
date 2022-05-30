@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabs:
   - {fileID: 1637066925607362624, guid: 35b4309d921de97459bcbc7ccbc8d966, type: 3}
-  _selfSpeed: 25
+  _selfSpeed: 1
   _detectionDistance: 25
