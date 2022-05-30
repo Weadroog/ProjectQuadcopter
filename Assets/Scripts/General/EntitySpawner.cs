@@ -10,6 +10,7 @@ namespace Assets.Scripts
     {
         private Dictionary<Type, IPool> _pools = new Dictionary<Type, IPool>();
         private WayMatrix _wayMatrix = new WayMatrix();
+        private Quadcopter _quadcopter;
 
         [Header("Configurations")]
         [SerializeField] private QuadcopterConfig _quadcopterConfig;
@@ -18,16 +19,31 @@ namespace Assets.Scripts
         [SerializeField] private CarConfig _carConfig;
         [SerializeField] private ClotheslineConfig _clotheslineConfig;
         [SerializeField] private NetGuyConfig _netGuyConfig;
+        [SerializeField] private BatteryConfig _batteryConfig;
 
         [Header("SpawnDensity")]
-        [SerializeField][Range(0, 100)] private int _aggressiveBirdDensity;
-        [SerializeField][Range(0, 100)] private int _carDensity;
-        [SerializeField][Range(0, 100)] private int _clothesLineDensity;
-        [SerializeField][Range(0, 100)] private int _netGuyDensity;
+        [SerializeField] [Range(0, 100)] private int _aggressiveBirdDensity;
+        [SerializeField] [Range(0, 100)] private int _carDensity;
+        [SerializeField] [Range(0, 100)] private int _clothesLineDensity;
+        [SerializeField] [Range(0, 100)] private int _netGuyDensity;
 
-        public void EnablePlayerCamera(Container entityContainer) => GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, entityContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
+        [Header("UI")]
+        [SerializeField] private LifeCounter _lifeCounter;
+        [SerializeField] private ChargeCounter _chargeCounter;
 
-        public void EnableQuadcopter(Container entityContainer) => GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer));
+        public void EnableBatteries(Container entityContainer)
+        {
+            _pools[typeof(Battery)] = new Pool<Battery>(new BatteryFactory(_batteryConfig), entityContainer, 3);
+            _quadcopter.GetComponent<Charger>().OnDecreased += SpawnBattery;
+        }
+
+        public void EnablePlayerCamera(Container entityContainer) => 
+            GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, entityContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
+
+        public void EnableQuadcopter(Container entityContainer)
+        {
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, _lifeCounter, _chargeCounter));
+        } 
 
         public void EnableCarTraffic(Container entityContainer)
         {
@@ -110,6 +126,11 @@ namespace Assets.Scripts
                 GetPool<NetGuy>().Get(window.SpawnPoint.transform.position);
                 window.Open();
             }
+        }
+
+        private void SpawnBattery()
+        {
+            GetPool<Battery>().Get(_wayMatrix.GetPosition(MatrixPosition.Center) + Vector3.forward * 200);
         }
 
         public Pool<T> GetPool<T>() where T : Actor => _pools[typeof(T)] as Pool<T>;

@@ -26,9 +26,11 @@ namespace Assets.Scripts
             _chunkGenerator.EnableChunks(chunkContainer);
             _entitySpawner.EnablePlayerCamera(entityContainer);
             _entitySpawner.EnableQuadcopter(entityContainer);
+            _entitySpawner.EnableBatteries(entityContainer);
+
             //_entitySpawner.EnableCarTraffic(entityContainer);
             //_entitySpawner.EnableAggressiveBirds(entityContainer);
-            _entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
+            //_entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
         }
     }
 }
