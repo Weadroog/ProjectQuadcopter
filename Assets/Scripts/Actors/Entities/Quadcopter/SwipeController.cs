@@ -37,9 +37,17 @@ namespace Assets.Scripts
 
         private void OnEnable() => SwipeHandler.OnSwipe += UpdatePosition;
 
-        public void SetMotionDuration(float motionDuration) => _motionDuration = motionDuration;
+        public SwipeController SetMotionDuration(float motionDuration)
+        {
+            _motionDuration = motionDuration;
+            return this;
+        }
 
-        public void SetStartablePosition(MatrixPosition position) => transform.position = _wayMatrix.GetPosition(position, out _currentPosition);
+        public SwipeController SetStartablePosition(MatrixPosition position)
+        {
+            transform.position = _wayMatrix.GetPosition(position, out _currentPosition);
+            return this;
+        }
 
         private void UpdatePosition(Vector2Int positionShift)
         {

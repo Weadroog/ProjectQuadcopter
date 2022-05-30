@@ -4,9 +4,12 @@ namespace Assets.Scripts
 {
     public class GameStartup : MonoBehaviour
     {
-        [Header("Configurations")]
         [SerializeField] private City _city;
         [SerializeField][Range(10, 100)] private float _startingSpeed;
+
+        [Header("UI")]
+        [SerializeField] private LifeCounter _lifeCounter;
+        [SerializeField] private ChargeCounter _chargeCounter;
 
         private EntitySpawner _entitySpawner;
         private ChunkGenerator _chunkGenerator;
@@ -25,12 +28,11 @@ namespace Assets.Scripts
 
             _chunkGenerator.EnableChunks(chunkContainer);
             _entitySpawner.EnablePlayerCamera(entityContainer);
-            _entitySpawner.EnableQuadcopter(entityContainer);
-            _entitySpawner.EnableBatteries(entityContainer);
-
+            _entitySpawner.EnableQuadcopter(entityContainer, _lifeCounter, _chargeCounter);
             //_entitySpawner.EnableCarTraffic(entityContainer);
             //_entitySpawner.EnableAggressiveBirds(entityContainer);
-            //_entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
+            _entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
+            //_entitySpawner.EnableBatteries(entityContainer);
         }
     }
 }

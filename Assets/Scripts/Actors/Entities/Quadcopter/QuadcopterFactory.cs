@@ -16,20 +16,28 @@ namespace Assets.Scripts
         public override Quadcopter GetCreated()
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
-            SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
-            Liver liver = quadcopter.gameObject.AddComponent<Liver>();
-            Charger charger = quadcopter.gameObject.AddComponent<Charger>();
-            quadcopter.AddReaction<CollisionDetector, NetGuy, AggressiveBird, Car>(new TakeDamageReaction(liver));
-            quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(quadcopter));
-            swipeController.SetStartablePosition(MatrixPosition.Center);
-            swipeController.SetMotionDuration(_config.MotionDuration);
-            liver.OnChanged += _lifeCounter.Display;
-            liver.SetMaxLives(_config.Lives);
-            liver.ResetHP();
+
+            quadcopter.gameObject
+                .AddComponent<SwipeController>()
+                .SetStartablePosition(MatrixPosition.Center)
+                .SetMotionDuration(_config.MotionDuration);
+
+            Lifer lifer = quadcopter.gameObject
+                .AddComponent<Lifer>()
+                .SetMaxLifes(_config.Lives);
+                
+            lifer.OnChanged += _lifeCounter.Display;
+
+
+            Charger charger = quadcopter.gameObject
+                .AddComponent<Charger>()
+                .SetMaxCharge(_config.Charge)
+                .SetDecreaseTime(_config.ChargeDecreaseTime);
+
             charger.OnChanged += _chargeCounter.Display;
-            charger.SetMaxCharge(_config.Charge);
-            charger.SetDecreaseTime(_config.ChargeDecreaseTime);
-            charger.ChargeUp();
+
+            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(lifer));
+            quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));
 
             return quadcopter;
         }

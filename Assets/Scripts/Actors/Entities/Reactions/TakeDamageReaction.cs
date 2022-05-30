@@ -2,16 +2,10 @@
 {
     public class TakeDamageReaction : Reaction
     {
-        private Liver _lives;
+        private Lifer _lifer;
 
-        public TakeDamageReaction(Liver lives)
-        {
-            _lives = lives;
-        }
+        public TakeDamageReaction(Lifer lifer) => _lifer = lifer;
 
-        public override void React()
-        {
-            _lives.TakeDamage();
-        }
+        public override void React() => _lifer.TakeDamage();
     }
 }

@@ -2,5 +2,5 @@
 
 namespace Assets.Scripts
 {
-    public class Net : MonoBehaviour { }
+    public class Net : Entity { }
 }

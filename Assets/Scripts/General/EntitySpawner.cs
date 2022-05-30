@@ -27,22 +27,14 @@ namespace Assets.Scripts
         [SerializeField] [Range(0, 100)] private int _clothesLineDensity;
         [SerializeField] [Range(0, 100)] private int _netGuyDensity;
 
-        [Header("UI")]
-        [SerializeField] private LifeCounter _lifeCounter;
-        [SerializeField] private ChargeCounter _chargeCounter;
-
-        public void EnableBatteries(Container entityContainer)
+        public void EnablePlayerCamera(Container entityContainer)
         {
-            _pools[typeof(Battery)] = new Pool<Battery>(new BatteryFactory(_batteryConfig), entityContainer, 3);
-            _quadcopter.GetComponent<Charger>().OnDecreased += SpawnBattery;
+            GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, entityContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
         }
 
-        public void EnablePlayerCamera(Container entityContainer) => 
-            GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, entityContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
-
-        public void EnableQuadcopter(Container entityContainer)
+        public void EnableQuadcopter(Container entityContainer, LifeCounter lifeCounter, ChargeCounter chargeCounter)
         {
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, _lifeCounter, _chargeCounter));
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter));
         } 
 
         public void EnableCarTraffic(Container entityContainer)
@@ -73,6 +65,12 @@ namespace Assets.Scripts
         {
             chunkGenerator.OnSpawnChunk += SpawnNetGuy; 
             _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), entityContainer, 10);
+        }
+
+        public void EnableBatteries(Container entityContainer)
+        {
+            _pools[typeof(Battery)] = new Pool<Battery>(new BatteryFactory(_batteryConfig), entityContainer, 3);
+            _quadcopter.GetComponent<Charger>().OnDecreased += SpawnBattery;
         }
 
         private IEnumerator SpawnCars(int line)

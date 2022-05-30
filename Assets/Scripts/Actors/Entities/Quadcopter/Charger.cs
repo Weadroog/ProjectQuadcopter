@@ -27,12 +27,18 @@ namespace Assets.Scripts
             }
         }
 
-        public void SetMaxCharge(int maxCharge) => _maxCharge = maxCharge;
+        public Charger SetMaxCharge(int maxCharge)
+        {
+            _maxCharge = maxCharge;
+            return this;
+        }
 
-        public void SetDecreaseTime(int decreaseTime) 
+        public Charger SetDecreaseTime(int decreaseTime) 
         {
             _decreaseTime = decreaseTime;
             _waitForSeconds = new WaitForSeconds(_decreaseTime);
+            ChargeUp();
+            return this;
         }
 
         public void ChargeUp() 

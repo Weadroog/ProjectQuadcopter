@@ -1,34 +1,39 @@
 using System;
 using UnityEngine;
 
-public class Liver : MonoBehaviour
+public class Lifer : MonoBehaviour
 {
     public event Action OnDeath;
     public event Action<int> OnChanged;
 
-    private int _maxLives;
-    private int _lives;
+    private int _maxLifes;
+    private int _lifes;
     
-    public int Lives
+    public int Lifes
     {
-        get => _lives;
+        get => _lifes;
         
         private set
         {
             if (value <= 0)
                 OnDeath?.Invoke();
 
-            _lives = Mathf.Clamp(value, 0, _maxLives);
+            _lifes = Mathf.Clamp(value, 0, _maxLifes);
 
-            OnChanged.Invoke(_lives);
+            OnChanged?.Invoke(_lifes);
         }
     }
 
-    public void SetMaxLives(int maxLives) => _maxLives = maxLives;
+    public Lifer SetMaxLifes(int maxLives)
+    {
+        _maxLifes = maxLives;
+        ResetHP();
+        return this;
+    }
 
-    public void Kill() => Lives = 0;
+    public void ResetHP() => Lifes = _maxLifes;
 
-    public void TakeDamage() => Lives--;
+    public void Kill() => Lifes = 0;
 
-    public void ResetHP() => Lives = _maxLives;
+    public void TakeDamage() => Lifes--;
 }
