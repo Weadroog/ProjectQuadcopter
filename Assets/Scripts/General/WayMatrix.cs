@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class WayMatrix
 {
-    private const int _width = 3;
-    private const int _height = 4;
-    private const float _spacing = 4;
+    public const int Width = 3;
+    public const int Height = 4;
+    public const float Spacing = 4;
+    public readonly Vector3 DisappearPoint;
 
     private Vector2[,] _matrix;
-
-    public int Width => _width;
-    public int Height => _height;
-    public float Spacing => _spacing;
 
     public WayMatrix()
     {
         _matrix = new Vector2[Height, Width];
+        DisappearPoint = new(0, 0, -10);
+        Build();
+    }
+
+    private void Build()
+    {
         float xPositionValue = Spacing;
 
         for (int x = 0; x < Height; x++)
