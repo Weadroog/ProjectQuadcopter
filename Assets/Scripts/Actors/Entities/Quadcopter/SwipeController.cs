@@ -20,8 +20,8 @@ namespace Assets.Scripts
             {
                 _currentPosition = new Vector2Int
                 (
-                    Mathf.Clamp(value.x, 0, _wayMatrix.Width - 1),
-                    Mathf.Clamp(value.y, 0, _wayMatrix.Height - 1)
+                    Mathf.Clamp(value.x, 0, WayMatrix.Width - 1),
+                    Mathf.Clamp(value.y, 0, WayMatrix.Height - 1)
                 );
             }
         }

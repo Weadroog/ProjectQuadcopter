@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts
 {
-    class QuadcopterFactory : ActorFactory<Quadcopter, QuadcopterConfig>
+    class QuadcopterFactory : EntityFactory<Quadcopter, QuadcopterConfig>
     {
         public QuadcopterFactory(QuadcopterConfig config, Container container) : base(config, container) { }
 

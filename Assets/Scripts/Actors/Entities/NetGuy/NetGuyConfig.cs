@@ -5,9 +5,23 @@ namespace Assets.Scripts
     [CreateAssetMenu(menuName = "Config/Net", fileName = "New Net Config")]
     public class NetGuyConfig : MultiplePrefabActorConfig<NetGuy>
     {
+        [SerializeField] private Net[] _netPrefabs;
         [SerializeField][Range(1, 100)] private float _detectionRadius;
         [SerializeField][Range(1, 10)] private float _semiMajorAxis;
         [SerializeField][Range(0, 10)] private float _leanOutingSpeed;
+
+        private int _netPrefabIndex;
+
+        public Net Net
+        {
+            get
+            {
+                _netPrefabIndex = (_netPrefabIndex == _prefabs.Length) ? 0 : _netPrefabIndex;
+                Net prefab = _netPrefabs[_netPrefabIndex];
+                _netPrefabIndex++;
+                return prefab;
+            }
+        }
 
         public float DetectionRadius => _detectionRadius;
         public float SemiMajorAxis => _semiMajorAxis;
