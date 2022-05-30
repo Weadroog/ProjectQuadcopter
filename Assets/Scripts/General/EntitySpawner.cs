@@ -128,7 +128,7 @@ namespace Assets.Scripts
 
         private void SpawnBattery()
         {
-            GetPool<Battery>().Get(_wayMatrix.GetPosition(MatrixPosition.Center) + Vector3.forward * 200);
+            GetPool<Battery>().Get(_wayMatrix.GetRandomPosition() + Vector3.forward * WayMatrix.Horizon);
         }
 
         public Pool<T> GetPool<T>() where T : Actor => _pools[typeof(T)] as Pool<T>;
