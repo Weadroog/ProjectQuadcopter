@@ -13,6 +13,8 @@ namespace Assets.Scripts
             Battery battery = Object.Instantiate(_config.Prefab); 
             Disappearer disappearer = battery.gameObject.AddComponent<Disappearer>();
             battery.gameObject.AddComponent<Mover>();
+            battery.AddReaction<CollisionDetector, Quadcopter>(new BatteryDisappearReaction(battery));
+            
             disappearer.SetDisappearPoint(_wayMatrix.DisappearPoint);
             return battery;
         }
