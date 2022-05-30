@@ -32,13 +32,6 @@ namespace Assets.Scripts
             return createdElement;
         }
 
-        private void PoolUp(T element, bool isActive)
-        {
-            element.transform.SetParent(_container.transform);
-            element.transform.localPosition = Vector3.zero;
-            element.gameObject.SetActive(isActive);
-        }
-
         private bool HasAvailable(out T availableElement)
         {
             for (int i = 0; i < _elements.Count; i++)
@@ -61,7 +54,8 @@ namespace Assets.Scripts
         {
             T element = _factory.GetCreated();
             _elements.Add(element);
-            PoolUp(element, isActive);
+            element.transform.SetParent(_container.transform);
+            element.gameObject.SetActive(isActive);
             return element;
         }
     }
