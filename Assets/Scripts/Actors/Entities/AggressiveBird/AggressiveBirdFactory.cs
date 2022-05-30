@@ -2,8 +2,10 @@
 
 namespace Assets.Scripts
 {
-    class AggressiveBirdFactory : ActorFactory<AggressiveBird, AggressiveBirdConfig>
+    class AggressiveBirdFactory : EntityFactory<AggressiveBird, AggressiveBirdConfig>
     {
+        private WayMatrix _wayMatrix = new();
+
         public AggressiveBirdFactory(AggressiveBirdConfig config) : base(config) { }
 
         public override AggressiveBird GetCreated()
@@ -14,7 +16,7 @@ namespace Assets.Scripts
             aggressiveBird.AddReaction<CollisionDetector, Quadcopter, Car>(new AggressiveBirdKillingReaction());
             aggressiveBird.AddReaction<CollisionDetector, NetGuy>(new FreezingReaction());
             mover.SetSelfSpeed(_config.SelfSpeed);
-            disappearer.SetDisappearPoint(new Vector3(0, 0, -20));
+            disappearer.SetDisappearPoint(_wayMatrix.DisappearPoint);
             return aggressiveBird;
         }
     }

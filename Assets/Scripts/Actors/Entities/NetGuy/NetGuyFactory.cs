@@ -2,8 +2,10 @@
 
 namespace Assets.Scripts
 {
-    class NetGuyFactory : ActorFactory<NetGuy, NetGuyConfig>
+    class NetGuyFactory : EntityFactory<NetGuy, NetGuyConfig>
     {
+        private WayMatrix _wayMatrix = new();
+
         public NetGuyFactory(NetGuyConfig config) : base(config) { }
 
         public override NetGuy GetCreated()
@@ -13,13 +15,13 @@ namespace Assets.Scripts
 
             netGuy.gameObject
                 .AddComponent<Disappearer>()
-                .SetDisappearPoint(new Vector3(0, 0, -20));
+                .SetDisappearPoint(_wayMatrix.DisappearPoint)
+                .OnDisappear += new ShoveingInWindowReaction(netGuy).React;
 
             netGuy
                 .AddReaction<EllipseDetector, Quadcopter>(new LeanOutingWindowReaction(netGuy, _config.LeanOutingSpeed))
                 .SetRadius(_config.DetectionRadius, _config.SemiMajorAxis);
 
-            netGuy.AddReaction<CollisionDetector, Quadcopter, AggressiveBird>(new NetCatchingReaction());
             return netGuy;
         }
     }

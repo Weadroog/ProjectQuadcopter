@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts
 {
-    class PlayerCameraFactory : ActorFactory<PlayerCamera, PlayerCameraConfig>
+    class PlayerCameraFactory : EntityFactory<PlayerCamera, PlayerCameraConfig>
     {
         public PlayerCameraFactory(PlayerCameraConfig config, Container container, Vector2 position) : base(config, container, position) { }
 
