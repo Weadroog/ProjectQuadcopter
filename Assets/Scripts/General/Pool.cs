@@ -50,7 +50,7 @@ namespace Assets.Scripts
             return false;
         }
 
-        private T Create(bool isActive)
+        protected T Create(bool isActive)
         {
             T element = _factory.GetCreated();
             _elements.Add(element);

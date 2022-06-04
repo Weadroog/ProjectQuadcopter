@@ -21,7 +21,5 @@ namespace Assets.Scripts
         public void Close() => _meshrRenderer.material = _closedMaterial;
 
         public void Open() => _meshrRenderer.material = _opendMaterial;
-
-        private void OnDisable() => Close();
     }
 }

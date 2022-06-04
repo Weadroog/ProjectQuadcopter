@@ -15,8 +15,7 @@ namespace Assets.Scripts
 
             netGuy.gameObject
                 .AddComponent<Disappearer>()
-                .SetDisappearPoint(_wayMatrix.DisappearPoint)
-                .OnDisappear += new ShoveingInWindowReaction(netGuy).React;
+                .SetDisappearPoint(_wayMatrix.DisappearPoint);
 
             netGuy
                 .AddReaction<EllipseDetector, Quadcopter>(new LeanOutingWindowReaction(netGuy, _config.LeanOutingSpeed))

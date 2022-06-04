@@ -3,8 +3,8 @@ using UnityEngine;
 public class WayMatrix
 {
     public const int Width = 3;
-    public const int Height = 4;
-    public const float Spacing = 4;
+    public const int Height = 3;
+    public const float Spacing = 3.5f;
     public const float Horizon = 200f;
     public readonly Vector3 DisappearPoint;
 
@@ -13,25 +13,25 @@ public class WayMatrix
     public WayMatrix()
     {
         _matrix = new Vector2[Height, Width];
-        DisappearPoint = new(0, 0, -10);
+        DisappearPoint = new(0, 0, -25);
         Build();
     }
 
     private void Build()
     {
-        float xPositionValue = Spacing;
+        float xPosition = Spacing;
 
         for (int x = 0; x < Height; x++)
         {
-            float yPositionValue = -Spacing;
+            float yPosition = -Spacing;
 
             for (int y = 0; y < Width; y++)
             {
-                _matrix[x, y] = new Vector2(yPositionValue, xPositionValue);
-                yPositionValue += Spacing;
+                _matrix[x, y] = new Vector2(yPosition, xPosition);
+                yPosition += Spacing;
             }
 
-            xPositionValue -= Spacing;
+            xPosition -= Spacing;
         }
     }
 
@@ -109,6 +109,10 @@ public class WayMatrix
                 {
                     return _matrix[Height - 2, Width / 2];
                 }
+            case MatrixPosition.Down:
+                {
+                    return _matrix[Height - 1, Width / 2];
+                }
             case MatrixPosition.DownLeft:
                 {
                     return _matrix[Height - 1, 0];
@@ -148,6 +152,7 @@ public enum MatrixPosition
     UpLeft,
     UpRight,
     Center,
+    Down,
     DownLeft,
     DownRight
 }

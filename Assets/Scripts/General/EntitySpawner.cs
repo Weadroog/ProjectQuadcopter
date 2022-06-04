@@ -51,7 +51,7 @@ namespace Assets.Scripts
         {
             _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), entityContainer, 10);
 
-            for (int row = 0; row < 3; row++)
+            for (int row = 0; row < 2; row++)
             {
 
                 for (int i = 0; i < WayMatrix.Width; i++)
@@ -63,8 +63,8 @@ namespace Assets.Scripts
 
         public void EnableNetGuys(Container entityContainer, ChunkGenerator chunkGenerator)
         {
-            chunkGenerator.OnSpawnChunk += SpawnNetGuy; 
             _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), entityContainer, 10);
+            chunkGenerator.OnSpawnChunk += SpawnNetGuy;
         }
 
         public void EnableBatteries(Container entityContainer)
@@ -109,10 +109,8 @@ namespace Assets.Scripts
             }
         }
 
-        private void SpawnNetGuy(Chunk chunk)
+        private void SpawnNetGuy(IEnumerable<Window> windows)
         {
-            IEnumerable<Window> windows = chunk.GetWindows();
-
             foreach (Window window in windows)
             {
                 if (Random.Range(0, 100) > _netGuyDensity)
