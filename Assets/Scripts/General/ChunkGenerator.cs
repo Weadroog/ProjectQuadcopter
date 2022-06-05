@@ -27,7 +27,7 @@ namespace Assets.Scripts
 
         private void SpawnStartableChunks(int chunksCount)
         {
-            _lastRoad = _roadPool.Get(_wayMatrix.GetPosition(MatrixPosition.Down) + Vector3.down * WayMatrix.Spacing);
+            _lastRoad = _roadPool.Get(_wayMatrix.GetPosition(MatrixPosition.Down) + Vector3.down * WayMatrix.VerticalSpacing);
 
             for (int i = 0; i < chunksCount; i++)
                 SpawnChunk();

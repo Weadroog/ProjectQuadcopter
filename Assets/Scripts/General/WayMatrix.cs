@@ -4,7 +4,10 @@ public class WayMatrix
 {
     public const int Width = 3;
     public const int Height = 3;
-    public const float Spacing = 3.5f;
+
+    public const float VerticalSpacing = 3.5f;
+    public const float HorizontalSpacing = 3.5f;
+
     public const float Horizon = 200f;
     public readonly Vector3 DisappearPoint;
 
@@ -19,19 +22,19 @@ public class WayMatrix
 
     private void Build()
     {
-        float xPosition = Spacing;
+        float xPosition = VerticalSpacing;
 
         for (int x = 0; x < Height; x++)
         {
-            float yPosition = -Spacing;
+            float yPosition = -HorizontalSpacing;
 
             for (int y = 0; y < Width; y++)
             {
                 _matrix[x, y] = new Vector2(yPosition, xPosition);
-                yPosition += Spacing;
+                yPosition += HorizontalSpacing;
             }
 
-            xPosition -= Spacing;
+            xPosition -= VerticalSpacing;
         }
     }
 
