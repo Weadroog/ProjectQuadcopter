@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bb4f5c405501e5478c6ab5ea8fab3e7, type: 3}
-  m_Name: ChunkDatabase
+  m_Name: ChunkConfig
   m_EditorClassIdentifier: 
   _districtsPrefab:
   - {fileID: 2537632661150493842, guid: e6385f9e345fe5646a73b256197e0e20, type: 3}
