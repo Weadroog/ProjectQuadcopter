@@ -8,7 +8,7 @@ namespace Assets.Scripts
     {
         public event Action<IEnumerable<Window>> OnSpawnChunk;
 
-        [SerializeField] private ChunkDatabase _chunkDatabase;
+        [SerializeField] private ChunkConfig _chunkDatabase;
         [Space(30)]
         [SerializeField][Range(1, 100)] private float _startableChunksCount;
 

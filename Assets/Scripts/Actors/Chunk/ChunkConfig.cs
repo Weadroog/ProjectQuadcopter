@@ -2,8 +2,8 @@
 
 namespace Assets.Scripts
 {
-    [CreateAssetMenu(menuName = "ChunkDatabase", fileName = "New Chunk Database")]
-    public class ChunkDatabase : Config
+    [CreateAssetMenu(menuName = "Config/Chunk Config", fileName = "New Chunk Config")]
+    public class ChunkConfig : Config
     {
         [SerializeField] protected District[] _districtsPrefab;
         [SerializeField] private Road _roadPrefab;

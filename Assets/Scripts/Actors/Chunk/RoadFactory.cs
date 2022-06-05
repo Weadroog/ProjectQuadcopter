@@ -5,10 +5,10 @@ namespace Assets.Scripts
     public class RoadFactory : ActorFactory<Road>
     {
         private WayMatrix _wayMatrix = new();
-        private ChunkDatabase _chunkDatabase;
+        private ChunkConfig _chunkDatabase;
         private Action _chunkSpawn;
 
-        public RoadFactory(ChunkDatabase chunkDatabase, Action chunkSpawn)
+        public RoadFactory(ChunkConfig chunkDatabase, Action chunkSpawn)
         {
             _chunkDatabase = chunkDatabase;
             _chunkSpawn = chunkSpawn;

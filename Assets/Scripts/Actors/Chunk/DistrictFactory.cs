@@ -5,9 +5,9 @@ namespace Assets.Scripts
     public class DistrictFactory : ActorFactory<District>
     {
         private WayMatrix _wayMatrix = new();
-        private ChunkDatabase _chunkDatabase;
+        private ChunkConfig _chunkDatabase;
 
-        public DistrictFactory(ChunkDatabase chunkDatabase) => _chunkDatabase = chunkDatabase;
+        public DistrictFactory(ChunkConfig chunkDatabase) => _chunkDatabase = chunkDatabase;
 
         public override District GetCreated()
         {
