@@ -119,7 +119,7 @@ namespace Assets.Scripts
                     continue;
                 }
 
-                GetPool<NetGuy>().Get(window.SpawnPoint.transform.position);
+                GetPool<NetGuy>().Get(window.GetSpawnPoint());
                 window.Open();
             }
         }

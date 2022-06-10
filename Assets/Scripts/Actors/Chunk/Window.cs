@@ -1,25 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Window : MonoBehaviour
     {
-        [SerializeField] private Material _opendMaterial;
-        [SerializeField] private Material _closedMaterial;
+        [SerializeField] private Mesh _opendMesh;
+        [SerializeField] private Mesh _closedMesh;
+        [SerializeField][Range(0, 5)] private float _offset;
+        private MeshFilter _meshFilter;
 
-        private MeshRenderer _meshrRenderer;
-        private SpawnPoint _spawnPoint;
+        private void Awake() => _meshFilter = GetComponentInChildren<MeshFilter>();
 
-        public SpawnPoint SpawnPoint => _spawnPoint;
-
-        private void Awake()
+        public Vector3 GetSpawnPoint()
         {
-            _meshrRenderer = GetComponentInChildren<MeshRenderer>();
-            _spawnPoint = GetComponentInChildren<SpawnPoint>();
+            return transform.forward * -_offset + transform.position;
         }
 
-        public void Close() => _meshrRenderer.material = _closedMaterial;
+        public void Close() => _meshFilter.mesh = _closedMesh;
 
-        public void Open() => _meshrRenderer.material = _opendMaterial;
+        public void Open() => _meshFilter.mesh = _opendMesh;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.forward * -_offset + transform.position, 1);
+        }
     }
 }
