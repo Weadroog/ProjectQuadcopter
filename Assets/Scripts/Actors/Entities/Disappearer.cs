@@ -1,14 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Disappearer : MonoBehaviour
     {
-        public event SpawnMethod OnDisappear;
+        public event Action OnDisappear;
 
         private Vector3 _disappearPoint;
 
-        public void SetDisappearPoint(Vector3 disappearPoint) => _disappearPoint = disappearPoint;
+        public Disappearer SetDisappearPoint(Vector3 disappearPoint)
+        {
+            _disappearPoint = disappearPoint;
+            return this;
+        }
 
         private void OnEnable() => UpdateService.OnUpdate += CheckEdgeOut;
 

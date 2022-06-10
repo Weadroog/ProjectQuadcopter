@@ -6,7 +6,7 @@ namespace Assets.Scripts
     {
 
         public static float Speed { get; private set; }
-        public static float Acceleration { get => 0.0005f; }
+        public static float Acceleration { get => 0.001f; }
 
         public static void SetStartSpeed(float startSpeed) => Speed = startSpeed;
 

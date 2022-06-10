@@ -2,11 +2,29 @@
 
 namespace Assets.Scripts
 {
-    [CreateAssetMenu(menuName = "Config/Chunk", fileName = "New Chunk Config")]
-    public class ChunkConfig : MultiplePrefabActorConfig<Chunk>
+    [CreateAssetMenu(menuName = "Config/Chunk Config", fileName = "New Chunk Config")]
+    public class ChunkConfig : Config
     {
-        [SerializeField] [Range(1, 10)] private float _moveSpeed;
+        [SerializeField] protected District[] _districtsPrefab;
+        [SerializeField] private Road _roadPrefab;
 
-        public float MoveSpeed { get => _moveSpeed; }
+        private int _districtPrefabIndex;
+
+        public District DistrictPrefab
+        {
+            get
+            {
+                _districtPrefabIndex = (_districtPrefabIndex == _districtsPrefab.Length) ? 0 : _districtPrefabIndex;
+                District prefab = _districtsPrefab[_districtPrefabIndex];
+                _districtPrefabIndex++;
+                return prefab;
+            }
+        }
+        public Road RoadPrefab => _roadPrefab;
+
+        public int DistrictsPrefabsCount => _districtsPrefab.Length;
+        
+
+        
     }
 }

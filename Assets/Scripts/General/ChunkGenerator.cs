@@ -1,46 +1,51 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public delegate void SpawnMethod();
-
     public class ChunkGenerator : MonoBehaviour
     {
-        [SerializeField] private ChunkConfig _chunkConfig;
+        public event Action<IEnumerable<Window>> OnSpawnChunk;
+
+        [SerializeField] private ChunkConfig _chunkDatabase;
         [Space(30)]
-        [SerializeField] [Range(1, 100)] private int _startableChunksAmount;
+        [SerializeField][Range(1, 100)] private float _startableChunksCount;
 
-        private WayMatrix _wayMatrix = new WayMatrix();
-        private Container _chunkContainer;
-        private Pool<Chunk> _chunksPool;
-        private Chunk _lastSpawnedChunk;
-        private EntitySpawner _entitySpawner;
+        private WayMatrix _wayMatrix = new();
+        private Pool<Road> _roadPool;
+        private Pool<District> _districtPool;
+        private Road _lastRoad;
+        private List<Window> _windows = new();
 
-        public void Init(City city, EntitySpawner entitySpawner)
+        public void EnableChunks(Container chunksContainer, int startableChunkCount) 
         {
-            _entitySpawner = entitySpawner;
-            _chunkContainer = ContainerService.GetCreatedContainer("Chunks", city.transform, _wayMatrix.GetPosition(MatrixPosition.Center));
-            ChunkFactory chunkFactory = new ChunkFactory(_chunkConfig, _chunkContainer, SpawnChunk);
-            _chunksPool = new Pool<Chunk>(chunkFactory, _chunkContainer, _chunkConfig.PrefabsCount);
-            GenerateStartableChunks(_startableChunksAmount);
+            _roadPool = new(new RoadFactory(_chunkDatabase, SpawnChunk), chunksContainer, startableChunkCount);
+            _districtPool = new(new DistrictFactory(_chunkDatabase), chunksContainer, _chunkDatabase.DistrictsPrefabsCount);
+            SpawnStartableChunks(startableChunkCount);
         }
 
-        private void GenerateStartableChunks(int amount)
+        private void SpawnStartableChunks(int chunksCount)
         {
-            _lastSpawnedChunk = _chunksPool.Get(_wayMatrix.GetPosition(MatrixPosition.Center));
+            _lastRoad = _roadPool.Get(_wayMatrix.GetPosition(MatrixPosition.Down) + Vector3.down * WayMatrix.VerticalSpacing);
 
-            for (int i = -1; i < amount; i++)
-                _lastSpawnedChunk = _chunksPool.Get(_lastSpawnedChunk.ConnectPosition);
+            for (int i = 0; i < chunksCount; i++)
+                SpawnChunk();
         }
 
-        public Chunk GetGeneratedChunk(Vector3 position)
+        private void SpawnChunk()
         {
-            Chunk spawnedChunk =  _chunksPool.Get(position);
-            spawnedChunk.CollectWindows(_entitySpawner.GetPool<NetGuy>(), _entitySpawner.NetGuyDensity);
-            _lastSpawnedChunk = spawnedChunk;
-            return spawnedChunk;
+            _windows.Clear();
+            _lastRoad = _roadPool.Get(_lastRoad.CentralConnectPosition);
+            District leftDistrict = _districtPool.Get(_lastRoad.LeftConnectPosition);
+            District rightDistrict = _districtPool.Get(_lastRoad.RightConnectPosition);
+            leftDistrict.transform.position += Vector3.left * leftDistrict.Size.x / 2;
+            rightDistrict.transform.position += Vector3.right * rightDistrict.Size.x / 2;
+            rightDistrict.transform.localEulerAngles = new Vector3(0, 180, 0);
+            leftDistrict.transform.localEulerAngles = new Vector3(0, 0, 0);
+            _windows.AddRange(leftDistrict.GetWindows());
+            _windows.AddRange(rightDistrict.GetWindows());
+            OnSpawnChunk?.Invoke(_windows);
         }
-
-        public void SpawnChunk() => GetGeneratedChunk(_lastSpawnedChunk.ConnectPosition);
     }
 }

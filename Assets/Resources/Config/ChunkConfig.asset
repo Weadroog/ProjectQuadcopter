@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb4f5c405501e5478c6ab5ea8fab3e7, type: 3}
   m_Name: ChunkConfig
   m_EditorClassIdentifier: 
-  _prefabs:
-  - {fileID: 7991555287911481885, guid: 7e09c5cc818acd042962a12b0e4e8abc, type: 3}
-  - {fileID: 6328417353234506659, guid: 1adb428b4a2889147966786232580af1, type: 3}
-  - {fileID: -840939647595525456, guid: 318db1cef752eb047a78c1a5a1af7f31, type: 3}
-  - {fileID: 6406978364637998829, guid: a673f34a113bc0d48911658cddd58050, type: 3}
-  - {fileID: -1471220750757077440, guid: d209540c019e14b40ac489e8239f83e5, type: 3}
-  - {fileID: 7946600438839257562, guid: d32b812a8f915fd4a84c41e46755c1a0, type: 3}
-  - {fileID: -1925305964513043887, guid: 01fe2093536242a42986ac4722490f21, type: 3}
-  _moveSpeed: 1
+  _districtsPrefab:
+  - {fileID: 2537632661150493842, guid: e6385f9e345fe5646a73b256197e0e20, type: 3}
+  - {fileID: 2224033142950272196, guid: 614b19a6cfc9d4a4189d7b1c59775ca1, type: 3}
+  - {fileID: 2575482324025676425, guid: e37da40c7fa88a641a08083ccd72cf68, type: 3}
+  - {fileID: -7031122738548866231, guid: 4eeaf81de868e844cac89dc96c5062d6, type: 3}
+  - {fileID: 2435827300984679549, guid: bfd60fe331ba212419275a38aa9ff287, type: 3}
+  - {fileID: 6296159547923802467, guid: 83c563319a909c24f97786c26be60f57, type: 3}
+  _roadPrefab: {fileID: 1362130198009995443, guid: c6bf8b0f60100384fb47103b13840fc1,
+    type: 3}

@@ -2,18 +2,23 @@
 
 namespace Assets.Scripts
 {
-    class ClotheslineFactory : ActorFactory<Clothesline, ClotheslineConfig>
+    class ClotheslineFactory : EntityFactory<Clothesline, ClotheslineConfig>
     {
-        private Entity _target;
+        private WayMatrix _wayMatrix = new();
 
-        public ClotheslineFactory(ClotheslineConfig config, Entity target) : base(config) => _target = target;
+        public ClotheslineFactory(ClotheslineConfig config) : base(config) { }
 
         public override Clothesline GetCreated()
         {
             Clothesline clothesline = Object.Instantiate(_config.Prefab);
-            clothesline.gameObject.AddComponent<Mover>();
-            clothesline.gameObject.AddComponent<Disappearer>();
-            clothesline.AddReaction<CollisionDetector>(new CausingDamage(_target.GetComponent<Health>()));
+
+            clothesline.gameObject
+                .AddComponent<Mover>();
+
+            clothesline.gameObject
+                .AddComponent<Disappearer>()
+                .SetDisappearPoint(_wayMatrix.DisappearPoint);
+
             return clothesline;
         }
     }

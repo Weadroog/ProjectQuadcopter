@@ -2,32 +2,39 @@ using UnityEngine;
 
 public class WayMatrix
 {
-    private const int _width = 3;
-    private const int _height = 4;
-    private const float _spacing = 4;
+    public const int Width = 3;
+    public const int Height = 3;
+
+    public const float VerticalSpacing = 3.5f;
+    public const float HorizontalSpacing = 3.5f;
+
+    public const float Horizon = 200f;
+    public readonly Vector3 DisappearPoint;
 
     private Vector2[,] _matrix;
-
-    public int Width => _width;
-    public int Height => _height;
-    public float Spacing => _spacing;
 
     public WayMatrix()
     {
         _matrix = new Vector2[Height, Width];
-        float xPositionValue = Spacing;
+        DisappearPoint = new(0, 0, -25);
+        Build();
+    }
+
+    private void Build()
+    {
+        float xPosition = VerticalSpacing;
 
         for (int x = 0; x < Height; x++)
         {
-            float yPositionValue = -Spacing;
+            float yPosition = -HorizontalSpacing;
 
             for (int y = 0; y < Width; y++)
             {
-                _matrix[x, y] = new Vector2(yPositionValue, xPositionValue);
-                yPositionValue += Spacing;
+                _matrix[x, y] = new Vector2(yPosition, xPosition);
+                yPosition += HorizontalSpacing;
             }
 
-            xPositionValue -= Spacing;
+            xPosition -= VerticalSpacing;
         }
     }
 
@@ -105,6 +112,10 @@ public class WayMatrix
                 {
                     return _matrix[Height - 2, Width / 2];
                 }
+            case MatrixPosition.Down:
+                {
+                    return _matrix[Height - 1, Width / 2];
+                }
             case MatrixPosition.DownLeft:
                 {
                     return _matrix[Height - 1, 0];
@@ -134,6 +145,8 @@ public class WayMatrix
         return matrixRow;
     }
 
+    public Vector3 GetRandomPosition() => _matrix[Random.Range(0, Height), Random.Range(0, Width)];
+
     private Vector2Int ConvertCoordinates(Vector2Int position) => new Vector2Int(position.y, position.x);
 }
 
@@ -142,6 +155,7 @@ public enum MatrixPosition
     UpLeft,
     UpRight,
     Center,
+    Down,
     DownLeft,
     DownRight
 }

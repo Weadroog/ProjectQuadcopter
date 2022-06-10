@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabs:
   - {fileID: 5917012183079924583, guid: b1fe09e495ac6734dbd206a74bb44d76, type: 3}
-  _detectionRange: 25
+  _netPrefabs:
+  - {fileID: 310586760892719651, guid: eeda91aa78d323643a431f96f359f019, type: 3}
+  _detectionRadius: 100
+  _semiMajorAxis: 4
+  _leanOutingSpeed: 5

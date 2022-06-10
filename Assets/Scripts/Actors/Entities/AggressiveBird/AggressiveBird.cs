@@ -1,4 +1,4 @@
 ﻿namespace Assets.Scripts
 {
-    public class AggressiveBird : ReactableEntity { }
+    public class AggressiveBird : Entity { }
 }

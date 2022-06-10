@@ -11,7 +11,10 @@
 
         public class States
         {
-            public const string Move = "Move";
+            public const string UpStrafe = "UpStrafe";
+            public const string DownStrafe = "DownStrafe";
+            public const string LeftStrafe = "LeftStrafe";
+            public const string RightStrafe = "RightStrafe";
         }
     }
 }
