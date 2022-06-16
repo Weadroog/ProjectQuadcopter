@@ -2,10 +2,9 @@
 
 namespace Assets.Scripts
 {
-    class Rotator : MonoBehaviour
+    class Rotator : ConfigReceiver<BatteryConfig>
     {
-        private float _rotationSpeed;
-        private readonly float _speedFactorMax = 100;
+        private readonly float _maxSpeedFactor = 100;
         private Vector3 _speedFactor;
 
 
@@ -15,11 +14,9 @@ namespace Assets.Scripts
             UpdateService.OnUpdate += Rotate;
         }
 
-        public void SetRotationSpeed(float rotationSpeed) => _rotationSpeed = rotationSpeed;
+        private void SetSpeedFactor() => _speedFactor = new Vector3(Random.Range(0, _maxSpeedFactor), Random.Range(0, _maxSpeedFactor), Random.Range(0, _maxSpeedFactor));
 
-        private void SetSpeedFactor() => _speedFactor = new Vector3(Random.Range(0, _speedFactorMax), Random.Range(0, _speedFactorMax), Random.Range(0, _speedFactorMax));
-
-        private void Rotate() => gameObject.transform.Rotate(Time.deltaTime * _rotationSpeed * _speedFactor);
+        private void Rotate() => gameObject.transform.Rotate(Time.deltaTime * _config.RotationSpeed * _speedFactor);
 
         private void OnDisable() => UpdateService.OnUpdate -= Rotate;
     }

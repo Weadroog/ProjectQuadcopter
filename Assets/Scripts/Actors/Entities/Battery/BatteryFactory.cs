@@ -11,20 +11,11 @@ namespace Assets.Scripts
         public override Battery GetCreated()
         {
             Battery battery = Object.Instantiate(_config.Prefab); 
-
-            Disappearer disappearer = battery.gameObject.AddComponent<Disappearer>();
-            disappearer.SetDisappearPoint(_wayMatrix.DisappearPoint);
-
-            Rotator rotator = battery.gameObject.AddComponent<Rotator>();
-            rotator.SetRotationSpeed(_config.RotationSpeed);
-
             Mover mover = battery.gameObject.AddComponent<Mover>();
-
+            battery.gameObject.AddComponent<Rotator>().Receive(_config);
+            battery.gameObject.AddComponent<Disappearer>().SetDisappearPoint(_wayMatrix.DisappearPoint);
             battery.AddReaction<CollisionDetector, Quadcopter>(new BatteryDisappearReaction(battery));
-            battery.AddReaction<BackDetector, AggressiveBird, Car>(new PushForwardReaction(mover)).SetDetectionDistance(10f);
-
-
-
+            battery.AddReaction<BackDetector, AggressiveBird, Car>(new PushForwardReaction(mover)).Receive(_config);
             return battery;
         }
     }

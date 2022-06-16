@@ -11,7 +11,7 @@ namespace Assets.Scripts
         public override Car GetCreated()
         {
             Car car = Object.Instantiate(_config.Prefab);
-            car.gameObject.AddComponent<Mover>().SetSelfSpeed(_config.SelfSpeed);
+            car.gameObject.AddComponent<Mover>().Receive(_config);
             car.gameObject.AddComponent<Disappearer>().SetDisappearPoint(_wayMatrix.DisappearPoint);
             car.AddReaction<CollisionDetector, Quadcopter, AggressiveBird>(new CarCrashingReaction());
             return car;
