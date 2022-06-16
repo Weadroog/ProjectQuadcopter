@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: BatteryConfig
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8072335975463165801, guid: 9fe9bccb4eee5224a8a0d9cc6a04dbf3, type: 3}
+  _rotationSpeed: 2.5

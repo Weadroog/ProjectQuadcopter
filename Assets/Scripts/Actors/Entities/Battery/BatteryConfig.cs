@@ -6,6 +6,9 @@ namespace Assets.Scripts
 
     class BatteryConfig : ActorConfig<Battery>
     {
+        [SerializeField] [Range(0, 10)] private float _rotationSpeed;
 
+
+        public float RotationSpeed => _rotationSpeed;
     }
 }
