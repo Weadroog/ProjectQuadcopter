@@ -15,6 +15,8 @@
             public const string DownStrafe = "DownStrafe";
             public const string LeftStrafe = "LeftStrafe";
             public const string RightStrafe = "RightStrafe";
+            public const string Fall = "Fall";
+            public const string Idle = "Idle";
         }
     }
 }
