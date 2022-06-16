@@ -10,8 +10,8 @@ namespace Assets.Scripts
         [SerializeField] [Range(1, 5)] private int _charge;
         [SerializeField] [Range(1, 15)] private int _chargeDecreaseTime;
 
-        public int Lives => _lives;
-        public int Charge => _charge;
+        public int MaxLives => _lives;
+        public int ChargeLimit => _charge;
         public int ChargeDecreaseTime => _chargeDecreaseTime;
         public float MotionDuration => _motionDuration;
     }

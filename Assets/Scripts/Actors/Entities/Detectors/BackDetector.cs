@@ -3,17 +3,14 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class BackDetector : MonoBehaviour, IDetector
+    public class BackDetector : Detector
     {
-        public event Action<Entity> OnDetect;
-        public event Action OnDetectAll;
+        public override event Action<Entity> OnDetect;
+        public override event Action OnDetectAll;
 
-        private float _detectionDistance;
         private bool _isDetection = true;
 
         private void OnEnable() => UpdateService.OnUpdate += Detect;
-
-        public void SetDetectionDistance(float range) => _detectionDistance = range;
 
         private void Detect()
         {
@@ -31,9 +28,9 @@ namespace Assets.Scripts
         private bool IsTargetInRadius(out Entity target)
         {
             Ray ray = new Ray(transform.position, Vector3.forward);
-            Debug.DrawRay(ray.origin, ray.direction * _detectionDistance, Color.red);
+            Debug.DrawRay(ray.origin, ray.direction * _config.DetectionDistance, Color.red);
 
-            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _detectionDistance))
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _config.DetectionDistance))
             {
                 if (detectionInfo.collider.TryGetComponent(out target))
                 {

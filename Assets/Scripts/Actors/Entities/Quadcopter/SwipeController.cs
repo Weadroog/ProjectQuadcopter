@@ -4,13 +4,12 @@ using DG.Tweening;
 
 namespace Assets.Scripts
 {
-    public class SwipeController : MonoBehaviour
+    public class SwipeController : ConfigReceiver<QuadcopterConfig>
     {
-        private float _motionDuration;
-        private WayMatrix _wayMatrix = new WayMatrix();
+        private WayMatrix _wayMatrix = new();
         private Vector2Int _currentPosition;
         private Animator _animator;
-        private Dictionary<Vector2Int, string> _animations = new Dictionary<Vector2Int, string>();
+        private Dictionary<Vector2Int, string> _animations = new();
 
         public Vector2Int CurrentPosition
         {
@@ -37,12 +36,6 @@ namespace Assets.Scripts
 
         private void OnEnable() => SwipeHandler.OnSwipe += UpdatePosition;
 
-        public SwipeController SetMotionDuration(float motionDuration)
-        {
-            _motionDuration = motionDuration;
-            return this;
-        }
-
         public SwipeController SetStartablePosition(MatrixPosition position)
         {
             transform.position = _wayMatrix.GetPosition(position, out _currentPosition);
@@ -52,7 +45,7 @@ namespace Assets.Scripts
         private void UpdatePosition(Vector2Int positionShift)
         {
             CurrentPosition = new Vector2Int(CurrentPosition.x + positionShift.x, CurrentPosition.y - positionShift.y);
-            transform.DOMove(_wayMatrix.GetPositionByArrayCoordinates(CurrentPosition), _motionDuration);
+            transform.DOMove(_wayMatrix.GetPositionByArrayCoordinates(CurrentPosition), _config.MotionDuration);
             _animator.Play(_animations[positionShift]);
         }
 

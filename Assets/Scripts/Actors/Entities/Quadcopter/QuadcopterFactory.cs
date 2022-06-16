@@ -20,16 +20,17 @@ namespace Assets.Scripts
             quadcopter.gameObject
                 .AddComponent<SwipeController>()
                 .SetStartablePosition(MatrixPosition.Center)
-                .SetMotionDuration(_config.MotionDuration);
+                .Receive(_config);
 
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
-            lifer.SetMaxLifes(_config.Lives);
+            lifer.Receive(_config);
+            lifer.Restore();
 
             Charger charger = quadcopter.gameObject.AddComponent<Charger>();
             charger.OnChanged += _chargeCounter.Display;
-            charger.SetMaxCharge(_config.Charge);
-            charger.SetDecreaseTime(_config.ChargeDecreaseTime);
+            charger.Receive(_config);
+            charger.Recharge();
 
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(lifer));
             quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));

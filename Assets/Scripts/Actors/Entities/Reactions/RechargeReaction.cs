@@ -6,6 +6,6 @@
 
         public RechargeReaction(Charger charger) => _charger = charger;
 
-        public override void React() => _charger.ChargeUp();
+        public override void React() => _charger.Recharge();
     }
 }

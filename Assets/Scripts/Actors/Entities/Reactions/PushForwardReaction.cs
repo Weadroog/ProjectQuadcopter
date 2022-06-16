@@ -4,14 +4,12 @@
     {
         private Mover _mover;
 
-        public PushForwardReaction(Mover mover)
-        {
-            _mover = mover;
-        }
+        public PushForwardReaction(Mover mover) => _mover = mover;
 
-        public override void React() 
+        public override void React()
         {
-            _mover.SetSelfSpeed(_detectableEntity.GetComponent<Mover>().SelfSpeed);
+            if (_detectableEntity.TryGetComponent(out Mover detectableEntityMover))
+                _mover.SetCurrentSpeed(detectableEntityMover.CurrentSpeed);
         }
     }
 }

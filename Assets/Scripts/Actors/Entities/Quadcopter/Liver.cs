@@ -1,39 +1,34 @@
 using System;
 using UnityEngine;
 
-public class Lifer : MonoBehaviour
+namespace Assets.Scripts
 {
-    public event Action OnDeath;
-    public event Action<int> OnChanged;
-
-    private int _maxLifes;
-    private int _lifes;
-    
-    public int Lifes
+    public class Lifer : ConfigReceiver<QuadcopterConfig>
     {
-        get => _lifes;
-        
-        private set
+        public event Action OnDeath;
+        public event Action<int> OnChanged;
+
+        private int _lifes;
+
+        public int Lifes
         {
-            if (value <= 0)
-                OnDeath?.Invoke();
+            get => _lifes;
 
-            _lifes = Mathf.Clamp(value, 0, _maxLifes);
+            private set
+            {
+                if (value <= 0)
+                    OnDeath?.Invoke();
 
-            OnChanged?.Invoke(_lifes);
+                _lifes = Mathf.Clamp(value, 0, _config.MaxLives);
+
+                OnChanged?.Invoke(_lifes);
+            }
         }
+
+        public void Restore() => Lifes = _config.MaxLives;
+
+        public void Kill() => Lifes = 0;
+
+        public void TakeDamage() => Lifes--;
     }
-
-    public Lifer SetMaxLifes(int maxLives)
-    {
-        _maxLifes = maxLives;
-        ResetHP();
-        return this;
-    }
-
-    public void ResetHP() => Lifes = _maxLifes;
-
-    public void Kill() => Lifes = 0;
-
-    public void TakeDamage() => Lifes--;
 }

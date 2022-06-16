@@ -19,7 +19,7 @@ namespace Assets.Scripts
 
             netGuy
                 .AddReaction<EllipseDetector, Quadcopter>(new LeanOutingWindowReaction(netGuy, _config.LeanOutingSpeed))
-                .SetRadius(_config.DetectionRadius, _config.SemiMajorAxis);
+                .Receive(_config);
 
             return netGuy;
         }
