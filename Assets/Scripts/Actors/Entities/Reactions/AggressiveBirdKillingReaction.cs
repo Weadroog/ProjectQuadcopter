@@ -4,6 +4,18 @@ namespace Assets.Scripts
 {
     public class AggressiveBirdKillingReaction : Reaction
     {
-        public override void React() => Debug.Log("Умер с распылением перьев");
+        private AggressiveBird _aggressiveBird;
+        private ParticleSystem _aggressiveBirdParticleSystem;
+
+        public AggressiveBirdKillingReaction(AggressiveBird aggressiveBird) 
+        {
+            _aggressiveBird = aggressiveBird;
+            _aggressiveBirdParticleSystem = _aggressiveBird.GetComponentInChildren<ParticleSystem>();
+        }
+
+        public override void React() 
+        {
+            _aggressiveBirdParticleSystem.Play();
+        }
     }
 }
