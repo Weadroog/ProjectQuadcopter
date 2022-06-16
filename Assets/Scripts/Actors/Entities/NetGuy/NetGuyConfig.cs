@@ -3,7 +3,7 @@
 namespace Assets.Scripts
 {
     [CreateAssetMenu(menuName = "Config/Net", fileName = "New Net Config")]
-    public class NetGuyConfig : MultiplePrefabActorConfig<NetGuy>, ICanDetect
+    public class NetGuyConfig : MultiplePrefabActorConfig<NetGuy>, ICanMove, ICanDetect
     {
         [SerializeField] private Net[] _netPrefabs;
         [SerializeField][Range(1, 100)] private float _detectionDistance;
@@ -23,8 +23,10 @@ namespace Assets.Scripts
             }
         }
 
+        public float SelfSpeed => 0;
         public float DetectionDistance => _detectionDistance;
         public float SemiMajorAxis => _semiMajorAxis;
         public float LeanOutingSpeed => _leanOutingSpeed;
+
     }
 }
