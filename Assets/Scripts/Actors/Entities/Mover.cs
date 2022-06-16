@@ -6,7 +6,12 @@ namespace Assets.Scripts
     {
         private float _selfSpeed;
 
-        private void OnEnable() => UpdateService.OnFixedUpdate += Move;
+        public float SelfSpeed => _selfSpeed;
+
+        private void OnEnable() 
+        {
+            UpdateService.OnFixedUpdate += Move;
+        }
 
         public void SetSelfSpeed(float selfSpeed) => _selfSpeed = selfSpeed;
 
