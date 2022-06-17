@@ -346,7 +346,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.15
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -958,7 +958,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.15
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1148,7 +1148,7 @@ MonoBehaviour:
   _clotheslineConfig: {fileID: 11400000, guid: 65204631fb977c449bcd81a425fcb227, type: 2}
   _netGuyConfig: {fileID: 11400000, guid: 0380147e93dde074490ad04b07cd84a6, type: 2}
   _batteryConfig: {fileID: 11400000, guid: 09ff6330c9c5503459cc3ac7d93fd886, type: 2}
-  _aggressiveBirdDensity: 2
+  _aggressiveBirdDensity: 10
   _carDensity: 15
   _clothesLineDensity: 15
   _netGuyDensity: 10
