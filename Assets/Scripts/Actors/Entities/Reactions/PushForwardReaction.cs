@@ -9,7 +9,7 @@
         public override void React()
         {
             if (_detectableEntity.TryGetComponent(out Mover detectableEntityMover))
-                _mover.SetCurrentSpeed(detectableEntityMover.CurrentSpeed);
+                _mover.Push(detectableEntityMover.SelfSpeed);
         }
     }
 }
