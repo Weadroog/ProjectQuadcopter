@@ -25,6 +25,10 @@ namespace Assets.Scripts
                 .AddReaction<EllipseDetector, Quadcopter>(new LeanOutingWindowReaction(netGuy, _config.LeanOutingSpeed))
                 .Receive(_config);
 
+            netGuy.gameObject
+                .AddComponent<NetEquiper>()
+                .Receive(_config);
+
             return netGuy;
         }
     }

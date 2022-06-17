@@ -6,6 +6,6 @@ namespace Assets.Scripts
     {
         protected C _config;
 
-        public void Receive(C config) => _config = config;
+        public virtual void Receive(C config) => _config = config;
     }
 }

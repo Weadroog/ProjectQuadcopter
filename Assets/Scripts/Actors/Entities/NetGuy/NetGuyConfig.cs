@@ -25,6 +25,6 @@ namespace Assets.Scripts
         public float SelfSpeed => 0;
         public float DetectionDistance => _detectionDistance;
         public float LeanOutingSpeed => _leanOutingSpeed;
-
+        public int NetPrefabsCount => _netPrefabs.Length;
     }
 }

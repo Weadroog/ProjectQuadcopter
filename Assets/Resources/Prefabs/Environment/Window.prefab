@@ -49,7 +49,7 @@ MonoBehaviour:
     type: 3}
   _closedMesh: {fileID: 7838088239457595268, guid: acd2952eefe620e4387149b7363de371,
     type: 3}
-  _offset: 3
+  _offset: 4
 --- !u!1 &5976048002327128254
 GameObject:
   m_ObjectHideFlags: 0
