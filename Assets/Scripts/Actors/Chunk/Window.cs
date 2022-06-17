@@ -12,10 +12,7 @@ namespace Assets.Scripts
 
         private void Awake() => _meshFilter = GetComponentInChildren<MeshFilter>();
 
-        public Vector3 GetSpawnPoint()
-        {
-            return transform.forward * -_offset + transform.position;
-        }
+        public Vector3 GetSpawnPoint() => transform.forward * -_offset + transform.position;
 
         public void Close() => _meshFilter.mesh = _closedMesh;
 
