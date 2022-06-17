@@ -11,6 +11,7 @@ namespace Assets.Scripts
         public override NetGuy GetCreated()
         {
             NetGuy netGuy = Object.Instantiate(_config.Prefab);
+            netGuy.GetComponent<Animator>().keepAnimatorControllerStateOnDisable = true;
             netGuy.gameObject.AddComponent<Mover>();
 
             netGuy.gameObject

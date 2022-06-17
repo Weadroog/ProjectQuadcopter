@@ -32,8 +32,8 @@ namespace Assets.Scripts
 
         private bool IsTargetInRadius()
         {
-            float semiMinorAxis = 1f;
-            float semiMajorAxis = 2f;
+            float semiMinorAxis = 3f;
+            float semiMajorAxis = 10;
             float distance = (Mathf
                 .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf
                 .Pow(semiMajorAxis, 2) + Mathf

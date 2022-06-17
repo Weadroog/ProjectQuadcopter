@@ -4,18 +4,21 @@ namespace Assets.Scripts
 {
     public class AggressiveBirdKillingReaction : Reaction
     {
-        private AggressiveBird _aggressiveBird;
-        private ParticleSystem _aggressiveBirdParticleSystem;
+        private AggressiveBird _bird;
+        private ParticleSystem _particleSystem;
+        private Animator _animator;
 
-        public AggressiveBirdKillingReaction(AggressiveBird aggressiveBird) 
+        public AggressiveBirdKillingReaction(AggressiveBird bird) 
         {
-            _aggressiveBird = aggressiveBird;
-            _aggressiveBirdParticleSystem = _aggressiveBird.GetComponentInChildren<ParticleSystem>();
+            _bird = bird;
+            _particleSystem = _bird.GetComponentInChildren<ParticleSystem>();
+            _animator = _bird.GetComponent<Animator>();
         }
 
         public override void React() 
         {
-            _aggressiveBirdParticleSystem.Play();
+            _particleSystem.Play();
+            _animator.Play(AnimationService.States.Fall);
         }
     }
 }

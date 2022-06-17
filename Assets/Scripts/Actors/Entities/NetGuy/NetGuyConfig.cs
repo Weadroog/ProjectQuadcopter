@@ -7,7 +7,6 @@ namespace Assets.Scripts
     {
         [SerializeField] private Net[] _netPrefabs;
         [SerializeField][Range(1, 100)] private float _detectionDistance;
-        [SerializeField][Range(1, 10)] private float _semiMajorAxis;
         [SerializeField][Range(0, 10)] private float _leanOutingSpeed;
 
         private int _netPrefabIndex;
@@ -24,7 +23,6 @@ namespace Assets.Scripts
         }
 
         public float DetectionDistance => _detectionDistance;
-        public float SemiMajorAxis => _semiMajorAxis;
         public float LeanOutingSpeed => _leanOutingSpeed;
     }
 }

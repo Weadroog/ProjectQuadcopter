@@ -20,6 +20,7 @@ namespace Assets.Scripts
 
             aggressiveBird.AddReaction<CollisionDetector, Quadcopter, Car>(new AggressiveBirdKillingReaction(aggressiveBird));
             aggressiveBird.AddReaction<CollisionDetector, NetGuy>(new FreezingReaction());
+            aggressiveBird.GetComponent<Animator>().keepAnimatorControllerStateOnDisable = true;
 
             return aggressiveBird;
         }
