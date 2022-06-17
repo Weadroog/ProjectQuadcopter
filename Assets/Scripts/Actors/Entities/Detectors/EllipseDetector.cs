@@ -32,15 +32,16 @@ namespace Assets.Scripts
 
         private bool IsTargetInRadius()
         {
-            float semiMinorAxis = 3f;
-            float semiMajorAxis = 10;
+            float ellipseRightSideValue = 1;
+            float xDistance = 10;
+            float zDistance = _config.DetectionDistance;
             float distance = (Mathf
                 .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf
-                .Pow(semiMajorAxis, 2) + Mathf
+                .Pow(zDistance, 2) + Mathf
                 .Pow(_target.transform.position.x - transform.position.x, 2) / Mathf
-                .Pow(semiMinorAxis, 2));
+                .Pow(xDistance, 2));
 
-            if (distance <= _config.DetectionDistance)
+            if (distance <= ellipseRightSideValue)
                 return true;
 
             return false;
