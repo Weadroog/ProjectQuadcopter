@@ -8,8 +8,8 @@ namespace Assets.Scripts
 {
     public class EntitySpawner : MonoBehaviour
     {
-        private Dictionary<Type, IPool> _pools = new Dictionary<Type, IPool>();
-        private WayMatrix _wayMatrix = new WayMatrix();
+        private Dictionary<Type, IPool> _pools = new();
+        private WayMatrix _wayMatrix = new();
         private Quadcopter _quadcopter;
 
         [Header("Configurations")]

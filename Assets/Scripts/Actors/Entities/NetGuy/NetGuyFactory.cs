@@ -11,12 +11,15 @@ namespace Assets.Scripts
         public override NetGuy GetCreated()
         {
             NetGuy netGuy = Object.Instantiate(_config.Prefab);
-            netGuy.GetComponent<Animator>().keepAnimatorControllerStateOnDisable = true;
+            Animator animator =  netGuy.GetComponent<Animator>();
+            animator.keepAnimatorControllerStateOnDisable = true;
+            
             netGuy.gameObject.AddComponent<Mover>().Receive(_config);
 
             netGuy.gameObject
                 .AddComponent<Disappearer>()
-                .SetDisappearPoint(_wayMatrix.DisappearPoint);
+                .SetDisappearPoint(_wayMatrix.DisappearPoint)
+                .OnDisappear += () => animator.SetFloat(AnimationService.Parameters.LeanOutingSide, 0);
 
             netGuy
                 .AddReaction<EllipseDetector, Quadcopter>(new LeanOutingWindowReaction(netGuy, _config.LeanOutingSpeed))
