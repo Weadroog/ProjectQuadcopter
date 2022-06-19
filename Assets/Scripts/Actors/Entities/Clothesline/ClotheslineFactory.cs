@@ -12,13 +12,6 @@ namespace Assets.Scripts
         {
             Clothesline clothesline = Object.Instantiate(_config.Prefab);
 
-            clothesline.gameObject
-                .AddComponent<Mover>();
-
-            clothesline.gameObject
-                .AddComponent<Disappearer>()
-                .SetDisappearPoint(_wayMatrix.DisappearPoint);
-
             return clothesline;
         }
     }

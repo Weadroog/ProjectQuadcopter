@@ -7,6 +7,7 @@ namespace Assets.Scripts
     {
         [SerializeField] protected District[] _districtsPrefab;
         [SerializeField] private Road _roadPrefab;
+        [SerializeField] private Road _startableChunk;
 
         private int _districtPrefabIndex;
 
@@ -22,6 +23,7 @@ namespace Assets.Scripts
         }
 
         public Road RoadPrefab => _roadPrefab;
+        public Road StartableChunk => _startableChunk;
         public int DistrictsPrefabsCount => _districtsPrefab.Length;
         public float SelfSpeed => 0;
     }

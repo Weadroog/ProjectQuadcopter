@@ -12,8 +12,7 @@ namespace Assets.Scripts
         {
             AggressiveBird aggressiveBird = Object.Instantiate(_config.Prefab);
 
-            Mover mover = aggressiveBird.gameObject.AddComponent<Mover>();
-            mover.Receive(_config);
+            aggressiveBird.gameObject.AddComponent<Mover>().Receive(_config);
 
             Disappearer disappearer = aggressiveBird.gameObject.AddComponent<Disappearer>();
             disappearer.SetDisappearPoint(_wayMatrix.DisappearPoint);

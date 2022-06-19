@@ -10,7 +10,7 @@ namespace Assets.Scripts
 
         [SerializeField] private ChunkConfig _chunkDatabase;
         [Space(30)]
-        [SerializeField][Range(1, 100)] private float _startableChunksCount;
+        [SerializeField][Range(1, 100)] private int _startableChunksCount;
 
         private WayMatrix _wayMatrix = new();
         private Pool<Road> _roadPool;
@@ -18,17 +18,26 @@ namespace Assets.Scripts
         private Road _lastRoad;
         private List<Window> _windows = new();
 
-        public void EnableChunks(Container chunksContainer, int startableChunkCount) 
+        public void EnableChunks(Container chunksContainer) 
         {
-            _roadPool = new(new RoadFactory(_chunkDatabase, SpawnChunk), chunksContainer, startableChunkCount);
+            _roadPool = new(new RoadFactory(_chunkDatabase, SpawnChunk), chunksContainer, _startableChunksCount);
             _districtPool = new(new DistrictFactory(_chunkDatabase), chunksContainer, _chunkDatabase.DistrictsPrefabsCount);
-            SpawnStartableChunks(startableChunkCount);
+            SpawnStartableChunk(chunksContainer);
+            SpawnStartableChunks(_startableChunksCount);
+        }
+
+        private void SpawnStartableChunk(Container chunkContainer)
+        {
+            float offset = 3.5f;
+            _lastRoad = Instantiate(_chunkDatabase.StartableChunk,
+            _wayMatrix.GetPosition(MatrixPosition.Down) + Vector3.down * offset,
+            Quaternion.identity, chunkContainer.transform);
+            _lastRoad.gameObject.AddComponent<Mover>().Receive(_chunkDatabase);
+            _lastRoad.gameObject.AddComponent<Disappearer>().SetDisappearPoint(Vector3.back * 50);
         }
 
         private void SpawnStartableChunks(int chunksCount)
         {
-            _lastRoad = _roadPool.Get(_wayMatrix.GetPosition(MatrixPosition.Down) + Vector3.down * WayMatrix.VerticalSpacing);
-
             for (int i = 0; i < chunksCount; i++)
                 SpawnChunk();
         }

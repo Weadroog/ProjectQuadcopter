@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts
 {
-    class QuadcopterFactory : EntityFactory<Quadcopter, QuadcopterConfig>
+    public class QuadcopterFactory : EntityFactory<Quadcopter, QuadcopterConfig>
     {
         private LifeCounter _lifeCounter;
         private ChargeCounter _chargeCounter;

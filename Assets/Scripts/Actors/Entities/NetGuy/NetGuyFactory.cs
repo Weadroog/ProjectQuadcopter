@@ -13,7 +13,7 @@ namespace Assets.Scripts
             NetGuy netGuy = Object.Instantiate(_config.Prefab);
             Animator animator =  netGuy.GetComponent<Animator>();
             animator.keepAnimatorControllerStateOnDisable = true;
-            
+
             netGuy.gameObject.AddComponent<Mover>().Receive(_config);
 
             netGuy.gameObject
