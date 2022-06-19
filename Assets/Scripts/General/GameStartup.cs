@@ -13,6 +13,7 @@ namespace Assets.Scripts
         private EntitySpawner _entitySpawner;
         private Button _tapToStartButton;
         private SpeedService _speedService;
+        private Quadcopter _quadcopter;
 
         private void Awake()
         {
@@ -29,7 +30,8 @@ namespace Assets.Scripts
             _speedService.SetStartableSpeed(_startableSpeed);
             _chunkGenerator.EnableChunks(chunkContainer);
             _entitySpawner.EnablePlayerCamera(entityContainer);
-            _entitySpawner.EnableQuadcopter(entityContainer).GetComponent<Lifer>().OnDeath += Stop;
+            _quadcopter = _entitySpawner.EnableQuadcopter(entityContainer);
+            _quadcopter.GetComponent<Lifer>().OnDeath += Stop;
             _entitySpawner.EnableCarTraffic(entityContainer);
             _entitySpawner.EnableAggressiveBirds(entityContainer);
             _entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
@@ -41,6 +43,7 @@ namespace Assets.Scripts
         private void Stop()
         {
             _speedService.enabled = false;
+            _quadcopter.GetComponent<SwipeController>().enabled = false;
             _entitySpawner.StopAllCoroutines();
         }
 
@@ -48,6 +51,7 @@ namespace Assets.Scripts
         {
             _speedService.enabled = true;
             _tapToStartButton.gameObject.SetActive(false);
+            _quadcopter.GetComponent<SwipeController>().enabled = true;
 
             if (_entitySpawner.IsEnabled<Car>())
                 _entitySpawner.SpawnCars();

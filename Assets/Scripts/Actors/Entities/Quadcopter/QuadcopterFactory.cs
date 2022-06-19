@@ -17,10 +17,13 @@ namespace Assets.Scripts
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
 
-            quadcopter.gameObject
+            SwipeController swipeController = quadcopter.gameObject
                 .AddComponent<SwipeController>()
-                .SetStartablePosition(MatrixPosition.Center)
-                .Receive(_config);
+                .SetStartablePosition(MatrixPosition.Center);
+
+            swipeController.Receive(_config);
+            swipeController.enabled = false;
+
 
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
