@@ -12,7 +12,7 @@ namespace Assets.Scripts
 
         private void CalculateDistance()
         {
-            _distance += Time.deltaTime * SpeedService.Speed;
+            _distance += Time.deltaTime * GlobalSpeedService.Speed;
             //Distance = $"{kilometers} {meters}"
         }
 

@@ -39,6 +39,7 @@ namespace Assets.Scripts
             LifeCounter lifeCounter = FindObjectOfType<LifeCounter>();
             ChargeCounter chargeCounter = FindObjectOfType<ChargeCounter>();
             _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter));
+            _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
         } 
 
@@ -66,7 +67,7 @@ namespace Assets.Scripts
 
         private IEnumerator CarSpawning(int line)
         {
-            WaitForSeconds spawnDelay = new(Random.Range(0.15f * SpeedService.Speed / SpeedService.Speed, 0.5f * SpeedService.Speed / SpeedService.Speed));
+            WaitForSeconds spawnDelay = new(Random.Range(0.15f * GlobalSpeedService.Speed / GlobalSpeedService.Speed, 0.5f * GlobalSpeedService.Speed / GlobalSpeedService.Speed));
             float offset = 1.5f;
 
             while (true)
@@ -92,7 +93,7 @@ namespace Assets.Scripts
 
         private IEnumerator AggressiveBirdsSpawning(int line, int row)
         {
-            WaitForSeconds spawnDelay = new(Random.Range(0.15f * SpeedService.Speed / SpeedService.Speed, 0.5f * SpeedService.Speed / SpeedService.Speed));
+            WaitForSeconds spawnDelay = new(Random.Range(0.15f * GlobalSpeedService.Speed / GlobalSpeedService.Speed, 0.5f * GlobalSpeedService.Speed / GlobalSpeedService.Speed));
 
             while (true)
             {

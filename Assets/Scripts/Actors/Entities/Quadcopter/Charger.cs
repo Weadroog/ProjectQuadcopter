@@ -28,10 +28,10 @@ namespace Assets.Scripts
         public void Recharge() 
         {
             Charge = _config.ChargeLimit;
-            ResartChargeDowning();
+            ResartChargeingDown();
         }
 
-        public void ResartChargeDowning()
+        public void ResartChargeingDown()
         {
             if (_chargeDownRoutine != null)
             {
@@ -40,6 +40,8 @@ namespace Assets.Scripts
 
             _chargeDownRoutine = StartCoroutine(ChargeDowning());
         }
+
+        public void StopChargeingDown() => StopCoroutine(_chargeDownRoutine);
 
         private IEnumerator ChargeDowning()
         {

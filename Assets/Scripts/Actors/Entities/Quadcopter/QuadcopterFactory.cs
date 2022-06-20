@@ -33,9 +33,8 @@ namespace Assets.Scripts
             Charger charger = quadcopter.gameObject.AddComponent<Charger>();
             charger.OnChanged += _chargeCounter.Display;
             charger.Receive(_config);
-            charger.Recharge();
 
-            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(lifer));
+            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(quadcopter));
             quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));
 
             return quadcopter;
