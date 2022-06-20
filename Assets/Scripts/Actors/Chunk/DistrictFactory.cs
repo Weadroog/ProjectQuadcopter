@@ -5,14 +5,14 @@ namespace Assets.Scripts
     public class DistrictFactory : ActorFactory<District>
     {
         private WayMatrix _wayMatrix = new();
-        private ChunkConfig _chunkDatabase;
+        private ChunkConfig _config;
 
-        public DistrictFactory(ChunkConfig chunkDatabase) => _chunkDatabase = chunkDatabase;
+        public DistrictFactory(ChunkConfig chunkDatabase) => _config = chunkDatabase;
 
         public override District GetCreated()
         {
-            District district = Object.Instantiate(_chunkDatabase.DistrictPrefab);
-            district.gameObject.AddComponent<Mover>();
+            District district = Object.Instantiate(_config.DistrictPrefab);
+            district.gameObject.AddComponent<Mover>().Receive(_config);
 
             district.gameObject
                 .AddComponent<Disappearer>()

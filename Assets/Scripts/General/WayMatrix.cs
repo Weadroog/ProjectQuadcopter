@@ -5,7 +5,7 @@ public class WayMatrix
     public const int Width = 3;
     public const int Height = 3;
 
-    public const float VerticalSpacing = 3.5f;
+    public const float VerticalSpacing = 5.8f;
     public const float HorizontalSpacing = 3.5f;
 
     public const float Horizon = 200f;

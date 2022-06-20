@@ -3,10 +3,11 @@
 namespace Assets.Scripts
 {
     [CreateAssetMenu(menuName = "Config/Chunk Config", fileName = "New Chunk Config")]
-    public class ChunkConfig : Config
+    public class ChunkConfig : Config, ICanMove
     {
         [SerializeField] protected District[] _districtsPrefab;
         [SerializeField] private Road _roadPrefab;
+        [SerializeField] private Road _startableChunk;
 
         private int _districtPrefabIndex;
 
@@ -20,11 +21,10 @@ namespace Assets.Scripts
                 return prefab;
             }
         }
+
         public Road RoadPrefab => _roadPrefab;
-
+        public Road StartableChunk => _startableChunk;
         public int DistrictsPrefabsCount => _districtsPrefab.Length;
-        
-
-        
+        public float SelfSpeed => 0;
     }
 }

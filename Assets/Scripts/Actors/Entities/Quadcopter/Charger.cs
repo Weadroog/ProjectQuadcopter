@@ -4,15 +4,13 @@ using System.Collections;
 
 namespace Assets.Scripts
 {
-    class Charger : MonoBehaviour
+    class Charger : ConfigReceiver<QuadcopterConfig>
     {
         public Action<int> OnChanged;
         public Action OnDecreased;
         public Action OnDischarged;
 
-        private int _maxCharge;
         private int _charge;
-        private int _decreaseTime;
         private WaitForSeconds _waitForSeconds;
         private Coroutine _chargeDownRoutine;
 
@@ -27,27 +25,13 @@ namespace Assets.Scripts
             }
         }
 
-        public Charger SetMaxCharge(int maxCharge)
+        public void Recharge() 
         {
-            _maxCharge = maxCharge;
-            return this;
+            Charge = _config.ChargeLimit;
+            ResartChargeingDown();
         }
 
-        public Charger SetDecreaseTime(int decreaseTime) 
-        {
-            _decreaseTime = decreaseTime;
-            _waitForSeconds = new WaitForSeconds(_decreaseTime);
-            ChargeUp();
-            return this;
-        }
-
-        public void ChargeUp() 
-        {
-            Charge = _maxCharge;
-            ResartChargeDowning();
-        }
-
-        public void ResartChargeDowning()
+        public void ResartChargeingDown()
         {
             if (_chargeDownRoutine != null)
             {
@@ -57,8 +41,11 @@ namespace Assets.Scripts
             _chargeDownRoutine = StartCoroutine(ChargeDowning());
         }
 
+        public void StopChargeingDown() => StopCoroutine(_chargeDownRoutine);
+
         private IEnumerator ChargeDowning()
         {
+            _waitForSeconds = new(_config.ChargeDecreaseTime);
 
             while(Charge > 0)
             {

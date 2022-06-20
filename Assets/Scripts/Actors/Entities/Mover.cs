@@ -2,15 +2,25 @@
 
 namespace Assets.Scripts
 {
-    public sealed class Mover : MonoBehaviour
+    public sealed class Mover : ConfigReceiver<ICanMove>
     {
-        private float _selfSpeed;
+        private float _pushingSpeed;
 
-        private void OnEnable() => UpdateService.OnFixedUpdate += Move;
+        public float SelfSpeed => _config.SelfSpeed;
 
-        public void SetSelfSpeed(float selfSpeed) => _selfSpeed = selfSpeed;
+        private void OnEnable()
+        {
+            _pushingSpeed = 0;
+            UpdateService.OnFixedUpdate += Move;
+        }
 
-        private void Move() => transform.position += (SpeedService.Speed + _selfSpeed) * Time.fixedDeltaTime * Vector3.back;
+        private void Move()
+        {
+            if (GlobalSpeedService.Speed > 0)
+                transform.position += (GlobalSpeedService.Speed + SelfSpeed + _pushingSpeed) * Time.fixedDeltaTime * Vector3.back;
+        }
+
+        public void Push(float pusherSpeed) => _pushingSpeed = pusherSpeed - SelfSpeed;
 
         private void OnDisable() => UpdateService.OnFixedUpdate -= Move;
     }

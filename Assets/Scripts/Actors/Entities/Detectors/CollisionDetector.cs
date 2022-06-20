@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class CollisionDetector : MonoBehaviour, IDetector
+    public class CollisionDetector : Detector
     {
-        public event Action<Entity> OnDetect;
-        public event Action OnDetectAll;
+        public override event Action<Entity> OnDetect;
+        public override event Action OnDetectAll;
 
         private void OnTriggerEnter(Collider other)
         {

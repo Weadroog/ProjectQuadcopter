@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class EllipseDetector : MonoBehaviour, IDetector
+    public class EllipseDetector : Detector
     {
-        public event Action<Entity> OnDetect;
-        public event Action OnDetectAll;
+        public override event Action<Entity> OnDetect;
+        public override event Action OnDetectAll;
 
-        private float _radius;
-        private float _semiMajorAxis;
         private bool _isDetection = true;
         private Entity _target;
 
@@ -17,13 +15,6 @@ namespace Assets.Scripts
         {
             UpdateService.OnUpdate += Detect;
             _target = FindObjectOfType<Quadcopter>();
-        }
-
-        public EllipseDetector SetRadius(float radius, float semiMajorAxis)
-        {
-            _radius = radius;
-            _semiMajorAxis = semiMajorAxis;
-            return this;
         }
 
         private void Detect()
@@ -41,14 +32,16 @@ namespace Assets.Scripts
 
         private bool IsTargetInRadius()
         {
-            float semiMinorAxis = 1f;
+            float ellipseRightSideValue = 1;
+            float xDistance = 10;
+            float zDistance = _config.DetectionDistance;
             float distance = (Mathf
                 .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf
-                .Pow(_semiMajorAxis, 2) + Mathf
+                .Pow(zDistance, 2) + Mathf
                 .Pow(_target.transform.position.x - transform.position.x, 2) / Mathf
-                .Pow(semiMinorAxis, 2));
+                .Pow(xDistance, 2));
 
-            if (distance <= _radius)
+            if (distance <= ellipseRightSideValue)
                 return true;
 
             return false;
