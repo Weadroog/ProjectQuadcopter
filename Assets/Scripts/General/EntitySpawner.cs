@@ -76,7 +76,8 @@ namespace Assets.Scripts
 
                 if (_carDensity > Random.Range(0, 100))
                 {
-                    GetPool<Car>().Get(position + Vector3.forward * _spawnDistance);
+                    Car car = GetPool<Car>().Get(position + Vector3.forward * _spawnDistance);
+                    if (car.CarColorChanger != null) car.CarColorChanger.ChangeColorRandom();
                 }
 
                 yield return spawnDelay;

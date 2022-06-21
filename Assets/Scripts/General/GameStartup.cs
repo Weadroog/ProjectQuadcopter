@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +13,14 @@ namespace Assets.Scripts
         private Button _tapToStartButton;
         private GlobalSpeedService _speedService;
         private Quadcopter _quadcopter;
+        private GameStopper _gameStopper;
 
         private void Awake()
         {
             _entitySpawner = GetComponentInChildren<EntitySpawner>();
             _chunkGenerator = GetComponentInChildren<ChunkGenerator>();
             _speedService = GetComponentInChildren<GlobalSpeedService>();
+            _gameStopper = GetComponentInChildren<GameStopper>();
             _tapToStartButton = FindObjectOfType<TapToStart>().GetComponent<Button>();
         }
 
@@ -32,7 +35,7 @@ namespace Assets.Scripts
             _entitySpawner.EnableAggressiveBirds(entityContainer);
             _entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
             _entitySpawner.EnableBatteries(entityContainer);
-            _speedService.enabled = false;
+            _gameStopper.Stop();
             _tapToStartButton.onClick.AddListener(Startup);
         }
 
@@ -40,6 +43,7 @@ namespace Assets.Scripts
         {
             _quadcopter.gameObject.SetActive(true);
             new QuadcopterNextReaction(_quadcopter).React();
+            _gameStopper.Play();
             _speedService.enabled = true;
             _tapToStartButton.gameObject.SetActive(false);
             _quadcopter.GetComponent<SwipeController>().enabled = true;
@@ -51,5 +55,6 @@ namespace Assets.Scripts
             if (_entitySpawner.IsEnabled<AggressiveBird>())
                 _entitySpawner.SpawnAggressiveBirds();
         }
+
     }
 }
