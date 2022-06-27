@@ -29,6 +29,17 @@ namespace Assets.Scripts
         [Space(30)]
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
+        private void OnEnable() => GameStopper.OnPlay += Setup;  
+
+        private void Setup()
+        {
+            if (IsEnabled<Car>())
+                SpawnCars();
+
+            if (IsEnabled<AggressiveBird>())
+                SpawnAggressiveBirds();
+        }
+
         public PlayerCamera EnablePlayerCamera(Container entityContainer)
         {
             return GetCreatedEntity(new PlayerCameraFactory(_playerCameraConfig, entityContainer, _wayMatrix.GetPosition(MatrixPosition.Center)));
@@ -41,7 +52,7 @@ namespace Assets.Scripts
             _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter));
             _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
-        } 
+        }
 
         public void EnableCarTraffic(Container entityContainer)
         {
@@ -146,6 +157,8 @@ namespace Assets.Scripts
 
         private E GetCreatedEntity<E>(IFactory<E> entityFactory) where E : Entity => entityFactory.GetCreated();
 
+        private void OnDisable() => GameStopper.OnPlay -= Setup;
+     
         private void OnDestroy() => StopAllCoroutines();
     }
 }

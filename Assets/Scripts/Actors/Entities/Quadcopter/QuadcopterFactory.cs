@@ -16,14 +16,15 @@ namespace Assets.Scripts
         public override Quadcopter GetCreated()
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
+            GameStopper.OnPlay += () => quadcopter.gameObject.SetActive(true);
 
             SwipeController swipeController = quadcopter.gameObject
                 .AddComponent<SwipeController>()
                 .SetStartablePosition(MatrixPosition.Center);
+            GameStopper.OnPlay += () => swipeController.enabled = true;
 
             swipeController.Receive(_config);
             swipeController.enabled = false;
-
 
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
@@ -33,9 +34,12 @@ namespace Assets.Scripts
             Charger charger = quadcopter.gameObject.AddComponent<Charger>();
             charger.OnChanged += _chargeCounter.Display;
             charger.Receive(_config);
+            GameStopper.OnPlay += charger.Recharge;
 
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(quadcopter));
             quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));
+
+            GameStopper.OnPlay += new QuadcopterNextReaction(quadcopter).React;
 
             return quadcopter;
         }
