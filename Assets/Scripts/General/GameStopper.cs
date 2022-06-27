@@ -10,8 +10,8 @@ namespace Assets.Scripts
     {
         private GlobalSpeedService _speedService;
 
-        public event Action OnStop;
-        public event Action OnPlay;
+        public static event Action OnStop;
+        public static event Action OnPlay;
 
         private void Awake() => _speedService = FindObjectOfType<GlobalSpeedService>();
 
