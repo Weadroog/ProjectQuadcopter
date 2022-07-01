@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class ShoveingInReaction : Reaction
+    public class CatchReaction : Reaction
     {
         private NetGuy _netGuy;
         private Animator _animator;
         private NetGuyConfig _config;
 
-        public ShoveingInReaction(NetGuy netGuy, NetGuyConfig config)
+        public CatchReaction(NetGuy netGuy, NetGuyConfig config)
         {
             _netGuy = netGuy;
             _config = config;
@@ -23,7 +23,7 @@ namespace Assets.Scripts
             float currentSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
             float targetSide = 0;
 
-            while (currentSide != targetSide)
+            while (Mathf.Approximately(currentSide, targetSide) == false)
             {
                 _animator.SetFloat(AnimationService.Parameters.Side, currentSide);
                 currentSide = Mathf.MoveTowards(currentSide, targetSide, _config.ShoveInSpeed * Time.deltaTime);

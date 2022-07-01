@@ -21,9 +21,8 @@ namespace Assets.Scripts
             float currentSide = 0;
             float targetSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
 
-            while (currentSide != targetSide)
+            while (Mathf.Approximately(currentSide, targetSide) == false)
             {
-                Debug.Log("ShoveOut");
                 _animator.SetFloat(AnimationService.Parameters.Side, currentSide);
                 currentSide = Mathf.MoveTowards(currentSide, targetSide, _config.ShoveInSpeed * Time.deltaTime);
                 yield return null;
