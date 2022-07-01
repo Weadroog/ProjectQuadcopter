@@ -6,11 +6,11 @@ namespace Assets.Scripts
 {
     public class FailedDeliveryReaction : Reaction
     {
-        public FailedDeliveryReaction() {  }
+        public FailedDeliveryReaction() { }
 
         public override void React()
         {
-            Debug.Log("Сбросили питсу: не подобрали заказ / пролетели клиента / потеряли питсу");
+            Debug.Log("Сбросили питсу: пролетели клиента");
             Deliverer.OnDeliveryEventOccured?.Invoke(DeliveryState.NotCarryingPizza);
         }
     }
