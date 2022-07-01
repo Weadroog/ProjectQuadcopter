@@ -17,5 +17,5 @@ MonoBehaviour:
   _netPrefabs:
   - {fileID: 310586760892719651, guid: eeda91aa78d323643a431f96f359f019, type: 3}
   _detectionDistance: 50
-  _shoveOutSpeed: 3
-  _shoveInSpeed: 5
+  _shoveOutSpeed: 1
+  _shoveInSpeed: 2

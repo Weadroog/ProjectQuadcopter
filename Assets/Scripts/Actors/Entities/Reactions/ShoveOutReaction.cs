@@ -6,14 +6,14 @@ namespace Assets.Scripts
     public class ShoveOutReaction : Reaction
     {
         private NetGuy _netGuy;
+        private NetGuyConfig _config;
         private Animator _animator;
-        private float _shoveInSpeed;
 
-        public ShoveOutReaction(NetGuy netGuy, float shoveInSpeed)
+        public ShoveOutReaction(NetGuy netGuy, NetGuyConfig config)
         {
             _netGuy = netGuy;
+            _config = config;
             _animator = netGuy.GetComponent<Animator>();
-            _shoveInSpeed = shoveInSpeed;
         }
 
         private IEnumerator ShoveOut()
@@ -24,7 +24,7 @@ namespace Assets.Scripts
             while (Mathf.Approximately(currentSide, targetSide) == false)
             {
                 _animator.SetFloat(AnimationService.Parameters.Side, currentSide);
-                currentSide = Mathf.MoveTowards(currentSide, targetSide, _shoveInSpeed * Time.deltaTime);
+                currentSide = Mathf.MoveTowards(currentSide, targetSide, _config.ShoveInSpeed * Time.deltaTime);
                 yield return null;
             }
 
