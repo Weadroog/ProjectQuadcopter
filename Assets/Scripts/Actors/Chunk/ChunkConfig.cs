@@ -10,31 +10,8 @@ namespace Assets.Scripts
         [SerializeField] private Road _roadPrefab;
         [SerializeField] private Road _startableChunk;
 
-        private int _districtPrefabIndex;
-        private int _districtWithPizzeriaPrefabIndex;
-
-        public District DistrictPrefab
-        {
-            get
-            {
-                _districtPrefabIndex = (_districtPrefabIndex == _districtsPrefab.Length) ? 0 : _districtPrefabIndex;
-                District prefab = _districtsPrefab[_districtPrefabIndex];
-                _districtPrefabIndex++;
-                return prefab;
-            }
-        }
-
-        public PizzeriaDistrict DistrictWithPizzeriaPrefab
-        {
-            get
-            {
-                _districtWithPizzeriaPrefabIndex = (_districtWithPizzeriaPrefabIndex == _districtsWithPizzeriaPrefab.Length) ? 0 : _districtWithPizzeriaPrefabIndex;
-                PizzeriaDistrict prefab = _districtsWithPizzeriaPrefab[_districtWithPizzeriaPrefabIndex];
-                _districtWithPizzeriaPrefabIndex++;
-                return prefab;
-            }
-        }
-
+        public District DistrictPrefab => _prefabGetter.Get(_districtsPrefab);
+        public PizzeriaDistrict DistrictWithPizzeriaPrefab => _prefabGetter.Get(_districtsWithPizzeriaPrefab);
         public Road RoadPrefab => _roadPrefab;
         public Road StartableChunk => _startableChunk;
         public int DistrictsPrefabsCount => _districtsPrefab.Length;

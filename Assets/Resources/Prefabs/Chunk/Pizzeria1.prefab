@@ -2683,7 +2683,7 @@ GameObject:
   - component: {fileID: 71497686744026682}
   - component: {fileID: 5056140837281016978}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: DispensePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2893,7 +2893,7 @@ GameObject:
   - component: {fileID: 4401906247669190665}
   - component: {fileID: -388330114694855839}
   m_Layer: 0
-  m_Name: District6
+  m_Name: Pizzeria1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2929,7 +2929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4231a1d1a72948fd89603303c683da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pizzaDispensePlace: {fileID: 0}
+  _pizzaDispensePoint: {fileID: 5056140837281016978}
 --- !u!1 &9000720493657180292
 GameObject:
   m_ObjectHideFlags: 0

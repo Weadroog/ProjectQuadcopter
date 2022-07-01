@@ -28,7 +28,7 @@ namespace Assets.Scripts
 
             for (int i = 0; i < _config.NetPrefabsCount; i++)
             {
-                Net net = Instantiate(_config.Net, _netPoint.transform);
+                Net net = Instantiate(_config.NetPrefab, _netPoint.transform);
                 net.AddReaction<CollisionDetector, Quadcopter>(new NetCatchingReaction());
                 _nets.Add(net);
             }

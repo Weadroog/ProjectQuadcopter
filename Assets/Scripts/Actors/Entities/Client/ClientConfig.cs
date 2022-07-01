@@ -3,11 +3,13 @@ using UnityEngine;
 namespace Assets.Scripts
 {
     [CreateAssetMenu(menuName = "Config/Client", fileName = "New Client Config")]
-    public class ClientConfig : MultiplePrefabActorConfig<Client>, ICanDetect, ICanMove
+    public class ClientConfig : Config, ICanDetect, ICanMove
     {
-        [SerializeField][Range(1, 30)] private int _bypassOffset;
+        [SerializeField] private Client[] _prefabs;
+        [SerializeField][Range(1, 30)] private int _bypassDistance;
 
-        public float DetectionDistance => _bypassOffset;
+        public Client Prefab => _prefabGetter.Get(_prefabs);
+        public float DetectionDistance => _bypassDistance;
         public float SelfSpeed => 0;
     }
 }

@@ -8,13 +8,12 @@ namespace Assets.Scripts
         private NetGuy _netGuy;
         private Animator _animator;
         private float _leanOutingSpeed;
-        private float _speedFactor = 0.01f;
 
         public LeanOutingWindowReaction(NetGuy netGuy, float leanOutingSpeed)
         {
             _netGuy = netGuy;
             _animator = netGuy.GetComponent<Animator>();
-            _leanOutingSpeed = leanOutingSpeed * _speedFactor;
+            _leanOutingSpeed = leanOutingSpeed;
         }
 
         private IEnumerator LeanOut()
@@ -22,10 +21,10 @@ namespace Assets.Scripts
             float currentSide = 0;
             float targetSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
 
-            while (currentSide != targetSide)
+            while (Mathf.Approximately(currentSide, targetSide))
             {
                 _animator.SetFloat(AnimationService.Parameters.LeanOutingSide, currentSide);
-                currentSide = Mathf.Lerp(currentSide, targetSide, _leanOutingSpeed);
+                currentSide = Mathf.MoveTowards(currentSide, targetSide, _leanOutingSpeed * Time.deltaTime);
                 yield return null;
             }
 
