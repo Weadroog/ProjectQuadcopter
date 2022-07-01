@@ -11,6 +11,7 @@ namespace Assets.Scripts
         private Dictionary<Type, IPool> _pools = new();
         private readonly WayMatrix _wayMatrix = new();
         private Quadcopter _quadcopter;
+        [SerializeField]private bool _isClientRequested;
 
         [Header("Configurations")]
         [SerializeField] private QuadcopterConfig _quadcopterConfig;
@@ -20,6 +21,8 @@ namespace Assets.Scripts
         [SerializeField] private ClotheslineConfig _clotheslineConfig;
         [SerializeField] private NetGuyConfig _netGuyConfig;
         [SerializeField] private BatteryConfig _batteryConfig;
+        [SerializeField] private ClientConfig _clientConfig;
+        [SerializeField] private PizzeriaGuyConfig _pizzeriaGuyConfig;
         [Space(30)]
         [Header("SpawnDensity")]
         [SerializeField][Range(0, 100)] private int _aggressiveBirdDensity;
@@ -29,7 +32,8 @@ namespace Assets.Scripts
         [Space(30)]
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
-        private void OnEnable() => GameStopper.OnPlay += Setup;  
+        private void OnEnable() => GameStopper.OnPlay += Setup;
+        
 
         private void Setup()
         {
@@ -74,6 +78,29 @@ namespace Assets.Scripts
         {
             _pools[typeof(Battery)] = new Pool<Battery>(new BatteryFactory(_batteryConfig), entityContainer, 3);
             _quadcopter.GetComponent<Charger>().OnDecreased += SpawnBattery;
+        }
+
+        public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
+        {
+            EnablePizzeriaGuy(entityContainer, chunkGenerator);
+            EnableClient(entityContainer, chunkGenerator);
+        }
+
+        private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
+        {
+            _pools[typeof(PizzeriaGuy)] = new Pool<PizzeriaGuy>(new PizzeriaGuyFactory(_pizzeriaGuyConfig), entityContainer, 2);
+            chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
+        }
+
+        private void EnableClient(Container entityContainer, ChunkGenerator chunkGenerator)
+        {
+            _pools[typeof(Client)] = new Pool<Client>(new ClientFactory(_clientConfig), entityContainer, 2);
+            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) => _isClientRequested = deliveryState == DeliveryState.CarryingPizza;
+        }
+
+        private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
+        {
+            GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
         }
 
         private IEnumerator CarSpawning(int line)
@@ -140,8 +167,14 @@ namespace Assets.Scripts
                     window.Close();
                     continue;
                 }
-
-                GetPool<NetGuy>().Get(window.GetSpawnPoint());
+                if (IsEnabled<Client>() && _isClientRequested)
+                {
+                    GetPool<Client>().Get(window.GetSpawnPoint());
+                    Debug.Log("spawned client");
+                    _isClientRequested = false;
+                }
+                    
+                else GetPool<NetGuy>().Get(window.GetSpawnPoint());
                 window.Open();
             }
         }
