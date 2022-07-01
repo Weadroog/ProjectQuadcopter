@@ -13,8 +13,8 @@ namespace Assets.Scripts
         [SerializeField] private ChunkConfig _chunkDatabase;
         [Space(30)]
         [SerializeField][Range(1, 100)] private int _startableChunksCount;
-        [SerializeField] private bool _isPizzeriaRequested;
 
+        private bool _isPizzeriaRequested;
         private WayMatrix _wayMatrix = new();
         private Pool<Road> _roadPool;
         private Pool<District> _districtPool;
@@ -22,9 +22,12 @@ namespace Assets.Scripts
         private Road _lastRoad;
         private List<Window> _windows = new();
 
-        private void OnEnable() => Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) => 
-            _isPizzeriaRequested = deliveryState == DeliveryState.NotCarryingPizza;
-       
+        private void OnEnable()
+        {
+            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) =>
+                _isPizzeriaRequested = deliveryState == DeliveryState.NotCarryingPizza;
+            Deliverer.OnPizzeriaBypassed += () => _isPizzeriaRequested = true;
+        }
         
         public void EnableChunks(Container chunksContainer) 
         {
@@ -70,6 +73,7 @@ namespace Assets.Scripts
             PizzeriaDistrict pizzeria = null;
             if (_isPizzeriaRequested)
             {
+                Debug.Log("Появилась пиццерия");
                 pizzeria = _pizzeriaPool.Get(position);
                 pieceOfChunk = pizzeria;
                 _isPizzeriaRequested = false;

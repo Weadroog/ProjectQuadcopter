@@ -177,7 +177,7 @@ namespace Assets.Scripts
                 {
                     _client.gameObject.SetActive(true);
                     _client.transform.position = window.GetSpawnPoint();
-                    Debug.Log("spawned client");
+                    Debug.Log("Появился клиент!");
                     _isClientRequested = false;
                 }
 
