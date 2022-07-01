@@ -9,6 +9,7 @@ namespace Assets.Scripts
 
         public static event Action<DeliveryState> OnDeliveryStateChanged;
         public static Action<DeliveryState> OnDeliveryEventOccured;
+        public static Action OnPizzeriaBypassed;
 
         private void OnEnable() => OnDeliveryEventOccured += SetDeliveryState;
 
@@ -17,8 +18,8 @@ namespace Assets.Scripts
             get => _deliveryState;
             private set
             {
+                if(value != _deliveryState) OnDeliveryStateChanged?.Invoke(value);
                 _deliveryState = value;
-                OnDeliveryStateChanged?.Invoke(_deliveryState);
             }
         }
 
