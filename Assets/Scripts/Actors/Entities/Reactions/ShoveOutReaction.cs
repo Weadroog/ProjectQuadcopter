@@ -3,25 +3,23 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class NetCatchingReaction : Reaction
+    public class ShoveOutReaction : Reaction
     {
         private NetGuy _netGuy;
         private Animator _animator;
         private float _shoveInSpeed;
 
-        public NetCatchingReaction(NetGuy netGuy, float ShoveInSpeed)
+        public ShoveOutReaction(NetGuy netGuy, float shoveInSpeed)
         {
             _netGuy = netGuy;
             _animator = netGuy.GetComponent<Animator>();
-            _shoveInSpeed = ShoveInSpeed;
+            _shoveInSpeed = shoveInSpeed;
         }
 
-        public override void React() => _netGuy.StartCoroutine(ShoveIn());
-
-        private IEnumerator ShoveIn()
+        private IEnumerator ShoveOut()
         {
-            float currentSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
-            float targetSide = 0;
+            float currentSide = 0;
+            float targetSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
 
             while (Mathf.Approximately(currentSide, targetSide) == false)
             {
@@ -32,5 +30,7 @@ namespace Assets.Scripts
 
             yield break;
         }
+
+        public override void React() => _netGuy.StartCoroutine(ShoveOut());
     }
 }

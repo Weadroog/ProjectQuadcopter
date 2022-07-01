@@ -33,7 +33,7 @@ namespace Assets.Scripts
         private bool IsTargetInRadius()
         {
             float ellipseRightSideValue = 1;
-            float xDistance = 10;
+            float xDistance = 12;
             float zDistance = _config.DetectionDistance;
             float distance = (Mathf
                 .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf

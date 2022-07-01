@@ -6,7 +6,7 @@
         {
             public const string MotionX = "MotionX";
             public const string MotionY = "MotionY";
-            public const string LeanOutingSide = "LeanOutingSide";
+            public const string Side = "LeanOutingSide";
         }
 
         public class States

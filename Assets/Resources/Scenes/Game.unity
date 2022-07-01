@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chunkDatabase: {fileID: 11400000, guid: d0b33549a8a9f504eaf3a663becbdbc3, type: 2}
-  _startableChunksCount: 10
+  _startableChunksCount: 3
 --- !u!1 &660147728
 GameObject:
   m_ObjectHideFlags: 0

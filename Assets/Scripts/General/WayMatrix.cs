@@ -16,7 +16,7 @@ public class WayMatrix
     public WayMatrix()
     {
         _matrix = new Vector2[Height, Width];
-        DisappearPoint = new(0, 0, -25);
+        DisappearPoint = new(0, 0, -50);
         Build();
     }
 
