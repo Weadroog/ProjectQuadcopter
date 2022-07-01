@@ -30,7 +30,7 @@ namespace Assets.Scripts
             _entitySpawner.EnableQuadcopter(entityContainer);
             _entitySpawner.EnableCarTraffic(entityContainer);
             _entitySpawner.EnableAggressiveBirds(entityContainer);
-            _entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
+            _entitySpawner.EnableNetGuys(entityContainer);
             _entitySpawner.EnableBatteries(entityContainer);
             _entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
             _gameStopper.Stop();

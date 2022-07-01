@@ -11,7 +11,8 @@ namespace Assets.Scripts
         private Dictionary<Type, IPool> _pools = new();
         private readonly WayMatrix _wayMatrix = new();
         private Quadcopter _quadcopter;
-        [SerializeField]private bool _isClientRequested;
+        private Client _client;
+        private bool _isClientRequested;
 
         [Header("Configurations")]
         [SerializeField] private QuadcopterConfig _quadcopterConfig;
@@ -37,6 +38,8 @@ namespace Assets.Scripts
 
         private void Setup()
         {
+            FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
+
             if (IsEnabled<Car>())
                 SpawnCars();
 
@@ -68,10 +71,9 @@ namespace Assets.Scripts
             _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), entityContainer, 10);
         }
 
-        public void EnableNetGuys(Container entityContainer, ChunkGenerator chunkGenerator)
+        public void EnableNetGuys(Container entityContainer)
         {
             _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), entityContainer, 10);
-            chunkGenerator.OnSpawnChunk += SpawnNetGuy;
         }
 
         public void EnableBatteries(Container entityContainer)
@@ -83,7 +85,7 @@ namespace Assets.Scripts
         public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
         {
             EnablePizzeriaGuy(entityContainer, chunkGenerator);
-            EnableClient(entityContainer, chunkGenerator);
+            EnableClient(entityContainer);
         }
 
         private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
@@ -92,9 +94,12 @@ namespace Assets.Scripts
             chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
         }
 
-        private void EnableClient(Container entityContainer, ChunkGenerator chunkGenerator)
+        private void EnableClient(Container entityContainer)
         {
-            _pools[typeof(Client)] = new Pool<Client>(new ClientFactory(_clientConfig), entityContainer, 2);
+            ClientFactory clientFactory = new ClientFactory(_clientConfig);
+            _client = clientFactory.GetCreated();
+            _client.gameObject.SetActive(false);
+            _client.transform.SetParent(entityContainer.transform);
             Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) => _isClientRequested = deliveryState == DeliveryState.CarryingPizza;
         }
 
@@ -158,6 +163,30 @@ namespace Assets.Scripts
             }
         }
 
+        private void SettleWindows(IEnumerable<Window> windows)
+        {
+            foreach (Window window in windows)
+            {
+                if (Random.Range(0, 100) > _netGuyDensity)
+                {
+                    window.Close();
+                    continue;
+                }
+
+                if (_client != null && _isClientRequested)
+                {
+                    _client.gameObject.SetActive(true);
+                    _client.transform.position = window.GetSpawnPoint();
+                    Debug.Log("spawned client");
+                    _isClientRequested = false;
+                }
+
+                else if (IsEnabled<NetGuy>()) GetPool<NetGuy>().Get(window.GetSpawnPoint());
+
+                window.Open();
+            }
+        }
+
         private void SpawnNetGuy(IEnumerable<Window> windows)
         {
             foreach (Window window in windows)
@@ -167,9 +196,10 @@ namespace Assets.Scripts
                     window.Close();
                     continue;
                 }
-                if (IsEnabled<Client>() && _isClientRequested)
+                if (_client != null && _isClientRequested)
                 {
-                    GetPool<Client>().Get(window.GetSpawnPoint());
+                    _client.gameObject.SetActive(true);
+                    _client.transform.position = window.GetSpawnPoint();
                     Debug.Log("spawned client");
                     _isClientRequested = false;
                 }
