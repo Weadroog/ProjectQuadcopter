@@ -16,7 +16,7 @@ namespace Assets.Scripts
                .AddComponent<Disappearer>()
                .SetDisappearPoint(_wayMatrix.DisappearPoint);
 
-            BypassDetector bypassDetector = pizzeriaGuy.AddReaction<BypassDetector, Quadcopter>(new FailedDeliveryReaction());
+            BypassDetector bypassDetector = pizzeriaGuy.AddReaction<BypassDetector, Quadcopter>(new FailedGrabPizzaReaction());
             bypassDetector.Receive(_config);
 
             CollisionDetector collisionDetector = pizzeriaGuy.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction());
