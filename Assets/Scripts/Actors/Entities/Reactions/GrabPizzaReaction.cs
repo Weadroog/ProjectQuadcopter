@@ -8,7 +8,7 @@ namespace Assets.Scripts
     {
         public override void React()
         {
-            Debug.Log("Grabbed Pizza");
+            Debug.Log("Забрали пиццу");
             Deliverer.OnDeliveryEventOccured?.Invoke(DeliveryState.CarryingPizza);
         }
     }
