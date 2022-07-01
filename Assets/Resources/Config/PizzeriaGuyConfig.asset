@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbe9da41e79e41eda2b7eb2311cc0c2, type: 3}
   m_Name: PizzeriaGuyConfig
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
-  _bypassOffset: 0
+  _prefabs:
+  - {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
+  _bypassOffset: 20

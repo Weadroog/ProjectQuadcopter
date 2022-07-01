@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ClientConfig
   m_EditorClassIdentifier: 
   _prefabs:
-  - {fileID: 0}
-  _bypassOffset: 0
+  - {fileID: 828858362942317433, guid: a2367d6b3f06d495c95529a0f1f47106, type: 3}
+  _bypassDistance: 20

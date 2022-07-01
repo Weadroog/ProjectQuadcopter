@@ -18,11 +18,10 @@ namespace Assets.Scripts
 
             netGuy.gameObject
                 .AddComponent<Disappearer>()
-                .SetDisappearPoint(_wayMatrix.DisappearPoint)
-                .OnDisappear += () => animator.SetFloat(AnimationService.Parameters.LeanOutingSide, 0);
+                .SetDisappearPoint(_wayMatrix.DisappearPoint);
 
             netGuy
-                .AddReaction<EllipseDetector, Quadcopter>(new LeanOutingWindowReaction(netGuy, _config.LeanOutingSpeed))
+                .AddReaction<EllipseDetector, Quadcopter>(new ShoveOutReaction(netGuy, _config))
                 .Receive(_config);
 
             netGuy.gameObject
