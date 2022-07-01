@@ -6,10 +6,12 @@ namespace Assets.Scripts
     public class ChunkConfig : Config, ICanMove
     {
         [SerializeField] protected District[] _districtsPrefab;
+        [SerializeField] protected PizzeriaDistrict[] _districtsWithPizzeriaPrefab;
         [SerializeField] private Road _roadPrefab;
         [SerializeField] private Road _startableChunk;
 
         private int _districtPrefabIndex;
+        private int _districtWithPizzeriaPrefabIndex;
 
         public District DistrictPrefab
         {
@@ -22,9 +24,21 @@ namespace Assets.Scripts
             }
         }
 
+        public PizzeriaDistrict DistrictWithPizzeriaPrefab
+        {
+            get
+            {
+                _districtWithPizzeriaPrefabIndex = (_districtWithPizzeriaPrefabIndex == _districtsWithPizzeriaPrefab.Length) ? 0 : _districtWithPizzeriaPrefabIndex;
+                PizzeriaDistrict prefab = _districtsWithPizzeriaPrefab[_districtWithPizzeriaPrefabIndex];
+                _districtWithPizzeriaPrefabIndex++;
+                return prefab;
+            }
+        }
+
         public Road RoadPrefab => _roadPrefab;
         public Road StartableChunk => _startableChunk;
         public int DistrictsPrefabsCount => _districtsPrefab.Length;
+        public int DistrictsWithPizzeeriaPrefabsCount => _districtsWithPizzeriaPrefab.Length;
         public float SelfSpeed => 0;
     }
 }
