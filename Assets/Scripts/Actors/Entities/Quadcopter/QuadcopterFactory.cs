@@ -36,6 +36,9 @@ namespace Assets.Scripts
             charger.Receive(_config);
             GameStopper.OnPlay += charger.Recharge;
 
+            Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
+            deliverer.SetDeliveryState(DeliveryState.NotCarryingPizza);
+
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(quadcopter));
             quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));
 
