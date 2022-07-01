@@ -31,6 +31,14 @@ namespace Assets.Scripts
             client.gameObject
                 .AddComponent<Mover>()
                 .Receive(_config);
+
+            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) => {
+                if (deliveryState == DeliveryState.NotCarryingPizza)
+                {
+                    client.gameObject.SetActive(false);
+                    Debug.Log("Клиент больше не ждет пиццу");
+                }
+            };
             return client;
         }
     }
