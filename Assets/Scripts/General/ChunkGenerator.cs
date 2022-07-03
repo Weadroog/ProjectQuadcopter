@@ -1,29 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts
 {
     public class ChunkGenerator : MonoBehaviour
     {
         public event Action<IEnumerable<Window>> OnSpawnChunk;
+        public event Action<PizzaDispensePoint> OnPizzeriaSpawned;
 
         [SerializeField] private ChunkConfig _chunkDatabase;
         [Space(30)]
         [SerializeField][Range(1, 100)] private int _startableChunksCount;
 
+        private bool _isPizzeriaRequested;
         private WayMatrix _wayMatrix = new();
         private Pool<Road> _roadPool;
         private Pool<District> _districtPool;
+        private Pool<PizzeriaDistrict> _pizzeriaPool;
         private Road _lastRoad;
         private List<Window> _windows = new();
 
+        private void OnEnable()
+        {
+            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) =>
+                _isPizzeriaRequested = deliveryState == DeliveryState.NotCarryingPizza;
+            Deliverer.OnPizzeriaBypassed += () => _isPizzeriaRequested = true;
+        }
+        
         public void EnableChunks(Container chunksContainer) 
         {
             _roadPool = new(new RoadFactory(_chunkDatabase, SpawnChunk), chunksContainer, _startableChunksCount);
             _districtPool = new(new DistrictFactory(_chunkDatabase), chunksContainer, _chunkDatabase.DistrictsPrefabsCount);
+            _pizzeriaPool = new(new DistrictWithPizzeriaFactory(_chunkDatabase), chunksContainer, _chunkDatabase.DistrictsWithPizzeeriaPrefabsCount);
             SpawnStartableChunk(chunksContainer);
             SpawnStartableChunks(_startableChunksCount);
+            _isPizzeriaRequested = true;
         }
 
         private void SpawnStartableChunk(Container chunkContainer)
@@ -46,15 +59,43 @@ namespace Assets.Scripts
         {
             _windows.Clear();
             _lastRoad = _roadPool.Get(_lastRoad.CentralConnectPosition);
-            District leftDistrict = _districtPool.Get(_lastRoad.LeftConnectPosition);
-            District rightDistrict = _districtPool.Get(_lastRoad.RightConnectPosition);
-            leftDistrict.transform.position += Vector3.left * leftDistrict.Size.x / 2;
-            rightDistrict.transform.position += Vector3.right * rightDistrict.Size.x / 2;
-            rightDistrict.transform.localEulerAngles = new Vector3(0, 180, 0);
-            leftDistrict.transform.localEulerAngles = new Vector3(0, 0, 0);
-            _windows.AddRange(leftDistrict.GetWindows());
-            _windows.AddRange(rightDistrict.GetWindows());
+            int side1 = Random.Range(0, 2) == 0 ? -1 : 1;
+            int side2 = side1 == 1 ? -1 : 1;
+            GetPieceOfChunk(side1);
+            GetPieceOfChunk(side2);
             OnSpawnChunk?.Invoke(_windows);
         }
+
+        private PieceOfChunk GetPieceOfChunk(float side)
+        {
+            Vector3 position = side == 1 ? _lastRoad.RightConnectPosition : _lastRoad.LeftConnectPosition;
+            PieceOfChunk pieceOfChunk;
+            PizzeriaDistrict pizzeria = null;
+            if (_isPizzeriaRequested)
+            {
+                Debug.Log("Появилась пиццерия");
+                pizzeria = _pizzeriaPool.Get(position);
+                pieceOfChunk = pizzeria;
+                _isPizzeriaRequested = false;
+            }
+
+            else
+            {
+                District district;
+                district = _districtPool.Get(position) ;
+                _windows.AddRange(district.GetWindows());
+                pieceOfChunk = district;
+            }
+
+            pieceOfChunk.transform.position += new Vector3(side, 0) * pieceOfChunk.Size.x / 2;
+            float rotation = side == 1 ? 180 : 0;
+            pieceOfChunk.transform.localEulerAngles = new Vector3(0, rotation, 0);
+            if(pizzeria != null) OnPizzeriaSpawned?.Invoke(pizzeria.PizzaDispensePoint);
+            return pieceOfChunk;
+        }
+
+
+        private void OnDisable() => Deliverer.OnDeliveryStateChanged -= (DeliveryState deliveryState) => _isPizzeriaRequested = deliveryState == DeliveryState.NotCarryingPizza;
+        
     }
 }

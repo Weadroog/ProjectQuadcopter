@@ -3,12 +3,14 @@
 namespace Assets.Scripts
 {
     [CreateAssetMenu(menuName = "Config/Aggressive Bird", fileName = "New Aggressive Bird Config")]
-    public class AggressiveBirdConfig : MultiplePrefabActorConfig<AggressiveBird>, ICanMove, ICanDetect
+    public class AggressiveBirdConfig : Config, ICanMove, ICanDetect
     {
-       [SerializeField] [Range(1, 100)] private float _selfSpeed;
-       [SerializeField] [Range(1, 100)] private float _detectionDistance;
+        [SerializeField] private AggressiveBird[] _prefabs;
+        [SerializeField][Range(1, 100)] private float _selfSpeed;
+        [SerializeField][Range(1, 100)] private float _detectionDistance;
 
-       public float SelfSpeed { get => _selfSpeed; }
-       public float DetectionDistance { get => _detectionDistance; }
+        public AggressiveBird Prefab => _prefabGetter.Get(_prefabs);
+        public float SelfSpeed => _selfSpeed;
+        public float DetectionDistance => _detectionDistance;
     }
 }

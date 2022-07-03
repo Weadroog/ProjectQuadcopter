@@ -10,9 +10,7 @@ namespace Assets.Scripts
 
         public override Clothesline GetCreated()
         {
-            Clothesline clothesline = Object.Instantiate(_config.Prefab);
-
-            return clothesline;
+            return null;
         }
     }
 }

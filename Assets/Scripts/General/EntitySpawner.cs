@@ -11,6 +11,8 @@ namespace Assets.Scripts
         private Dictionary<Type, IPool> _pools = new();
         private readonly WayMatrix _wayMatrix = new();
         private Quadcopter _quadcopter;
+        private Client _client;
+        private bool _isClientRequested;
 
         [Header("Configurations")]
         [SerializeField] private QuadcopterConfig _quadcopterConfig;
@@ -20,6 +22,8 @@ namespace Assets.Scripts
         [SerializeField] private ClotheslineConfig _clotheslineConfig;
         [SerializeField] private NetGuyConfig _netGuyConfig;
         [SerializeField] private BatteryConfig _batteryConfig;
+        [SerializeField] private ClientConfig _clientConfig;
+        [SerializeField] private PizzeriaGuyConfig _pizzeriaGuyConfig;
         [Space(30)]
         [Header("SpawnDensity")]
         [SerializeField][Range(0, 100)] private int _aggressiveBirdDensity;
@@ -29,10 +33,13 @@ namespace Assets.Scripts
         [Space(30)]
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
-        private void OnEnable() => GameStopper.OnPlay += Setup;  
+        private void OnEnable() => GameStopper.OnPlay += Setup;
+        
 
         private void Setup()
         {
+            FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
+
             if (IsEnabled<Car>())
                 SpawnCars();
 
@@ -64,16 +71,41 @@ namespace Assets.Scripts
             _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), entityContainer, 10);
         }
 
-        public void EnableNetGuys(Container entityContainer, ChunkGenerator chunkGenerator)
+        public void EnableNetGuys(Container entityContainer)
         {
             _pools[typeof(NetGuy)] = new Pool<NetGuy>(new NetGuyFactory(_netGuyConfig), entityContainer, 10);
-            chunkGenerator.OnSpawnChunk += SpawnNetGuy;
         }
 
         public void EnableBatteries(Container entityContainer)
         {
             _pools[typeof(Battery)] = new Pool<Battery>(new BatteryFactory(_batteryConfig), entityContainer, 3);
             _quadcopter.GetComponent<Charger>().OnDecreased += SpawnBattery;
+        }
+
+        public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
+        {
+            EnablePizzeriaGuy(entityContainer, chunkGenerator);
+            EnableClient(entityContainer);
+        }
+
+        private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
+        {
+            _pools[typeof(PizzeriaGuy)] = new Pool<PizzeriaGuy>(new PizzeriaGuyFactory(_pizzeriaGuyConfig), entityContainer, 2);
+            chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
+        }
+
+        private void EnableClient(Container entityContainer)
+        {
+            ClientFactory clientFactory = new ClientFactory(_clientConfig);
+            _client = clientFactory.GetCreated();
+            _client.gameObject.SetActive(false);
+            _client.transform.SetParent(entityContainer.transform);
+            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) => _isClientRequested = deliveryState == DeliveryState.CarryingPizza;
+        }
+
+        private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
+        {
+            GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
         }
 
         private IEnumerator CarSpawning(int line)
@@ -144,7 +176,7 @@ namespace Assets.Scripts
             }
         }
 
-        private void SpawnNetGuy(IEnumerable<Window> windows)
+        private void SettleWindows(IEnumerable<Window> windows)
         {
             foreach (Window window in windows)
             {
@@ -154,7 +186,38 @@ namespace Assets.Scripts
                     continue;
                 }
 
-                GetPool<NetGuy>().Get(window.GetSpawnPoint());
+                if (_client != null && _isClientRequested)
+                {
+                    _client.gameObject.SetActive(true);
+                    _client.transform.position = window.GetSpawnPoint();
+                    Debug.Log("Появился клиент!");
+                    _isClientRequested = false;
+                }
+
+                else if (IsEnabled<NetGuy>()) GetPool<NetGuy>().Get(window.GetSpawnPoint());
+
+                window.Open();
+            }
+        }
+
+        private void SpawnNetGuy(IEnumerable<Window> windows)
+        {
+            foreach (Window window in windows)
+            {
+                if (Random.Range(0, 100) > _netGuyDensity)
+                {
+                    window.Close();
+                    continue;
+                }
+                if (_client != null && _isClientRequested)
+                {
+                    _client.gameObject.SetActive(true);
+                    _client.transform.position = window.GetSpawnPoint();
+                    Debug.Log("spawned client");
+                    _isClientRequested = false;
+                }
+                    
+                else GetPool<NetGuy>().Get(window.GetSpawnPoint());
                 window.Open();
             }
         }

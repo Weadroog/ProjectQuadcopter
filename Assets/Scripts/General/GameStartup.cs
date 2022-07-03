@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,6 @@ namespace Assets.Scripts
         private ChunkGenerator _chunkGenerator;
         private EntitySpawner _entitySpawner;
         private Button _tapToStartButton;
-        private Quadcopter _quadcopter;
         private GameStopper _gameStopper;
 
         private void Awake()
@@ -27,23 +27,14 @@ namespace Assets.Scripts
             Container entityContainer = ContainerService.GetCreatedContainer("Entities", _city.transform);
             _chunkGenerator.EnableChunks(chunkContainer);
             _entitySpawner.EnablePlayerCamera(entityContainer);
-            _quadcopter = _entitySpawner.EnableQuadcopter(entityContainer);
+            _entitySpawner.EnableQuadcopter(entityContainer);
             _entitySpawner.EnableCarTraffic(entityContainer);
-            //_entitySpawner.EnableAggressiveBirds(entityContainer);
-            //_entitySpawner.EnableNetGuys(entityContainer, _chunkGenerator);
-            //_entitySpawner.EnableBatteries(entityContainer);
+            _entitySpawner.EnableAggressiveBirds(entityContainer);
+            _entitySpawner.EnableNetGuys(entityContainer);
+            _entitySpawner.EnableBatteries(entityContainer);
+            _entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
             _gameStopper.Stop();
-            _tapToStartButton.onClick.AddListener(Startup);
-        }
-
-        private void Startup()
-        {
-            _quadcopter.gameObject.SetActive(true);
-            new QuadcopterNextReaction(_quadcopter).React();
-            _gameStopper.Play();
-            _tapToStartButton.gameObject.SetActive(false);
-            _quadcopter.GetComponent<SwipeController>().enabled = true;
-            _quadcopter.GetComponent<Charger>().Recharge();
+            _tapToStartButton.onClick.AddListener(_gameStopper.Play);
         }
     }
 }
