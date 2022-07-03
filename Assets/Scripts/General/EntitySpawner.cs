@@ -78,20 +78,33 @@ namespace Assets.Scripts
 
         private IEnumerator CarSpawning(int line)
         {
-            WaitForSeconds spawnDelay = new(Random.Range(0.15f * GlobalSpeedService.Speed / GlobalSpeedService.Speed, 0.5f * GlobalSpeedService.Speed / GlobalSpeedService.Speed));
+            float delay = 0.5f;
+            float maxDistance = 15f;
+            float minDistance = 5f;
+            float previousCarHalfSize = 0;
             float offset = 1.5f;
+
+            Vector3 instancePosition = new Vector3(-250f, -15f, 1000f);
+            Vector3 spawnPosition = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, WayMatrix.Height - 1)) + Vector3.down * offset + Vector3.forward * _spawnDistance;
 
             while (true)
             {
-                Vector3 position = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, WayMatrix.Height - 1)) + Vector3.down * offset;
-
                 if (_carDensity > Random.Range(0, 100))
                 {
-                    Car car = GetPool<Car>().Get(position + Vector3.forward * _spawnDistance);
+                    Car car = GetPool<Car>().Get(instancePosition);
                     if (car.CarColorChanger != null) car.CarColorChanger.ChangeColorRandom();
-                }
 
-                yield return spawnDelay;
+                    float distanceBetweenCars = Random.Range(minDistance, maxDistance);
+                    float speed = GlobalSpeedService.Speed + _carConfig.SelfSpeed;
+                    float carHalfSize = car.Size / 2;
+                    delay = (Mathf.Sqrt(speed * speed + 2 * GlobalSpeedService.Acceleration * (distanceBetweenCars + carHalfSize + previousCarHalfSize)) - speed) / GlobalSpeedService.Acceleration;
+                    previousCarHalfSize = carHalfSize;
+
+                    yield return new WaitForSeconds(delay);
+
+                    car.transform.position = spawnPosition;
+                }
+                else yield return new WaitForSeconds(delay);
             }
         }
 
