@@ -113,7 +113,7 @@ namespace Assets.Scripts
             float delay = 0.5f;
             float maxDistance = 15f;
             float minDistance = 5f;
-            float previousCarHalfSize = 0;
+            float previousHalfSize = 0;
             float offset = 1.5f;
 
             Vector3 instancePosition = new Vector3(-250f, -15f, 1000f);
@@ -128,9 +128,9 @@ namespace Assets.Scripts
 
                     float distanceBetweenCars = Random.Range(minDistance, maxDistance);
                     float speed = GlobalSpeedService.Speed + _carConfig.SelfSpeed;
-                    float carHalfSize = car.Size / 2;
-                    delay = (Mathf.Sqrt(speed * speed + 2 * GlobalSpeedService.Acceleration * (distanceBetweenCars + carHalfSize + previousCarHalfSize)) - speed) / GlobalSpeedService.Acceleration;
-                    previousCarHalfSize = carHalfSize;
+                    float halfSize = car.Size / 2;
+                    delay = (Mathf.Sqrt(speed * speed + 2 * GlobalSpeedService.Acceleration * (distanceBetweenCars + halfSize + previousHalfSize)) - speed) / GlobalSpeedService.Acceleration;
+                    previousHalfSize = halfSize;
 
                     yield return new WaitForSeconds(delay);
 
