@@ -32,7 +32,7 @@ namespace Assets.Scripts
             lifer.Restore();
 
             Charger charger = quadcopter.gameObject.AddComponent<Charger>();
-            charger.OnChanged += _chargeCounter.Display;
+            //charger.OnChanged += _chargeCounter.Display;
             charger.Receive(_config);
             GameStopper.OnPlay += charger.Recharge;
 
