@@ -6,11 +6,13 @@ namespace Assets.Scripts
     {
         private LifeCounter _lifeCounter;
         private ChargeCounter _chargeCounter;
+        private MoneyCounter _moneyCounter;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, ChargeCounter chargeCounter) : base(config, container) 
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, ChargeCounter chargeCounter, MoneyCounter moneyCounter) : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _chargeCounter = chargeCounter;
+            _moneyCounter = moneyCounter;
         }
 
         public override Quadcopter GetCreated()
@@ -38,6 +40,12 @@ namespace Assets.Scripts
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             deliverer.SetDeliveryState(DeliveryState.NotCarryingPizza);
+
+            Purse purse = quadcopter.gameObject.AddComponent<Purse>();
+            purse.OnChanged += _moneyCounter.Display;
+            purse.Receive(_config);
+            purse.SetInitialAmount();
+
 
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(quadcopter));

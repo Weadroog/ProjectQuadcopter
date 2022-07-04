@@ -56,7 +56,9 @@ namespace Assets.Scripts
         {
             LifeCounter lifeCounter = FindObjectOfType<LifeCounter>();
             ChargeCounter chargeCounter = FindObjectOfType<ChargeCounter>();
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter));
+            MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
+
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter, moneyCounter));
             _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
         }

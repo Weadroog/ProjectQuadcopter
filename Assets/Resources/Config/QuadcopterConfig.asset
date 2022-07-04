@@ -17,3 +17,4 @@ MonoBehaviour:
   _lives: 3
   _charge: 3
   _chargeDecreaseTime: 10
+  _money: 0
