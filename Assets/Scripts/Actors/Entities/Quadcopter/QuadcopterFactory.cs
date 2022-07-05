@@ -6,11 +6,13 @@ namespace Assets.Scripts
     {
         private LifeCounter _lifeCounter;
         private ChargeCounter _chargeCounter;
+        private MoneyCounter _moneyCounter;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, ChargeCounter chargeCounter) : base(config, container) 
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, ChargeCounter chargeCounter, MoneyCounter moneyCounter) : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _chargeCounter = chargeCounter;
+            _moneyCounter = moneyCounter;
         }
 
         public override Quadcopter GetCreated()
@@ -21,6 +23,7 @@ namespace Assets.Scripts
             SwipeController swipeController = quadcopter.gameObject
                 .AddComponent<SwipeController>()
                 .SetStartablePosition(MatrixPosition.Center);
+
             GameStopper.OnPlay += () => swipeController.enabled = true;
 
             swipeController.Receive(_config);
@@ -31,17 +34,15 @@ namespace Assets.Scripts
             lifer.Receive(_config);
             lifer.Restore();
 
-            Charger charger = quadcopter.gameObject.AddComponent<Charger>();
-            charger.OnChanged += _chargeCounter.Display;
-            charger.Receive(_config);
-            GameStopper.OnPlay += charger.Recharge;
+            Purse purse = quadcopter.gameObject.AddComponent<Purse>();
+            purse.OnChanged += _moneyCounter.Display;
+            purse.Receive(_config);
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             deliverer.SetDeliveryState(DeliveryState.NotCarryingPizza);
 
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
-            quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));
 
             GameStopper.OnPlay += new QuadcopterNextReaction(quadcopter, _config).React;
 
