@@ -19,7 +19,6 @@ namespace Assets.Scripts
         [SerializeField] private PlayerCameraConfig _playerCameraConfig;
         [SerializeField] private AggressiveBirdConfig _aggressiveBirdConfig;
         [SerializeField] private CarConfig _carConfig;
-        [SerializeField] private ClotheslineConfig _clotheslineConfig;
         [SerializeField] private NetGuyConfig _netGuyConfig;
         [SerializeField] private BatteryConfig _batteryConfig;
         [SerializeField] private ClientConfig _clientConfig;
@@ -28,7 +27,6 @@ namespace Assets.Scripts
         [Header("SpawnDensity")]
         [SerializeField][Range(0, 100)] private int _aggressiveBirdDensity;
         [SerializeField][Range(0, 100)] private int _carDensity;
-        [SerializeField][Range(0, 100)] private int _clothesLineDensity;
         [SerializeField][Range(0, 100)] private int _netGuyDensity;
         [Space(30)]
         [SerializeField][Range(0, 1000)] private int _spawnDistance;

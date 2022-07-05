@@ -39,11 +39,11 @@ namespace Assets.Scripts
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             deliverer.SetDeliveryState(DeliveryState.NotCarryingPizza);
 
-            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new PizzaFallenReaction(deliverer));
-            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net, Clothesline>(new TakeDamageReaction(quadcopter));
+            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net>(new PizzaFallenReaction(deliverer));
+            quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
             quadcopter.AddReaction<CollisionDetector, Battery>(new RechargeReaction(charger));
 
-            GameStopper.OnPlay += new QuadcopterNextReaction(quadcopter).React;
+            GameStopper.OnPlay += new QuadcopterNextReaction(quadcopter, _config).React;
 
             return quadcopter;
         }
