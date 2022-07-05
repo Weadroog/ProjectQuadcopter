@@ -8,27 +8,27 @@ namespace Assets.Scripts
         public event Action OnDeath;
         public event Action<int> OnChanged;
 
-        private int _lifes;
+        private int _lives;
 
-        public int Lifes
+        public int Lives
         {
-            get => _lifes;
+            get => _lives;
 
             private set
             {
                 if (value <= 0)
                     OnDeath?.Invoke();
 
-                _lifes = Mathf.Clamp(value, 0, _config.MaxLives);
+                _lives = Mathf.Clamp(value, 0, _config.MaxLives);
 
-                OnChanged?.Invoke(_lifes);
+                OnChanged?.Invoke(_lives);
             }
         }
 
-        public void Restore() => Lifes = _config.MaxLives;
+        public void Restore() => Lives = _config.MaxLives;
 
-        public void Kill() => Lifes = 0;
+        public void Kill() => Lives = 0;
 
-        public void TakeDamage() => Lifes--;
+        public void TakeDamage() => Lives--;
     }
 }

@@ -18,3 +18,4 @@ MonoBehaviour:
   _immortalModeTime: 2
   _charge: 3
   _chargeDecreaseTime: 10
+  _money: 0
