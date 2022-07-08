@@ -15,3 +15,4 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
   _bypassOffset: 20
+  _detectZoneLength: 10

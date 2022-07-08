@@ -105,7 +105,11 @@ namespace Assets.Scripts
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
         {
-            GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
+            PizzeriaGuy pizzeriaGuy = GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
+            BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
+            pizzeriaGuyCollider.center = new Vector3(-1 * Mathf.Abs(dispensePoint.transform.position.x) + WayMatrix.HorizontalSpacing/2, WayMatrix.VerticalSpacing / 2, 0);
+
+            pizzeriaGuy.transform.eulerAngles = Vector3.up * (pizzeriaGuy.transform.position.x < 0 ? 180 : 0);
         }
 
         private IEnumerator CarSpawning(int line)

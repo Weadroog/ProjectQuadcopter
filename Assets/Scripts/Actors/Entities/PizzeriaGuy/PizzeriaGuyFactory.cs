@@ -16,6 +16,9 @@ namespace Assets.Scripts
                .AddComponent<Disappearer>()
                .SetDisappearPoint(_wayMatrix.DisappearPoint);
 
+            BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
+            pizzeriaGuyCollider.size = new Vector3(WayMatrix.HorizontalSpacing * 2, WayMatrix.VerticalSpacing * 2, _config.DetectZoneLength);
+
             BypassDetector bypassDetector = pizzeriaGuy.AddReaction<BypassDetector, Quadcopter>(new FailedGrabPizzaReaction());
             bypassDetector.Receive(_config);
 
