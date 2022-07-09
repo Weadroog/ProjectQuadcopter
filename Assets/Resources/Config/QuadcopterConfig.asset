@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: QuadcopterConfig
   m_EditorClassIdentifier: 
   _prefab: {fileID: 163720967156421028, guid: 22f90b340925e154894b222624c01db1, type: 3}
-  _motionDuration: 0.3
+  _motionDuration: 3
   _lives: 3
+  _immortalModeTime: 2
   _charge: 3
   _chargeDecreaseTime: 10
+  _money: 0

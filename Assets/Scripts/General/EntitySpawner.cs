@@ -19,7 +19,6 @@ namespace Assets.Scripts
         [SerializeField] private PlayerCameraConfig _playerCameraConfig;
         [SerializeField] private AggressiveBirdConfig _aggressiveBirdConfig;
         [SerializeField] private CarConfig _carConfig;
-        [SerializeField] private ClotheslineConfig _clotheslineConfig;
         [SerializeField] private NetGuyConfig _netGuyConfig;
         [SerializeField] private BatteryConfig _batteryConfig;
         [SerializeField] private ClientConfig _clientConfig;
@@ -28,7 +27,6 @@ namespace Assets.Scripts
         [Header("SpawnDensity")]
         [SerializeField][Range(0, 100)] private int _aggressiveBirdDensity;
         [SerializeField][Range(0, 100)] private int _carDensity;
-        [SerializeField][Range(0, 100)] private int _clothesLineDensity;
         [SerializeField][Range(0, 100)] private int _netGuyDensity;
         [Space(30)]
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
@@ -56,7 +54,9 @@ namespace Assets.Scripts
         {
             LifeCounter lifeCounter = FindObjectOfType<LifeCounter>();
             ChargeCounter chargeCounter = FindObjectOfType<ChargeCounter>();
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter));
+            MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
+
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter, moneyCounter));
             _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
         }
@@ -105,25 +105,42 @@ namespace Assets.Scripts
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
         {
-            GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
+            PizzeriaGuy pizzeriaGuy = GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
+            BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
+            pizzeriaGuyCollider.center = new Vector3(-1 * Mathf.Abs(dispensePoint.transform.position.x) + WayMatrix.HorizontalSpacing/2, WayMatrix.VerticalSpacing / 2, 0);
+
+            pizzeriaGuy.transform.eulerAngles = Vector3.up * (pizzeriaGuy.transform.position.x < 0 ? 180 : 0);
         }
 
         private IEnumerator CarSpawning(int line)
         {
-            WaitForSeconds spawnDelay = new(Random.Range(0.15f * GlobalSpeedService.Speed / GlobalSpeedService.Speed, 0.5f * GlobalSpeedService.Speed / GlobalSpeedService.Speed));
+            float delay = 0.5f;
+            float maxDistance = 15f;
+            float minDistance = 5f;
+            float previousHalfSize = 0;
             float offset = 1.5f;
+
+            Vector3 instancePosition = new Vector3(-250f, -15f, 1000f);
+            Vector3 spawnPosition = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, WayMatrix.Height - 1)) + Vector3.down * offset + Vector3.forward * _spawnDistance;
 
             while (true)
             {
-                Vector3 position = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, WayMatrix.Height - 1)) + Vector3.down * offset;
-
                 if (_carDensity > Random.Range(0, 100))
                 {
-                    Car car = GetPool<Car>().Get(position + Vector3.forward * _spawnDistance);
+                    Car car = GetPool<Car>().Get(instancePosition);
                     if (car.CarColorChanger != null) car.CarColorChanger.ChangeColorRandom();
-                }
 
-                yield return spawnDelay;
+                    float distanceBetweenCars = Random.Range(minDistance, maxDistance);
+                    float speed = GlobalSpeedService.Speed + _carConfig.SelfSpeed;
+                    float halfSize = car.Size / 2;
+                    delay = (Mathf.Sqrt(speed * speed + 2 * GlobalSpeedService.Acceleration * (distanceBetweenCars + halfSize + previousHalfSize)) - speed) / GlobalSpeedService.Acceleration;
+                    previousHalfSize = halfSize;
+
+                    yield return new WaitForSeconds(delay);
+
+                    car.transform.position = spawnPosition;
+                }
+                else yield return new WaitForSeconds(delay);
             }
         }
 

@@ -6,7 +6,7 @@
         {
             public const string MotionX = "MotionX";
             public const string MotionY = "MotionY";
-            public const string Side = "LeanOutingSide";
+            public const string Side = "Side";
         }
 
         public class States
@@ -17,7 +17,6 @@
             public const string RightStrafe = "RightStrafe";
             public const string Fall = "Fall";
             public const string Idle = "Idle";
-            public const string TakeNext = "TakeNext";
         }
     }
 }

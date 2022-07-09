@@ -1,38 +1,55 @@
 fileFormatVersion: 2
-guid: 0154090653ccbb54496302d34250ff28
+guid: bd3f690dc8ccd594781612c6690f7829
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
-      74: -459873417827293001
+      74: -8526115137362047785
     second: DownStrafe
   - first:
-      74: -8945691123924629249
-    second: Armature|Idle
+      74: 3949184196891408138
+    second: Idle
   - first:
-      74: -2766843141536150808
+      74: -1887413263963794393
     second: LeftStrafe
   - first:
-      74: -37742227047103879
+      74: -9095623574198363823
     second: RightStrafe
   - first:
-      74: 9163159621682474919
+      74: 8789712498929214918
     second: UpStrafe
+  externalObjects:
   - first:
-      74: -3100369314251171874
-    second: Idle
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {instanceID: 0}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_
+    second: {instanceID: 0}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plastic 1
+    second: {instanceID: 0}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plastic 2
+    second: {instanceID: 0}
   materials:
     materialImportMode: 2
-    materialName: 0
-    materialSearch: 1
+    materialName: 2
+    materialSearch: 0
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -52,10 +69,10 @@ ModelImporter:
     clipAnimations:
     - serializedVersion: 16
       name: DownStrafe
-      takeName: Armature|DownStrafe
+      takeName: Armature|Armature|Armature|DownStrafe|Armature|DownStrafe
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -81,7 +98,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Idle
-      takeName: Armature|Idle
+      takeName: Armature|Armature|Armature|Idle|Armature|Idle
       internalID: 0
       firstFrame: 0
       lastFrame: 80
@@ -110,10 +127,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: LeftStrafe
-      takeName: Armature|LeftStrafe
+      takeName: Armature|Armature|Armature|LeftStrafe|Armature|LeftStrafe
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -139,10 +156,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: RightStrafe
-      takeName: Armature|RightStrafe
+      takeName: Armature|Armature|Armature|RightStrafe|Armature|RightStrafe
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -168,10 +185,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: UpStrafe
-      takeName: Armature|UpStrafe
+      takeName: Armature|Armature|Armature|UpStrafe|Armature|UpStrafe
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -198,7 +215,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 0.6
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -207,7 +224,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -251,7 +268,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.5
+    globalScale: 0.6
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

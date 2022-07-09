@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -12,7 +9,7 @@ namespace Assets.Scripts
 
         public static event Action OnStop;
         public static event Action OnPlay;
-
+            
         private void Awake() => _speedService = FindObjectOfType<GlobalSpeedService>();
 
         public void Stop()
@@ -30,5 +27,3 @@ namespace Assets.Scripts
         }
     }
 }
-
-

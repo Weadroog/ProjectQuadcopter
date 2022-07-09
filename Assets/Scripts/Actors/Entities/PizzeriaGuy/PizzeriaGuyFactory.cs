@@ -23,6 +23,7 @@ namespace Assets.Scripts
                 .AddComponent<PizzaEquipper>()
                 .Receive(_config);
 
+
             CollisionDetector collisionDetector = pizzeriaGuy.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction());
             collisionDetector.Receive(_config);
             collisionDetector.OnDetect += (Entity entity) =>

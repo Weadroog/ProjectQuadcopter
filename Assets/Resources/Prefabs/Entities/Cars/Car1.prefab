@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 7556066367354074198}
   - component: {fileID: 5066961233641141595}
   - component: {fileID: -8251532785398780950}
+  - component: {fileID: 7056829024114349172}
   m_Layer: 0
   m_Name: Car1
   m_TagString: Untagged
@@ -483,6 +484,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &7056829024114349172
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3602332726695316722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 2.3, z: 5}
+  m_Center: {x: 0, y: -0.69, z: 0.2}
 --- !u!1 &3696179304642321722
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5908224570653700569}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -0, y: -2, z: 0}
+  m_LocalPosition: {x: -0, y: -1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

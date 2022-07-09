@@ -42,6 +42,8 @@ namespace Assets.Scripts
             return this;
         }
 
+        public void SetPosition(MatrixPosition position) => _wayMatrix.GetPosition(position, out _currentPosition);
+
         private void UpdatePosition(Vector2Int positionShift)
         {
             CurrentPosition = new Vector2Int(CurrentPosition.x + positionShift.x, CurrentPosition.y - positionShift.y);

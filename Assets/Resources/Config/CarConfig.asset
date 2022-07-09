@@ -15,5 +15,6 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 5066961233641141595, guid: f4deb85e11c91ea479774027be804021, type: 3}
   - {fileID: 5066961233641141595, guid: efa06b13816b97e4a9ce70f0beb67db8, type: 3}
+  - {fileID: 5066961233641141595, guid: ae2d215e2d01dd24bb4f50462a5afeaa, type: 3}
   _selfSpeed: 25
   _detectionDistance: 25
