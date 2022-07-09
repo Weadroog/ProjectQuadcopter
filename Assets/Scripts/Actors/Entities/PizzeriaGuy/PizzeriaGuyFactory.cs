@@ -16,15 +16,19 @@ namespace Assets.Scripts
                .AddComponent<Disappearer>()
                .SetDisappearPoint(_wayMatrix.DisappearPoint);
 
-            BypassDetector bypassDetector = pizzeriaGuy.AddReaction<BypassDetector, Quadcopter>(new FailedGrabPizzaReaction());
-            bypassDetector.Receive(_config);
+            BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
+            pizzeriaGuyCollider.size = new Vector3(WayMatrix.HorizontalSpacing * 2, WayMatrix.VerticalSpacing * 2, _config.DetectZoneLength);
+
+            pizzeriaGuy.gameObject
+                .AddComponent<PizzaEquipper>()
+                .Receive(_config);
 
             CollisionDetector collisionDetector = pizzeriaGuy.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction());
             collisionDetector.Receive(_config);
             collisionDetector.OnDetect += (Entity entity) =>
             {
-                if (entity.TryGetComponent(out Quadcopter quadcopter))
-                    bypassDetector.Disactivate();
+                //if (entity.TryGetComponent(out Quadcopter quadcopter))
+                    //bypassDetector.Disactivate();
             };
 
             pizzeriaGuy.gameObject
