@@ -11,20 +11,15 @@ namespace Assets.Scripts
         public override Client GetCreated()
         {
             Client client = Object.Instantiate(_config.Prefab);
-            BypassDetector bypassDetector = client.AddReaction<BypassDetector, Quadcopter>(new FailedDeliveryReaction());
-            bypassDetector.Receive(_config);
 
-            client.gameObject
+            Disappearer disappearer = client.gameObject
                .AddComponent<Disappearer>()
                .SetDisappearPoint(_wayMatrix.DisappearPoint);
 
-            CollisionDetector collisionDetector = client.AddReaction<CollisionDetector, Quadcopter>(new SuccessfulDeliveryReaction());
+            disappearer.OnDisappear += Deliverer.OnDeliverySequenceFailed.Invoke;
+
+            CollisionDetector collisionDetector = client.AddReaction<CollisionDetector, Pizza>(new SuccessfulDeliveryReaction(client));
             collisionDetector.Receive(_config);
-            collisionDetector.OnDetect += (Entity entity) =>
-            {
-                if (entity.TryGetComponent(out Quadcopter quadcopter))
-                    bypassDetector.Disactivate();
-            };
 
             client.gameObject
                 .AddComponent<Mover>()

@@ -193,6 +193,7 @@ namespace Assets.Scripts
                 {
                     _client.gameObject.SetActive(true);
                     _client.transform.position = window.GetSpawnPoint();
+                    _client.transform.eulerAngles = Vector3.up * (_client.transform.position.x < 0 ? 180 : 0);
                     Debug.Log("Появился клиент!");
                     _isClientRequested = false;
                 }
