@@ -11,7 +11,7 @@ namespace Assets.Scripts
         public override void React()
         {
             Debug.Log("Сбросили питсу: пролетели клиента");
-            Deliverer.OnDeliveryEventOccured?.Invoke(DeliveryState.NotCarryingPizza);
+            Deliverer.OnDeliverySequenceFailed?.Invoke();
         }
     }
 

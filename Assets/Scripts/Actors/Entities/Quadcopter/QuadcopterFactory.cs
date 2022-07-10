@@ -39,7 +39,7 @@ namespace Assets.Scripts
             purse.Receive(_config);
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
-            deliverer.SetDeliveryState(DeliveryState.NotCarryingPizza);
+            deliverer.SetPizzaCarryingStatus(false);
 
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, AggressiveBird, Car, Net>(new TakeDamageReaction(quadcopter, _config));

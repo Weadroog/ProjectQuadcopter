@@ -16,13 +16,11 @@ namespace Assets.Scripts
 
         public override void React()
         {
-            if (_deliverer.DeliveryState == DeliveryState.CarryingPizza)
+            if (_deliverer.IsCarryingPizza)
             {
-                Deliverer.OnDeliveryEventOccured?.Invoke(DeliveryState.NotCarryingPizza);
+                Deliverer.OnDeliverySequenceFailed?.Invoke();
                 Debug.Log("Уронили питсу");
             }
-            
-            
         }
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
+    [Obsolete]
     public class BypassDetector : Detector
     {
         public override event Action<Entity> OnDetect;

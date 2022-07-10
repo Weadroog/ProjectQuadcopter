@@ -9,7 +9,7 @@ namespace Assets.Scripts
         public override void React()
         {
             Debug.Log("Удачно доставили питсу, спавним новую пиццерию");
-            Deliverer.OnDeliveryEventOccured?.Invoke(DeliveryState.NotCarryingPizza);
+            Deliverer.OnSuccessfulDelivery?.Invoke();
         }
     }
 

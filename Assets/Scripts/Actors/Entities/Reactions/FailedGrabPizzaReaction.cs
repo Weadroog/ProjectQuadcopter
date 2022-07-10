@@ -5,7 +5,7 @@ namespace Assets.Scripts
     {
         public override void React()
         {
-            Deliverer.OnPizzeriaBypassed?.Invoke();
+            Deliverer.OnDeliverySequenceFailed?.Invoke();
         }
 
     }
