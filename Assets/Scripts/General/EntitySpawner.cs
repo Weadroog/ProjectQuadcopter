@@ -100,7 +100,7 @@ namespace Assets.Scripts
             _client = clientFactory.GetCreated();
             _client.gameObject.SetActive(false);
             _client.transform.SetParent(entityContainer.transform);
-            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) => _isClientRequested = deliveryState == DeliveryState.CarryingPizza;
+            Deliverer.OnPizzaGrabbed += () => _isClientRequested = true;
         }
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
@@ -108,7 +108,6 @@ namespace Assets.Scripts
             PizzeriaGuy pizzeriaGuy = GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
             BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
             pizzeriaGuyCollider.center = new Vector3(-1 * Mathf.Abs(dispensePoint.transform.position.x) + WayMatrix.HorizontalSpacing/2, WayMatrix.VerticalSpacing / 2, 0);
-
             pizzeriaGuy.transform.eulerAngles = Vector3.up * (pizzeriaGuy.transform.position.x < 0 ? 180 : 0);
         }
 
@@ -200,28 +199,6 @@ namespace Assets.Scripts
 
                 else if (IsEnabled<NetGuy>()) GetPool<NetGuy>().Get(window.GetSpawnPoint());
 
-                window.Open();
-            }
-        }
-
-        private void SpawnNetGuy(IEnumerable<Window> windows)
-        {
-            foreach (Window window in windows)
-            {
-                if (Random.Range(0, 100) > _netGuyDensity)
-                {
-                    window.Close();
-                    continue;
-                }
-                if (_client != null && _isClientRequested)
-                {
-                    _client.gameObject.SetActive(true);
-                    _client.transform.position = window.GetSpawnPoint();
-                    Debug.Log("spawned client");
-                    _isClientRequested = false;
-                }
-                    
-                else GetPool<NetGuy>().Get(window.GetSpawnPoint());
                 window.Open();
             }
         }

@@ -24,9 +24,7 @@ namespace Assets.Scripts
 
         private void OnEnable()
         {
-            Deliverer.OnDeliveryStateChanged += (DeliveryState deliveryState) =>
-                _isPizzeriaRequested = deliveryState == DeliveryState.NotCarryingPizza;
-            Deliverer.OnPizzeriaBypassed += () => _isPizzeriaRequested = true;
+            Deliverer.OnDeliverySequenceFailed += () => _isPizzeriaRequested = true;
         }
         
         public void EnableChunks(Container chunksContainer) 
@@ -95,7 +93,10 @@ namespace Assets.Scripts
         }
 
 
-        private void OnDisable() => Deliverer.OnDeliveryStateChanged -= (DeliveryState deliveryState) => _isPizzeriaRequested = deliveryState == DeliveryState.NotCarryingPizza;
+        private void OnDisable()
+        {
+            Deliverer.OnDeliverySequenceFailed -= () => _isPizzeriaRequested = true;
+        }
         
     }
 }
