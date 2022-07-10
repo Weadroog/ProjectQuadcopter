@@ -10,6 +10,8 @@ namespace Assets.Scripts
 
         public Client Prefab => _prefabGetter.Get(_prefabs);
         public float DetectionDistance => _bypassDistance;
+        public float DetectionWidth => 0;
         public float SelfSpeed => 0;
+
     }
 }

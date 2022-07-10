@@ -13,6 +13,8 @@ namespace Assets.Scripts
         public Battery Prefab => _prefab;
         public float SelfSpeed => 0;
         public float DetectionDistance => _detectionDistance;
+        public float DetectionWidth => 0;
         public float RotationSpeed => _rotationSpeed;
+
     }
 }

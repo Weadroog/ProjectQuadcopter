@@ -11,8 +11,10 @@ namespace Assets.Scripts
 
         public PizzeriaGuy Prefab => _prefabGetter.Get(_prefabs);
         public float DetectionDistance => _bypassOffset;
+        public float DetectionWidth => 0;
         public float DetectZoneLength => _detectZoneLength;
         public float SelfSpeed => 0;
+
     }
 }
 

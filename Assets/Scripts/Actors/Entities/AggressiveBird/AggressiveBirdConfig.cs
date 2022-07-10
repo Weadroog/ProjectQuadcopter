@@ -12,5 +12,6 @@ namespace Assets.Scripts
         public AggressiveBird Prefab => _prefabGetter.Get(_prefabs);
         public float SelfSpeed => _selfSpeed;
         public float DetectionDistance => _detectionDistance;
+        public float DetectionWidth => 0;
     }
 }

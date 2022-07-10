@@ -3,5 +3,6 @@
     public interface ICanDetect
     {
         public float DetectionDistance { get; }
+        public float DetectionWidth { get; }
     }
 }

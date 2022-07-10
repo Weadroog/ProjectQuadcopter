@@ -12,5 +12,6 @@ namespace Assets.Scripts
         public Car Prefab => _prefabGetter.Get(_prefabs);
         public float SelfSpeed => _selfSpeed;
         public float DetectionDistance => _detectionDistance;
+        public float DetectionWidth => 0;
     }
 }
