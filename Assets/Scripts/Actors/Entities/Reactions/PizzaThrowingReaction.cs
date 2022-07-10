@@ -7,7 +7,6 @@ namespace Assets.Scripts
     public class PizzaThrowingReaction : Reaction
     {
         private Pizza _pizza;
-        //private Quadcopter _quadcopter;
 
         public PizzaThrowingReaction(Pizza pizza)
         {

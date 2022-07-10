@@ -19,7 +19,6 @@ namespace Assets.Scripts
             Debug.Log("Забрали пиццу");
             _pizza.transform.SetParent(_detectableEntity.transform);
             Deliverer.OnPizzaGrabbed?.Invoke();
-            //Deliverer.OnDeliveryEventOccured?.Invoke(DeliveryState.CarryingPizza);
         }
     }
 }
