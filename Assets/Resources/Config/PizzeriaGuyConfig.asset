@@ -18,3 +18,6 @@ MonoBehaviour:
   - {fileID: 5886073294840374202, guid: 34f1c64648cee4d26832e430c36dd934, type: 3}
   _bypassOffset: 20
   _detectZoneLength: 10
+  _detectFloorsUp: 0
+  _detectFloorsDown: 0
+  _detectFloors: {x: 0, y: 0}

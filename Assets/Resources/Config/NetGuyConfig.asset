@@ -20,3 +20,6 @@ MonoBehaviour:
   _detectionDistanceZ: 50
   _shoveOutSpeed: 1
   _shoveInSpeed: 2
+  _detectFloorsUp: 0
+  _detectFloorsDown: 0
+  _detectFloors: {x: 0, y: 0}

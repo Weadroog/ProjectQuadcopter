@@ -15,3 +15,5 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 828858362942317433, guid: a2367d6b3f06d495c95529a0f1f47106, type: 3}
   _bypassDistance: 20
+  _detectFloorsUp: 2
+  _detectFloorsDown: 2

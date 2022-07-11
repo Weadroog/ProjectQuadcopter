@@ -14,7 +14,8 @@ namespace Assets.Scripts
         public float SelfSpeed => 0;
         public float DetectionDistance => _detectionDistance;
         public float DetectionWidth => 0;
+        public int DetectFloorsUp => 0;
+        public int DetectFloorsDown => 0;
         public float RotationSpeed => _rotationSpeed;
-
     }
 }
