@@ -35,29 +35,40 @@ namespace Assets.Scripts
             float ellipseRightSideValue = 1;
             float xDistance = _config.DetectionWidth;
             float zDistance = _config.DetectionDistance;
-            float distance = (Mathf
+            float yUpDistance = _config.DetectFloorsUp * WayMatrix.VerticalSpacing + WayMatrix.VerticalSpacing / 4;
+            float yDownDistance = Mathf.Abs(_config.DetectFloorsDown) * WayMatrix.VerticalSpacing + WayMatrix.VerticalSpacing / 4;
+            float xzDistance = (Mathf
                 .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf
                 .Pow(zDistance, 2) + Mathf
                 .Pow(_target.transform.position.x - transform.position.x, 2) / Mathf
                 .Pow(xDistance, 2));
+            float verticalDistanceToTarget = transform.position.y - _target.transform.position.y;
+            bool isInVerticalDistance;
 
-            Draw(zDistance, xDistance, 60);
+            Draw(yUpDistance, yDownDistance, zDistance, xDistance, 30);
 
-            if (distance <= ellipseRightSideValue)
+            isInVerticalDistance = verticalDistanceToTarget > 0 
+                ? yDownDistance >= Mathf.Abs(verticalDistanceToTarget) 
+                : yUpDistance >= Mathf.Abs(verticalDistanceToTarget);
+
+            if (xzDistance <= ellipseRightSideValue && isInVerticalDistance)
                 return true;
 
             return false;
         }
 
-        private void Draw(float a, float b, int pointsNumber)
+        private void Draw(float yAxisUpLength, float yAxisDownLength, float zAxisLength, float xAxisLength, int pointsNumber)
         {
-            Vector3 previousPoint = new Vector3(b * Mathf.Sin(0) + transform.position.x, 0, a * Mathf.Cos(0) + transform.position.z);
-            Vector3 nextPoint = previousPoint;
+            Vector3 previousPoint = new Vector3(xAxisLength * Mathf.Sin(0) + transform.position.x, transform.position.y, zAxisLength * Mathf.Cos(0) + transform.position.z);
+            Vector3 nextPoint;
+
+            Debug.DrawLine(previousPoint + yAxisUpLength * Vector3.up, previousPoint + yAxisDownLength * Vector3.down, Color.green);
 
             for (float i = 2 * Mathf.PI / pointsNumber; i < 2 * Mathf.PI; i += 2 * Mathf.PI / pointsNumber)
             {
-                nextPoint = new Vector3(b * Mathf.Sin(i) + transform.position.x, 0, a * Mathf.Cos(i) + transform.position.z);
+                nextPoint = new Vector3(xAxisLength * Mathf.Sin(i) + transform.position.x, transform.position.y, zAxisLength * Mathf.Cos(i) + transform.position.z);
                 Debug.DrawLine(previousPoint, nextPoint, Color.red);
+                Debug.DrawLine(nextPoint + yAxisUpLength * Vector3.up, nextPoint + yAxisDownLength * Vector3.down, Color.green);
                 previousPoint = nextPoint;
             }
         }

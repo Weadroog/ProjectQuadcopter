@@ -335,7 +335,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56
+  m_fontSize: 58.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56
+  m_fontSize: 58.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1344,8 +1344,8 @@ MonoBehaviour:
   _batteryConfig: {fileID: 11400000, guid: 09ff6330c9c5503459cc3ac7d93fd886, type: 2}
   _clientConfig: {fileID: 11400000, guid: 6a6ab063228d84d93a15f9dd25eb1fa2, type: 2}
   _pizzeriaGuyConfig: {fileID: 11400000, guid: cd3deaf12fbb7402e81f6f69859e269f, type: 2}
-  _aggressiveBirdDensity: 5
-  _carDensity: 25
+  _aggressiveBirdDensity: 0
+  _carDensity: 0
   _netGuyDensity: 10
   _spawnDistance: 200
 --- !u!1 &2112761519
