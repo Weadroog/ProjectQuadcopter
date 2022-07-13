@@ -22,7 +22,7 @@ namespace Assets.Scripts
                 .OnDisappear += () => netGuy.GetComponent<Animator>().SetFloat(AnimationService.Parameters.Side, 0);
 
             netGuy
-                .AddReaction<EllipseDetector, Quadcopter>(new ShoveOutReaction(netGuy, _config))
+                .AddReaction<BoxDetector, Quadcopter>(new ShoveOutReaction(netGuy, _config))
                 .Receive(_config);
 
             netGuy.gameObject

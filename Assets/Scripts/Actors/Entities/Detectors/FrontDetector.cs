@@ -28,9 +28,9 @@ namespace Assets.Scripts
         private bool IsTargetInRadius(out Entity target)
         {
             Ray ray = new Ray(transform.position, Vector3.back);
-            Debug.DrawRay(ray.origin, ray.direction * _config.DetectionDistance, Color.red);
+            Debug.DrawRay(ray.origin, ray.direction * _config.XDetectionDistanceLeft, Color.red);
 
-            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _config.DetectionDistance))
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _config.XDetectionDistanceLeft))
             {
                 if (detectionInfo.collider.TryGetComponent(out target))
                 {

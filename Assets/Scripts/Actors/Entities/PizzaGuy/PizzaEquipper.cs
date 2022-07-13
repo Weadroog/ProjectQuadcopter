@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class PizzaEquipper : ConfigReceiver<PizzeriaGuyConfig>
+    public class PizzaEquipper : ConfigReceiver<PizzaGuyConfig>
     {
         private PizzaPoint _pizzaPoint;
         private Pizza _equipedPizza;
@@ -22,7 +22,7 @@ namespace Assets.Scripts
             }
         }
 
-        public override void Receive(PizzeriaGuyConfig config)
+        public override void Receive(PizzaGuyConfig config)
         {
             base.Receive(config);
             _pizzaPoint = GetComponentInChildren<PizzaPoint>();

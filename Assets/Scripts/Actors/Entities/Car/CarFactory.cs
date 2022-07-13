@@ -14,7 +14,7 @@ namespace Assets.Scripts
             car.gameObject.AddComponent<Mover>().Receive(_config);
 
             car.gameObject.AddComponent<Disappearer>().SetDisappearPoint(_wayMatrix.DisappearPoint);
-            car.AddReaction<CollisionDetector, Quadcopter, AggressiveBird>(new CarCrashingReaction());
+            car.AddReaction<CollisionDetector, Quadcopter, Bird>(new CarCrashingReaction());
             return car;
         }
     }

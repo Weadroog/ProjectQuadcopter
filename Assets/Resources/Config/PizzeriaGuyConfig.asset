@@ -16,8 +16,6 @@ MonoBehaviour:
   - {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
   _pizzaPrefabs:
   - {fileID: 5886073294840374202, guid: 34f1c64648cee4d26832e430c36dd934, type: 3}
-  _bypassOffset: 20
-  _detectZoneLength: 10
-  _detectFloorsUp: 0
-  _detectFloorsDown: 0
-  _detectFloors: {x: 0, y: 0}
+  _xDetectionRadius: 10
+  _zDetectionRange: {x: -10, y: 0}
+  _yDetectionRange: {x: -10, y: 10}

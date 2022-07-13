@@ -39,7 +39,7 @@ namespace Assets.Scripts
                 _isDetection = true;
         }
 
-        private bool CheckBypass() { return transform.position.z + _config.DetectionDistance < _target.transform.position.z; }
+        private bool CheckBypass() { return transform.position.z + _config.XDetectionDistanceLeft < _target.transform.position.z; }
         
         private void OnDisable() => UpdateService.OnUpdate -= Detect;
     }

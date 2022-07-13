@@ -18,7 +18,7 @@ namespace Assets.Scripts
             battery.gameObject.AddComponent<Disappearer>().SetDisappearPoint(_wayMatrix.DisappearPoint);
 
             battery.AddReaction<CollisionDetector, Quadcopter>(new BatteryDisappearReaction(battery));
-            battery.AddReaction<BackDetector, AggressiveBird, Car>(new PushForwardReaction(mover)).Receive(_config);
+            battery.AddReaction<BackDetector, Bird, Car>(new PushForwardReaction(mover)).Receive(_config);
             return battery;
         }
     }

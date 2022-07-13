@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts
@@ -14,21 +15,19 @@ namespace Assets.Scripts
         private Client _client;
         private bool _isClientRequested;
 
-        [Header("Configurations")]
-        [SerializeField] private QuadcopterConfig _quadcopterConfig;
-        [SerializeField] private PlayerCameraConfig _playerCameraConfig;
-        [SerializeField] private AggressiveBirdConfig _aggressiveBirdConfig;
-        [SerializeField] private CarConfig _carConfig;
-        [SerializeField] private NetGuyConfig _netGuyConfig;
-        [SerializeField] private BatteryConfig _batteryConfig;
-        [SerializeField] private ClientConfig _clientConfig;
-        [SerializeField] private PizzeriaGuyConfig _pizzeriaGuyConfig;
-        [Space(30)]
-        [Header("SpawnDensity")]
-        [SerializeField][Range(0, 100)] private int _aggressiveBirdDensity;
-        [SerializeField][Range(0, 100)] private int _carDensity;
-        [SerializeField][Range(0, 100)] private int _netGuyDensity;
-        [Space(30)]
+        [SerializeField, BoxGroup("Configurations")] private QuadcopterConfig _quadcopterConfig;
+        [SerializeField, BoxGroup("Configurations")] private PlayerCameraConfig _playerCameraConfig;
+        [SerializeField, BoxGroup("Configurations")] private BirdConfig _birdConfig;
+        [SerializeField, BoxGroup("Configurations")] private CarConfig _carConfig;
+        [SerializeField, BoxGroup("Configurations")] private NetGuyConfig _netGuyConfig;
+        [SerializeField, BoxGroup("Configurations")] private BatteryConfig _batteryConfig;
+        [SerializeField, BoxGroup("Configurations")] private ClientConfig _clientConfig;
+        [SerializeField, BoxGroup("Configurations")] private PizzaGuyConfig _pizzeriaGuyConfig;
+
+        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _aggressiveBirdDensity;
+        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _carDensity;
+        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _netGuyDensity;
+
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
         private void OnEnable() => GameStopper.OnPlay += Setup;
@@ -41,7 +40,7 @@ namespace Assets.Scripts
             if (IsEnabled<Car>())
                 SpawnCars();
 
-            if (IsEnabled<AggressiveBird>())
+            if (IsEnabled<Bird>())
                 SpawnAggressiveBirds();
         }
 
@@ -68,7 +67,7 @@ namespace Assets.Scripts
 
         public void EnableAggressiveBirds(Container entityContainer)
         {
-            _pools[typeof(AggressiveBird)] = new Pool<AggressiveBird>(new AggressiveBirdFactory(_aggressiveBirdConfig), entityContainer, 10);
+            _pools[typeof(Bird)] = new Pool<Bird>(new BirdFactory(_birdConfig), entityContainer, 10);
         }
 
         public void EnableNetGuys(Container entityContainer)
@@ -90,7 +89,7 @@ namespace Assets.Scripts
 
         private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
         {
-            _pools[typeof(PizzeriaGuy)] = new Pool<PizzeriaGuy>(new PizzeriaGuyFactory(_pizzeriaGuyConfig), entityContainer, 2);
+            _pools[typeof(PizzaGuy)] = new Pool<PizzaGuy>(new PizzaGuyFactory(_pizzeriaGuyConfig), entityContainer, 2);
             chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
         }
 
@@ -105,7 +104,7 @@ namespace Assets.Scripts
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
         {
-            PizzeriaGuy pizzeriaGuy = GetPool<PizzeriaGuy>().Get(dispensePoint.transform.position);
+            PizzaGuy pizzeriaGuy = GetPool<PizzaGuy>().Get(dispensePoint.transform.position);
             BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
             pizzeriaGuyCollider.center = new Vector3(-1 * Mathf.Abs(dispensePoint.transform.position.x) + WayMatrix.HorizontalSpacing / 2, WayMatrix.VerticalSpacing / 2, 0);
             pizzeriaGuy.transform.eulerAngles = Vector3.up * (pizzeriaGuy.transform.position.x < 0 ? 180 : 0);
@@ -161,7 +160,7 @@ namespace Assets.Scripts
 
                 if (_aggressiveBirdDensity > Random.Range(0, 100))
                 {
-                    GetPool<AggressiveBird>().Get(position + Vector3.forward * _spawnDistance);
+                    GetPool<Bird>().Get(position + Vector3.forward * _spawnDistance);
                 }
 
                 yield return spawnDelay;

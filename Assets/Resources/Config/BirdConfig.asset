@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5571ec99416a51d4fa6282a96f3ee2f7, type: 3}
-  m_Name: AggressiveBirdConfig
+  m_Name: BirdConfig
   m_EditorClassIdentifier: 
   _prefabs:
   - {fileID: 1637066925607362624, guid: 35b4309d921de97459bcbc7ccbc8d966, type: 3}
   _selfSpeed: 40
-  _detectionDistance: 25
+  _xDetectionRange: {x: 0, y: 0}
+  _zDetectionRange: {x: -10, y: 0}
+  _yDetectionRange: {x: 0, y: 0}

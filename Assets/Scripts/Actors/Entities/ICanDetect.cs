@@ -2,9 +2,11 @@
 {
     public interface ICanDetect
     {
-        public float DetectionDistance { get; }
-        public float DetectionWidth { get; }
-        public int DetectFloorsUp { get; }
-        public int DetectFloorsDown { get; }
+        public float XDetectionDistanceLeft { get; }
+        public float XDetectionDistanceRight { get; }
+        public float ZDetectionDistanceForward { get; }
+        public float ZDetectionDistanceBackward { get; }
+        public float YDetectionDistanceUp { get; }
+        public float YDetectionDistanceDown { get; }
     }
 }

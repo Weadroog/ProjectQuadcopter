@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class EllipseDetector : Detector
+    public class BoxDetector : Detector
     {
         public override event Action<Entity> OnDetect;
         public override event Action OnDetectAll;
@@ -33,10 +33,10 @@ namespace Assets.Scripts
         private bool IsTargetInRadius()
         {
             float ellipseRightSideValue = 1;
-            float xDistance = _config.DetectionWidth;
-            float zDistance = _config.DetectionDistance;
-            float yUpDistance = _config.DetectFloorsUp * WayMatrix.VerticalSpacing + WayMatrix.VerticalSpacing / 4;
-            float yDownDistance = Mathf.Abs(_config.DetectFloorsDown) * WayMatrix.VerticalSpacing + WayMatrix.VerticalSpacing / 4;
+            float xDistance = _config.ZDetectionDistanceForward;
+            float zDistance = _config.XDetectionDistanceLeft;
+            float yUpDistance = _config.YDetectionDistanceUp * WayMatrix.VerticalSpacing + WayMatrix.VerticalSpacing / 4;
+            float yDownDistance = Mathf.Abs(_config.YDetectionDistanceDown) * WayMatrix.VerticalSpacing + WayMatrix.VerticalSpacing / 4;
             float xzDistance = (Mathf
                 .Pow(_target.transform.position.z - transform.position.z, 2) / Mathf
                 .Pow(zDistance, 2) + Mathf

@@ -4909,7 +4909,7 @@ GameObject:
   - component: {fileID: 1637066925607362624}
   - component: {fileID: 7962057237281856545}
   m_Layer: 0
-  m_Name: AggressiveBird
+  m_Name: Bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

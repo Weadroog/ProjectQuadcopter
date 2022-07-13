@@ -4,11 +4,11 @@ namespace Assets.Scripts
 {
     public class AggressiveBirdKillingReaction : Reaction
     {
-        private AggressiveBird _bird;
+        private Bird _bird;
         private ParticleSystem _particleSystem;
         private Animator _animator;
 
-        public AggressiveBirdKillingReaction(AggressiveBird bird) 
+        public AggressiveBirdKillingReaction(Bird bird) 
         {
             _bird = bird;
             _particleSystem = _bird.GetComponentInChildren<ParticleSystem>();
