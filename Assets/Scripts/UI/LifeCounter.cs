@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts
+﻿namespace UI
 {
     public class LifeCounter : UICouter { }
 }

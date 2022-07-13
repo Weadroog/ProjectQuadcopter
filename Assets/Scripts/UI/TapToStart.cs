@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using General;
 
-namespace Assets.Scripts
+namespace UI
 {
     public class TapToStart : MonoBehaviour
     {

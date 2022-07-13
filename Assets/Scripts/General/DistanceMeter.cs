@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Services;
 
-namespace Assets.Scripts
+namespace General
 {
     public class DistanceMeter : MonoBehaviour
     {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using General;
 
-namespace Assets.Scripts
+namespace Services
 {
     public class ContainerService : MonoBehaviour
     {

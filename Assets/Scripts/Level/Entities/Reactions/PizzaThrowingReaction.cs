@@ -1,0 +1,22 @@
+using UnityEngine;
+using Entities;
+
+namespace Reactions
+{
+    public class PizzaThrowingReaction : Reaction
+    {
+        private Pizza _pizza;
+
+        public PizzaThrowingReaction(Pizza pizza)
+        {
+            _pizza = pizza;
+        }
+
+        public override void React()
+        {
+            _pizza.transform.position = _detectableEntity.transform.position;
+            Debug.Log($"Throwing Pizza ({_detectableEntity.name})");
+        }
+    }
+}
+

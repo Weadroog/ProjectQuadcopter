@@ -1,17 +1,20 @@
 using UnityEngine;
 using TMPro;
 
-public class UICouter : MonoBehaviour
+namespace UI
 {
-    private TextMeshProUGUI _value;
-
-    private void Awake()
+    public class UICouter : MonoBehaviour
     {
-        _value = GetComponent<TextMeshProUGUI>();
-    }
+        private TextMeshProUGUI _value;
 
-    public void Display(int value)
-    {
-        _value.text = value.ToString();
+        private void Awake()
+        {
+            _value = GetComponent<TextMeshProUGUI>();
+        }
+
+        public void Display(int value)
+        {
+            _value.text = value.ToString();
+        }
     }
 }

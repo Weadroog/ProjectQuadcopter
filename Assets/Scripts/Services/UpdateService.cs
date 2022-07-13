@@ -1,15 +1,18 @@
 using System;
 using UnityEngine;
 
-public sealed class UpdateService : MonoBehaviour
+namespace Services
 {
-    public static Action OnLateUpdate;
-    public static Action OnUpdate;
-    public static Action OnFixedUpdate;
+    public sealed class UpdateService : MonoBehaviour
+    {
+        public static Action OnLateUpdate;
+        public static Action OnUpdate;
+        public static Action OnFixedUpdate;
 
-    private void LateUpdate() => OnLateUpdate?.Invoke();
+        private void LateUpdate() => OnLateUpdate?.Invoke();
 
-    private void Update() => OnUpdate?.Invoke();
+        private void Update() => OnUpdate?.Invoke();
 
-    private void FixedUpdate() => OnFixedUpdate?.Invoke();
+        private void FixedUpdate() => OnFixedUpdate?.Invoke();
+    }
 }

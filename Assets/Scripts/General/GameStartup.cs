@@ -1,8 +1,12 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Services;
+using UI;
+using Chunk;
+using Level;
+using Entities;
 
-namespace Assets.Scripts
+namespace General
 {
     public class GameStartup : MonoBehaviour
     {
@@ -26,7 +30,6 @@ namespace Assets.Scripts
             Container chunkContainer = ContainerService.GetCreatedContainer("Chunks", _city.transform);
             Container entityContainer = ContainerService.GetCreatedContainer("Entities", _city.transform);
             _chunkGenerator.EnableChunks(chunkContainer);
-            _entitySpawner.EnablePlayerCamera(entityContainer);
             _entitySpawner.EnableQuadcopter(entityContainer);
             _entitySpawner.EnableCarTraffic(entityContainer);
             _entitySpawner.EnableAggressiveBirds(entityContainer);
