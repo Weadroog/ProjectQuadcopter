@@ -18,11 +18,11 @@ namespace Entities
         public float SelfSpeed => 0;
         public float RotationSpeed => _rotationSpeed;
 
-        public float XDetectionDistanceLeft => _xDetectionRange.x;
-        public float XDetectionDistanceRight => _xDetectionRange.y;
-        public float ZDetectionDistanceForward => _zDetectionRange.x;
-        public float ZDetectionDistanceBackward => _zDetectionRange.y;
-        public float YDetectionDistanceUp => _yDetectionRange.x;
-        public float YDetectionDistanceDown => _yDetectionRange.y;
+        public float XDetectionDistanceLeft => Mathf.Abs(_xDetectionRange.x);
+        public float XDetectionDistanceRight => Mathf.Abs(_xDetectionRange.y);
+        public float ZDetectionDistanceForward => Mathf.Abs(_zDetectionRange.x);
+        public float ZDetectionDistanceBackward => Mathf.Abs(_zDetectionRange.y);
+        public float YDetectionDistanceUp => Mathf.Abs(_yDetectionRange.x);
+        public float YDetectionDistanceDown => Mathf.Abs(_yDetectionRange.y);
     }
 }

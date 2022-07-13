@@ -16,6 +16,6 @@ MonoBehaviour:
   - {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
   _pizzaPrefabs:
   - {fileID: 5886073294840374202, guid: 34f1c64648cee4d26832e430c36dd934, type: 3}
-  _xDetectionRadius: 10
-  _zDetectionRange: {x: -10, y: 0}
-  _yDetectionRange: {x: -10, y: 10}
+  _xDetectionRadius: 20.6
+  _zDetectionRange: {x: -49.69983, y: 0}
+  _yDetectionRange: {x: -10, y: 58.41443}
