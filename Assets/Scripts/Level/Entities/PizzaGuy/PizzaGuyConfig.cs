@@ -4,7 +4,7 @@ using General;
 
 namespace Entities
 {
-    [CreateAssetMenu(menuName = "Config/PizzeriaGuy", fileName = "New Pizzeria Guy Config")]
+    [CreateAssetMenu(menuName = "Config/PizzaGuy", fileName = "New Pizza Guy Config")]
     public class PizzaGuyConfig : Config, ICanDetect, ICanMove
     {
         [SerializeField] private PizzaGuy[] _prefabs;
@@ -20,8 +20,8 @@ namespace Entities
         public float XDetectionDistanceRight => _xDetectionRange;
         public float ZDetectionDistanceForward => _zDetectionRange.x;
         public float ZDetectionDistanceBackward => _zDetectionRange.y;
-        public float YDetectionDistanceUp => _yDetectionRange.x;
-        public float YDetectionDistanceDown => _yDetectionRange.y;
+        public float YDetectionDistanceUp => _yDetectionRange.y;
+        public float YDetectionDistanceDown => _yDetectionRange.x;
     }
 }
 

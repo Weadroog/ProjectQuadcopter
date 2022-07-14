@@ -34,27 +34,26 @@ namespace Entities
 
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
-        private void OnEnable() => GameStopper.OnPlay += Setup;
-        
-
-        private void Setup()
+        private void OnEnable()
         {
-            FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
+            GameFlowService.OnPlay += () =>
+            {
+                FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
 
-            if (IsEnabled<Car>())
-                SpawnCars();
+                if (IsEnabled<Car>())
+                    SpawnCars();
 
-            if (IsEnabled<Bird>())
-                SpawnAggressiveBirds();
+                if (IsEnabled<Bird>())
+                    SpawnAggressiveBirds();
+            };
         }
 
         public Quadcopter EnableQuadcopter(Container entityContainer)
         {
             LifeCounter lifeCounter = FindObjectOfType<LifeCounter>();
-            ChargeCounter chargeCounter = FindObjectOfType<ChargeCounter>();
             MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
 
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, chargeCounter, moneyCounter));
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter));
             _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
         }
@@ -213,8 +212,18 @@ namespace Entities
 
         private E GetCreatedEntity<E>(IFactory<E> entityFactory) where E : Entity => entityFactory.GetCreated();
 
-        private void OnDisable() => GameStopper.OnPlay -= Setup;
-     
-        private void OnDestroy() => StopAllCoroutines();
+        private void OnDisable()
+        {
+            GameFlowService.OnPlay -= () =>
+            {
+                FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
+
+                if (IsEnabled<Car>())
+                    SpawnCars();
+
+                if (IsEnabled<Bird>())
+                    SpawnAggressiveBirds();
+            };
+        }
     }
 }

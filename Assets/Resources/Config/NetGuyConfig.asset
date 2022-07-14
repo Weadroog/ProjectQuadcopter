@@ -18,8 +18,8 @@ MonoBehaviour:
   - {fileID: 310586760892719651, guid: eeda91aa78d323643a431f96f359f019, type: 3}
   _shoveOutSpeed: 1
   _shoveInSpeed: 2
-  _xDetectionRange: 5
-  _zDetectionDistanceForward: 15
+  _xDetectionRange: 12
+  _zDetectionDistanceForward: 0
   _zDetectionDistanceBackward: 25
-  _yDetectionDistanceUp: 20
-  _yDetectionDistanceDown: 10
+  _yDetectionDistanceUp: 1
+  _yDetectionDistanceDown: 1

@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
-using General;
+using Services;
 
 namespace UI
 {
     public class TapToStart : MonoBehaviour
     {
-        private void OnEnable() => GameStopper.OnPlay += Setup;
+        private void OnEnable() => GameFlowService.OnPlay += () => gameObject.SetActive(false);
 
-        private void Setup() => gameObject.SetActive(false);
-
-        private void OnDisable() => GameStopper.OnPlay -= Setup;
+        private void OnDisable() => GameFlowService.OnPlay -= () => gameObject?.SetActive(false);
     }
 }

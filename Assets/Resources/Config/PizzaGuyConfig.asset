@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbe9da41e79e41eda2b7eb2311cc0c2, type: 3}
-  m_Name: PizzeriaGuyConfig
+  m_Name: PizzaGuyConfig
   m_EditorClassIdentifier: 
   _prefabs:
   - {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
   _pizzaPrefabs:
   - {fileID: 5886073294840374202, guid: 34f1c64648cee4d26832e430c36dd934, type: 3}
-  _xDetectionRadius: 20.6
-  _zDetectionRange: {x: -49.69983, y: 0}
-  _yDetectionRange: {x: -10, y: 58.41443}
+  _xDetectionRange: 12
+  _zDetectionRange: {x: 0, y: 40}
+  _yDetectionRange: {x: 0, y: 10}

@@ -4,13 +4,13 @@ using General;
 
 namespace Entities
 {
-    [CreateAssetMenu(menuName = "Config/Net", fileName = "New Net Config")]
+    [CreateAssetMenu(menuName = "Config/NetGuy", fileName = "New NetGuy Config")]
     public class NetGuyConfig : Config, ICanMove, ICanDetect
     {
         [SerializeField] private NetGuy[] _netGuyPrefabs;
         [SerializeField] private Net[] _netPrefabs;
-        [SerializeField] [Range(0, 10)] private float _shoveOutSpeed;
-        [SerializeField] [Range(0, 10)] private float _shoveInSpeed;
+        [SerializeField, Range(0, 10)] private float _shoveOutSpeed;
+        [SerializeField, Range(0, 10)] private float _shoveInSpeed;
         [SerializeField, Range(0, 100), BoxGroup("Detection")] private float _xDetectionRange;
         [SerializeField, Range(0, 100), BoxGroup("Detection")] private float _zDetectionDistanceForward;
         [SerializeField, Range(0, 100), BoxGroup("Detection")] private float _zDetectionDistanceBackward;

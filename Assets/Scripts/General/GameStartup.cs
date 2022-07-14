@@ -15,13 +15,13 @@ namespace General
         private ChunkGenerator _chunkGenerator;
         private EntitySpawner _entitySpawner;
         private Button _tapToStartButton;
-        private GameStopper _gameStopper;
+        private GameFlowService _gameStopper;
 
         private void Awake()
         {
             _entitySpawner = GetComponentInChildren<EntitySpawner>();
             _chunkGenerator = GetComponentInChildren<ChunkGenerator>();
-            _gameStopper = GetComponentInChildren<GameStopper>();
+            _gameStopper = GetComponentInChildren<GameFlowService>();
             _tapToStartButton = FindObjectOfType<TapToStart>().GetComponent<Button>();
         }
 

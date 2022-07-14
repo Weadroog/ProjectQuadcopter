@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -8251532785398780950}
   - component: {fileID: 7056829024114349172}
   m_Layer: 0
-  m_Name: BigCar2
+  m_Name: LongTruck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

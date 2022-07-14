@@ -20,16 +20,6 @@ namespace Components
         {
             UpdateService.OnUpdate += Detect;
             _target = FindObjectOfType<Quadcopter>();
-
-            if (_target)
-            {
-                _xDetectionDistance[0] = _config.XDetectionDistanceLeft;
-                _xDetectionDistance[1] = _config.XDetectionDistanceRight;
-                _yDetectionDistance[0] = _config.YDetectionDistanceDown;
-                _yDetectionDistance[1] = _config.YDetectionDistanceUp;
-                _zDetectionDistance[0] = _config.ZDetectionDistanceBackward;
-                _zDetectionDistance[1] = _config.ZDetectionDistanceForward;
-            }
         }
 
         private void Detect()
@@ -47,23 +37,33 @@ namespace Components
 
         private bool IsTargetInBox()
         {
+            if (_target != null)
+            {
+                _xDetectionDistance[0] = _config.XDetectionDistanceLeft;
+                _xDetectionDistance[1] = _config.XDetectionDistanceRight;
+                _yDetectionDistance[0] = _config.YDetectionDistanceDown;
+                _yDetectionDistance[1] = _config.YDetectionDistanceUp;
+                _zDetectionDistance[0] = _config.ZDetectionDistanceBackward;
+                _zDetectionDistance[1] = _config.ZDetectionDistanceForward;
+            }
+
             Vector3 distance = _target.transform.position - transform.position;
             int xIndex = (int)Mathf.Clamp01(Mathf.Sign(distance.x) + 1);
             int yIndex = (int)Mathf.Clamp01(Mathf.Sign(distance.y) + 1);
             int zIndex = (int)Mathf.Clamp01(Mathf.Sign(distance.z) + 1);
 
-            #if (UNITY_EDITOR)
-            Draw();
-            #endif
-
-            return _xDetectionDistance[xIndex] >= Mathf.Abs(distance.x) && _yDetectionDistance[yIndex] >= Mathf.Abs(distance.y) && _zDetectionDistance[zIndex] >= Mathf.Abs(distance.z);
+            return _xDetectionDistance[xIndex] >= Mathf.Abs(distance.x) 
+                && _yDetectionDistance[yIndex] >= Mathf.Abs(distance.y) 
+                && _zDetectionDistance[zIndex] >= Mathf.Abs(distance.z);
         }
 
-        private void Draw()
+        private void OnDrawGizmos()
         {
+            Gizmos.color = Color.green;
             Vector3 pos = transform.position;
-            Vector3[] points = 
-                { 
+
+            Vector3[] points =
+            {
                 pos + new Vector3(-_xDetectionDistance[0], -_yDetectionDistance[0], -_zDetectionDistance[0]),
                 pos + new Vector3(_xDetectionDistance[1], -_yDetectionDistance[0], -_zDetectionDistance[0]),
                 pos + new Vector3(_xDetectionDistance[1], -_yDetectionDistance[0], _zDetectionDistance[1]),
@@ -74,16 +74,16 @@ namespace Components
                 pos + new Vector3(_xDetectionDistance[1], _yDetectionDistance[1], _zDetectionDistance[1]),
                 pos + new Vector3(-_xDetectionDistance[0], _yDetectionDistance[1], _zDetectionDistance[1]),
                 pos + new Vector3(-_xDetectionDistance[0], _yDetectionDistance[1], -_zDetectionDistance[0]),
-                };
+            };
 
             for (int i = 0; i < points.Length - 1; i++)
             {
-                Debug.DrawLine(points[i], points[i+1], Color.green);
+                Gizmos.DrawLine(points[i], points[i + 1]);
             }
 
-            for(int i = 1; i < 4; i++)
+            for (int i = 1; i < 4; i++)
             {
-                Debug.DrawLine(points[i], points[i+5], Color.green);
+                Gizmos.DrawLine(points[i], points[i + 5]);
             }
         }
 

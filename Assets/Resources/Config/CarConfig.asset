@@ -16,7 +16,9 @@ MonoBehaviour:
   - {fileID: 5066961233641141595, guid: f4deb85e11c91ea479774027be804021, type: 3}
   - {fileID: 5066961233641141595, guid: efa06b13816b97e4a9ce70f0beb67db8, type: 3}
   - {fileID: 5066961233641141595, guid: ae2d215e2d01dd24bb4f50462a5afeaa, type: 3}
+  - {fileID: 5066961233641141595, guid: 92f502caf3ea1f54db38e0d4d34e6584, type: 3}
+  - {fileID: 5066961233641141595, guid: 2ec43ffbace227747a2802cc56464ee7, type: 3}
   _selfSpeed: 25
   _xDetectionRange: {x: 0, y: 0}
-  _zDetectionRange: {x: -10, y: 0}
+  _zDetectionRange: {x: 0, y: 0}
   _yDetectionRange: {x: 0, y: 0}

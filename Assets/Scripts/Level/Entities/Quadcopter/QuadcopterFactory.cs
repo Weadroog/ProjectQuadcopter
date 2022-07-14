@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using General;
+using Services;
 using UI;
 using Components;
 using Reactions;
@@ -9,29 +10,24 @@ namespace Entities
     public class QuadcopterFactory : EntityFactory<Quadcopter, QuadcopterConfig>
     {
         private LifeCounter _lifeCounter;
-        private ChargeCounter _chargeCounter;
         private MoneyCounter _moneyCounter;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, ChargeCounter chargeCounter, MoneyCounter moneyCounter) : base(config, container) 
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, MoneyCounter moneyCounter) : base(config, container) 
         {
             _lifeCounter = lifeCounter;
-            _chargeCounter = chargeCounter;
             _moneyCounter = moneyCounter;
         }
 
         public override Quadcopter GetCreated()
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
-            GameStopper.OnPlay += () => quadcopter.gameObject.SetActive(true);
+            GameFlowService.OnPlay += () => quadcopter.gameObject.SetActive(true);
 
-            SwipeController swipeController = quadcopter.gameObject
-                .AddComponent<SwipeController>()
-                .SetStartablePosition(MatrixPosition.Center);
-
-            GameStopper.OnPlay += () => swipeController.enabled = true;
-
+            SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
             swipeController.Receive(_config);
             swipeController.enabled = false;
+            GameFlowService.OnPlay += () => swipeController.enabled = true;
+
 
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
@@ -48,7 +44,7 @@ namespace Entities
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
 
-            GameStopper.OnPlay += new QuadcopterNextReaction(quadcopter, _config).React;
+            GameFlowService.OnPlay += new QuadcopterNextReaction(quadcopter, _config).React;
 
             return quadcopter;
         }
