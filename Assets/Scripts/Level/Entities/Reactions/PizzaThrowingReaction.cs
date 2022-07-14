@@ -14,7 +14,6 @@ namespace Reactions
 
         public override void React()
         {
-            _pizza.transform.position = _detectableEntity.transform.position;
             Debug.Log($"Throwing Pizza ({_detectableEntity.name})");
         }
     }

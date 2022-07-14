@@ -7,16 +7,18 @@ namespace Reactions
     public class SuccessfulDeliveryReaction : Reaction
     {
         private Client _client;
+        private Deliverer _deliverer;
 
-        public SuccessfulDeliveryReaction(Client client) => _client = client;
+        public SuccessfulDeliveryReaction(Client client, Deliverer deliverer) {
+            _client = client;
+            _deliverer = deliverer;
+        }
 
         public override void React()
         {
-            _detectableEntity.gameObject.SetActive(false);
-            _detectableEntity.transform.SetParent(null);
             _client.gameObject.SetActive(false);
             Debug.Log("Удачно доставили питсу, спавним новую пиццерию");
-            Deliverer.OnSuccessfulDelivery?.Invoke();
+            _deliverer.DropPizza(true);
         }
     }
 

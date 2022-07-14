@@ -9,6 +9,9 @@ namespace Components
         private PizzaPoint _pizzaPoint;
         private Pizza _equipedPizza;
         private Pizza _pizza;
+        private Deliverer _deliverer;
+
+        public Deliverer Deliverer { get => _deliverer; set => _deliverer = value; }
 
         public Pizza EquipedPizza
         {
@@ -28,7 +31,7 @@ namespace Components
             _pizzaPoint = GetComponentInChildren<PizzaPoint>();
 
             Pizza pizza = Instantiate(_config.PizzaPrefab, _pizzaPoint.transform);
-            pizza.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction(pizza));
+            pizza.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction(pizza, Deliverer));
             _pizza = pizza;
             Equip();
         }

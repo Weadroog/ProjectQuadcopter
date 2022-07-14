@@ -23,11 +23,6 @@ namespace Chunk
         private Pool<PizzeriaDistrict> _pizzeriaPool;
         private Road _lastRoad;
         private List<Window> _windows = new();
-
-        private void OnEnable()
-        {
-            Deliverer.OnDeliverySequenceFailed += () => _isPizzeriaRequested = true;
-        }
         
         public void EnableChunks(Container chunksContainer) 
         {
@@ -37,6 +32,8 @@ namespace Chunk
             SpawnStartableChunks(chunksContainer, _startableChunksCount);
             _isPizzeriaRequested = true;
         }
+
+        public void RequestPizzeria() => _isPizzeriaRequested = true;
 
         private void SpawnStartableChunks(Container chunkContainer, int chunksCount)
         {
@@ -90,9 +87,5 @@ namespace Chunk
             return pieceOfChunk;
         }
 
-        private void OnDisable()
-        {
-            Deliverer.OnDeliverySequenceFailed -= () => _isPizzeriaRequested = true;
-        }
     }
 }

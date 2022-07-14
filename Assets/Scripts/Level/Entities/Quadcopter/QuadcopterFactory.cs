@@ -28,7 +28,6 @@ namespace Entities
             swipeController.enabled = false;
             GameFlowService.OnPlay += () => swipeController.enabled = true;
 
-
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
             lifer.Receive(_config);
@@ -39,7 +38,6 @@ namespace Entities
             purse.Receive(_config);
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
-            deliverer.SetPizzaCarryingStatus(false);
 
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));

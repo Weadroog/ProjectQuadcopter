@@ -17,7 +17,7 @@ namespace Reactions
         {
             if (_deliverer.IsCarryingPizza)
             {
-                Deliverer.OnDeliverySequenceFailed?.Invoke();
+                _deliverer.DropPizza();
                 Debug.Log("Уронили питсу");
             }
         }

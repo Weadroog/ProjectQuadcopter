@@ -5,12 +5,17 @@ namespace Reactions
 {
     public class FailedDeliveryReaction : Reaction
     {
-        public FailedDeliveryReaction() { }
+        private Deliverer _deliverer;
+
+        public FailedDeliveryReaction(Deliverer deliverer)
+        {
+            _deliverer = deliverer;
+        }
 
         public override void React()
         {
             Debug.Log("Сбросили питсу: пролетели клиента");
-            Deliverer.OnDeliverySequenceFailed?.Invoke();
+            _deliverer.DropPizza();
         }
     }
 

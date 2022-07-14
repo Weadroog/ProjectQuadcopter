@@ -19,6 +19,7 @@ namespace Entities
         private Quadcopter _quadcopter;
         private Client _client;
         private bool _isClientRequested;
+        private Deliverer _deliverer;
 
         [SerializeField, BoxGroup("Configurations")] private QuadcopterConfig _quadcopterConfig;
         [SerializeField, BoxGroup("Configurations")] private BirdConfig _birdConfig;
@@ -38,7 +39,9 @@ namespace Entities
         {
             GameFlowService.OnPlay += () =>
             {
-                FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
+                ChunkGenerator chunkGenerator = FindObjectOfType<ChunkGenerator>();
+                chunkGenerator.OnSpawnChunk += SettleWindows;
+                _deliverer.OnPizzeriaRequested += chunkGenerator.RequestPizzeria;
 
                 if (IsEnabled<Car>())
                     SpawnCars();
@@ -54,6 +57,7 @@ namespace Entities
             MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
 
             _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter));
+            _deliverer = _quadcopter.GetComponent<Deliverer>();
             _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
         }
@@ -87,17 +91,17 @@ namespace Entities
 
         private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
         {
-            _pools[typeof(PizzaGuy)] = new Pool<PizzaGuy>(new PizzaGuyFactory(_pizzeriaGuyConfig), entityContainer, 2);
+            _pools[typeof(PizzaGuy)] = new Pool<PizzaGuy>(new PizzaGuyFactory(_pizzeriaGuyConfig, _deliverer), entityContainer, 2);
             chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
         }
 
         private void EnableClient(Container entityContainer)
         {
-            ClientFactory clientFactory = new ClientFactory(_clientConfig);
+            ClientFactory clientFactory = new ClientFactory(_clientConfig, _deliverer);
             _client = clientFactory.GetCreated();
             _client.gameObject.SetActive(false);
             _client.transform.SetParent(entityContainer.transform);
-            Deliverer.OnPizzaGrabbed += () => _isClientRequested = true;
+            _deliverer.OnPizzaGrabbed += () => _isClientRequested = true;
         }
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)

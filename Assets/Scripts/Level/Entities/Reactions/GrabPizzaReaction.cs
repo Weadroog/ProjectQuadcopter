@@ -7,17 +7,18 @@ namespace Reactions
     public class GrabPizzaReaction : Reaction
     {
         private Pizza _pizza;
+        private Deliverer _deliverer;
 
-        public GrabPizzaReaction(Pizza pizza)
+        public GrabPizzaReaction(Pizza pizza, Deliverer deliverer)
         {
             _pizza = pizza;
+            _deliverer = deliverer;
         }
 
         public override void React()
         {
             Debug.Log("Забрали пиццу");
-            _pizza.transform.SetParent(_detectableEntity.transform);
-            Deliverer.OnPizzaGrabbed?.Invoke();
+            _deliverer.GrabPizza();
         }
     }
 }
