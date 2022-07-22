@@ -1,19 +1,31 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Services
 {
     public class GlobalSpeedService : MonoBehaviour
     {
+        public static event Action OnStartup;
+        public static event Action OnStop;
+
         [SerializeField][Range(0, 100)]private float _speed;
 
+        public static GlobalSpeedService Instance { get; private set; }
         public static float Speed { get; private set; }
         public static float Acceleration => 0.1f;
+
+        private void Awake() => Instance = this;
 
         private void OnEnable()
         {
             UpdateService.OnUpdate += SpeedUp;
             Speed = _speed;
+            OnStartup?.Invoke();
         }
+
+        public static void Startup() => Instance.enabled = true;
+
+        public static void Stop() => Instance.enabled = false;
 
         private static void SpeedUp() => Speed += Acceleration * Time.deltaTime;
 
@@ -21,6 +33,7 @@ namespace Services
         {
             UpdateService.OnUpdate -= SpeedUp;
             Speed = 0;
+            OnStop?.Invoke();
         }
     }
 }

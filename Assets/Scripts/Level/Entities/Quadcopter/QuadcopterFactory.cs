@@ -12,7 +12,8 @@ namespace Entities
         private LifeCounter _lifeCounter;
         private MoneyCounter _moneyCounter;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, MoneyCounter moneyCounter) : base(config, container) 
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, MoneyCounter moneyCounter)
+            : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _moneyCounter = moneyCounter;
@@ -21,12 +22,12 @@ namespace Entities
         public override Quadcopter GetCreated()
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
-            GameFlowService.OnPlay += () => quadcopter.gameObject.SetActive(true);
+            GlobalSpeedService.OnStartup += () => quadcopter.gameObject.SetActive(true);
 
             SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
             swipeController.Receive(_config);
             swipeController.enabled = false;
-            GameFlowService.OnPlay += () => swipeController.enabled = true;
+            GlobalSpeedService.OnStartup += () => swipeController.enabled = true;
 
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
@@ -42,7 +43,7 @@ namespace Entities
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
 
-            GameFlowService.OnPlay += new QuadcopterNextReaction(quadcopter, _config).React;
+            GlobalSpeedService.OnStartup += new QuadcopterNextReaction(quadcopter, _config).React;
 
             return quadcopter;
         }

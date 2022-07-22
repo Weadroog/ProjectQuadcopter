@@ -16,6 +16,7 @@ namespace Entities
     {
         private Dictionary<Type, IPool> _pools = new();
         private readonly WayMatrix _wayMatrix = new();
+        private ChunkGenerator _chunkGenerator;
         private Quadcopter _quadcopter;
         private Client _client;
         private bool _isClientRequested;
@@ -35,13 +36,14 @@ namespace Entities
 
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
+        private void Awake() => _chunkGenerator = FindObjectOfType<ChunkGenerator>();
+
         private void OnEnable()
         {
-            GameFlowService.OnPlay += () =>
+            GlobalSpeedService.OnStartup += () =>
             {
-                ChunkGenerator chunkGenerator = FindObjectOfType<ChunkGenerator>();
-                chunkGenerator.OnSpawnChunk += SettleWindows;
-                _deliverer.OnPizzeriaRequested += chunkGenerator.RequestPizzeria;
+                _chunkGenerator.OnSpawnChunk += SettleWindows;
+                _deliverer.OnPizzeriaRequested += _chunkGenerator.RequestPizzeria;
 
                 if (IsEnabled<Car>())
                     SpawnCars();
@@ -49,6 +51,9 @@ namespace Entities
                 if (IsEnabled<Bird>())
                     SpawnAggressiveBirds();
             };
+
+            GlobalSpeedService.OnStop += () => StopAllCoroutines();
+
         }
 
         public Quadcopter EnableQuadcopter(Container entityContainer)
@@ -218,9 +223,9 @@ namespace Entities
 
         private void OnDisable()
         {
-            GameFlowService.OnPlay -= () =>
+            GlobalSpeedService.OnStartup -= () =>
             {
-                FindObjectOfType<ChunkGenerator>().OnSpawnChunk += SettleWindows;
+                _chunkGenerator.OnSpawnChunk += SettleWindows;
 
                 if (IsEnabled<Car>())
                     SpawnCars();
@@ -228,6 +233,8 @@ namespace Entities
                 if (IsEnabled<Bird>())
                     SpawnAggressiveBirds();
             };
+
+            GlobalSpeedService.OnStop -= () => StopAllCoroutines();
         }
     }
 }

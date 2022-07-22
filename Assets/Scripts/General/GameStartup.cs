@@ -15,13 +15,11 @@ namespace General
         private ChunkGenerator _chunkGenerator;
         private EntitySpawner _entitySpawner;
         private Button _tapToStartButton;
-        private GameFlowService _gameStopper;
 
         private void Awake()
         {
             _entitySpawner = GetComponentInChildren<EntitySpawner>();
             _chunkGenerator = GetComponentInChildren<ChunkGenerator>();
-            _gameStopper = GetComponentInChildren<GameFlowService>();
             _tapToStartButton = FindObjectOfType<TapToStart>().GetComponent<Button>();
         }
 
@@ -36,8 +34,8 @@ namespace General
             _entitySpawner.EnableNetGuys(entityContainer);
             //_entitySpawner.EnableBatteries(entityContainer);
             //_entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
-            _gameStopper.Stop();
-            _tapToStartButton.onClick.AddListener(_gameStopper.Play);
+            GlobalSpeedService.Stop();
+            _tapToStartButton.onClick.AddListener(GlobalSpeedService.Startup);
         }
     }
 }

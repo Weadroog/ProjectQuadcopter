@@ -811,7 +811,6 @@ Transform:
   - {fileID: 63567837}
   - {fileID: 637588022}
   - {fileID: 2091640525}
-  - {fileID: 985523225}
   m_Father: {fileID: 1457702395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -965,50 +964,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948753735}
   m_CullTransparentMesh: 1
---- !u!1 &985523224
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 985523225}
-  - component: {fileID: 985523226}
-  m_Layer: 0
-  m_Name: GameStopper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &985523225
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985523224}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 937335060}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &985523226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985523224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9ad1e967f6146109b5beae7447ce67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1066193457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1555,7 +1510,7 @@ MonoBehaviour:
   _batteryConfig: {fileID: 11400000, guid: 09ff6330c9c5503459cc3ac7d93fd886, type: 2}
   _clientConfig: {fileID: 11400000, guid: 6a6ab063228d84d93a15f9dd25eb1fa2, type: 2}
   _pizzeriaGuyConfig: {fileID: 11400000, guid: cd3deaf12fbb7402e81f6f69859e269f, type: 2}
-  _birdsDensity: 15
+  _birdsDensity: 10
   _carsDensity: 25
   _netGuysDensity: 10
   _spawnDistance: 200
