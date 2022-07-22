@@ -23,7 +23,6 @@ namespace Reactions
 
         public override void React()
         {
-            GlobalSpeedService.Startup();
             _swipeController.StartCoroutine(Immortaling());
             _swipeController.StartCoroutine(ControlDisabling());
         }
@@ -38,6 +37,7 @@ namespace Reactions
 
         private IEnumerator Immortaling()
         {
+            _renderer.enabled = true;
             float currentTime = 0;
             float flickeringSpeed = 5f;
             Color defaultColor = _renderer.material.color;

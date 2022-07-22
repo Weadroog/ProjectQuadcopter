@@ -41,7 +41,7 @@ namespace Entities
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
 
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
-            quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
+            quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter));
 
             GlobalSpeedService.OnStartup += new QuadcopterNextReaction(quadcopter, _config).React;
 

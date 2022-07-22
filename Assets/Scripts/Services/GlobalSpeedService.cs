@@ -23,10 +23,6 @@ namespace Services
             OnStartup?.Invoke();
         }
 
-        public static void Startup() => Instance.enabled = true;
-
-        public static void Stop() => Instance.enabled = false;
-
         private static void SpeedUp() => Speed += Acceleration * Time.deltaTime;
 
         private void OnDisable()

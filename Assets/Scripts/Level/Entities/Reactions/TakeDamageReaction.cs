@@ -1,4 +1,6 @@
-﻿using Services;
+﻿using System.Collections;
+using UnityEngine;
+using Services;
 using Entities;
 using Components;
 
@@ -7,20 +9,27 @@ namespace Reactions
     public class TakeDamageReaction : Reaction
     {
         private Lifer _lifer;
-        private QuadcopterNextReaction _moveNextReaction;
+        private SkinnedMeshRenderer _renderer;
 
-        public TakeDamageReaction(Quadcopter quadcopter, QuadcopterConfig config)
+        public TakeDamageReaction(Quadcopter quadcopter)
         {
             _lifer = quadcopter.GetComponent<Lifer>();
-            _moveNextReaction = new(quadcopter, config);
+            _renderer = quadcopter.GetComponentInChildren<SkinnedMeshRenderer>();
         }
 
         public override void React()
         {
             _lifer.TakeDamage();
-            //Кат сцена
-            //GlobalSpeedService.Stop();
-            _moveNextReaction.React();
+            _lifer.StartCoroutine(Focus());
+            _renderer.enabled = false;
+        }
+
+        private IEnumerator Focus()
+        {
+            GlobalSpeedService.Instance.enabled = false;
+            yield return new WaitForSeconds(1);
+            GlobalSpeedService.Instance.enabled = true;
+            yield break;
         }
     }
 }

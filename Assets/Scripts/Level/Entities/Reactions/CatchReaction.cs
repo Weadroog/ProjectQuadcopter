@@ -10,18 +10,21 @@ namespace Reactions
         private NetGuy _netGuy;
         private Animator _animator;
         private NetGuyConfig _config;
+        private Animation _animation;
 
         public CatchReaction(NetGuy netGuy, NetGuyConfig config)
         {
             _netGuy = netGuy;
             _config = config;
             _animator = netGuy.GetComponent<Animator>();
+            _animation = netGuy.GetComponentInChildren<Animation>();
         }
 
         public override void React() => _netGuy.StartCoroutine(ShoveIn());
 
         private IEnumerator ShoveIn()
         {
+            _animation.Play();
             float currentSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
             float targetSide = 0;
 
