@@ -35,7 +35,7 @@ namespace General
             _entitySpawner.EnableAggressiveBirds(entityContainer);
             _entitySpawner.EnableNetGuys(entityContainer);
             //_entitySpawner.EnableBatteries(entityContainer);
-            _entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
+            //_entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
             _gameStopper.Stop();
             _tapToStartButton.onClick.AddListener(_gameStopper.Play);
         }

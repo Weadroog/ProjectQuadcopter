@@ -29,9 +29,9 @@ namespace Entities
         [SerializeField, BoxGroup("Configurations")] private ClientConfig _clientConfig;
         [SerializeField, BoxGroup("Configurations")] private PizzaGuyConfig _pizzeriaGuyConfig;
 
-        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _aggressiveBirdDensity;
-        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _carDensity;
-        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _netGuyDensity;
+        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _birdsDensity;
+        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _carsDensity;
+        [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _netGuysDensity;
 
         [SerializeField][Range(0, 1000)] private int _spawnDistance;
 
@@ -125,7 +125,7 @@ namespace Entities
 
             while (true)
             {
-                if (_carDensity > Random.Range(0, 100))
+                if (_carsDensity > Random.Range(0, 100))
                 {
                     Car car = GetPool<Car>().Get(instancePosition);
                     if (car.CarColorChanger != null) car.CarColorChanger.ChangeColorRandom();
@@ -160,7 +160,7 @@ namespace Entities
             {
                 Vector3 position = _wayMatrix.GetPositionByArrayCoordinates(new Vector2Int(line, row));
 
-                if (_aggressiveBirdDensity > Random.Range(0, 100))
+                if (_birdsDensity > Random.Range(0, 100))
                 {
                     GetPool<Bird>().Get(position + Vector3.forward * _spawnDistance);
                 }
@@ -184,7 +184,7 @@ namespace Entities
         {
             foreach (Window window in windows)
             {
-                if (Random.Range(0, 100) > _netGuyDensity)
+                if (Random.Range(0, 100) > _netGuysDensity)
                 {
                     window.Close();
                     continue;
