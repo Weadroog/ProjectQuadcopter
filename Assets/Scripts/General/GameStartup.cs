@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Services;
-using UI;
 using Chunk;
 using Level;
 using Entities;
@@ -28,7 +26,7 @@ namespace General
             _chunkGenerator.EnableChunks(chunkContainer);
             _entitySpawner.EnableQuadcopter(entityContainer);
             _entitySpawner.EnableCarTraffic(entityContainer);
-            _entitySpawner.EnableAggressiveBirds(entityContainer);
+            _entitySpawner.EnableBirds(entityContainer);
             _entitySpawner.EnableNetGuys(entityContainer);
             //_entitySpawner.EnableBatteries(entityContainer);
             //_entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);

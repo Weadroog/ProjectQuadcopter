@@ -40,11 +40,13 @@ namespace Entities
 
         private void OnEnable()
         {
-            GlobalSpeedService.OnStartup += () =>
-            {
-                _chunkGenerator.OnSpawnChunk += SettleWindows;
+            _chunkGenerator.OnSpawnChunk += SettleWindows;
+
+            if (IsEnabled<PizzaGuy>() && IsEnabled<Client>())
                 _deliverer.OnPizzeriaRequested += _chunkGenerator.RequestPizzeria;
 
+            GlobalSpeedService.OnStartup += () =>
+            {
                 if (IsEnabled<Car>())
                     SpawnCars();
 
@@ -72,7 +74,7 @@ namespace Entities
             _pools[typeof(Car)] = new Pool<Car>(new CarFactory(_carConfig), entityContainer, 10);
         }
 
-        public void EnableAggressiveBirds(Container entityContainer)
+        public void EnableBirds(Container entityContainer)
         {
             _pools[typeof(Bird)] = new Pool<Bird>(new BirdFactory(_birdConfig), entityContainer, 10);
         }
@@ -90,11 +92,11 @@ namespace Entities
 
         public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
         {
-            EnablePizzeriaGuy(entityContainer, chunkGenerator);
+            EnablePizzaGuy(entityContainer, chunkGenerator);
             EnableClient(entityContainer);
         }
 
-        private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
+        private void EnablePizzaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
         {
             _pools[typeof(PizzaGuy)] = new Pool<PizzaGuy>(new PizzaGuyFactory(_pizzeriaGuyConfig, _deliverer), entityContainer, 2);
             chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
@@ -223,10 +225,13 @@ namespace Entities
 
         private void OnDisable()
         {
+            _chunkGenerator.OnSpawnChunk -= SettleWindows;
+
+            if (IsEnabled<PizzaGuy>() && IsEnabled<Client>())
+                _deliverer.OnPizzeriaRequested -= _chunkGenerator.RequestPizzeria;
+
             GlobalSpeedService.OnStartup -= () =>
             {
-                _chunkGenerator.OnSpawnChunk += SettleWindows;
-
                 if (IsEnabled<Car>())
                     SpawnCars();
 

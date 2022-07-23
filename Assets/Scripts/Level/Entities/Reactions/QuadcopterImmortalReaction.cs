@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Services;
 using Entities;
 using Components;
 
@@ -30,7 +29,7 @@ namespace Reactions
         private IEnumerator ControlDisabling()
         {
             _swipeController.enabled = false;
-            yield return new WaitForSeconds(_config.ImmortalModeTime / 2);
+            yield return new WaitForSeconds(_config.ImmortalModeTime / 5);
             _swipeController.enabled = true;
             yield break;
         }
