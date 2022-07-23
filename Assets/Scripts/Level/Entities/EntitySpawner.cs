@@ -51,7 +51,7 @@ namespace Entities
                     SpawnCars();
 
                 if (IsEnabled<Bird>())
-                    SpawnAggressiveBirds();
+                    SpawnBirds();
             };
 
             GlobalSpeedService.OnStop += () => StopAllCoroutines();
@@ -176,7 +176,7 @@ namespace Entities
             }
         }
 
-        public void SpawnAggressiveBirds()
+        public void SpawnBirds()
         {
             for (int row = 0; row < 2; row++)
             {
@@ -236,7 +236,7 @@ namespace Entities
                     SpawnCars();
 
                 if (IsEnabled<Bird>())
-                    SpawnAggressiveBirds();
+                    SpawnBirds();
             };
 
             GlobalSpeedService.OnStop -= () => StopAllCoroutines();

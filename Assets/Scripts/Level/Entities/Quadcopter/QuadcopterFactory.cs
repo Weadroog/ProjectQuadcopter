@@ -45,6 +45,8 @@ namespace Entities
 
             GlobalSpeedService.OnStartup += new QuadcopterNextReaction(quadcopter, _config).React;
 
+            quadcopter.GetComponentInChildren<Camera>().transform.SetParent(_container.transform);
+
             return quadcopter;
         }
     }

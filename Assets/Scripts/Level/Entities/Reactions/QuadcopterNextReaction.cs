@@ -13,7 +13,6 @@ namespace Reactions
         private SwipeController _swipeController;
         private float _takeNextDuration;
         private QuadcopterImmortalReaction _immortalReaction;
-        private SkinnedMeshRenderer _renderer;
 
         public QuadcopterNextReaction(Quadcopter quadcopter, QuadcopterConfig config)
         {
@@ -21,7 +20,6 @@ namespace Reactions
             _swipeController = quadcopter.GetComponent<SwipeController>();
             _takeNextDuration = config.MotionDuration * 3;
             _immortalReaction = new(quadcopter, config);
-            _renderer = _quadCopter.GetComponentInChildren<SkinnedMeshRenderer>();
         }
 
         public override void React()

@@ -4,13 +4,13 @@ using Entities;
 
 namespace Reactions
 {
-    public class AggressiveBirdKillingReaction : Reaction
+    public class BirdKillingReaction : Reaction
     {
         private Bird _bird;
         private ParticleSystem _particleSystem;
         private Animator _animator;
 
-        public AggressiveBirdKillingReaction(Bird bird) 
+        public BirdKillingReaction(Bird bird) 
         {
             _bird = bird;
             _particleSystem = _bird.GetComponentInChildren<ParticleSystem>();
