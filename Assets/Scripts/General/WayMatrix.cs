@@ -57,79 +57,46 @@ namespace General
             Debug.Log(matrixOut);
         }
 
-        public Vector3 GetPosition(MatrixPosition position, out Vector2Int worldMatrixCoordinates)
+        public Vector3 GetPosition(MatrixPosition matrixPosition, out Vector2Int worldMatrixCoordinates)
         {
-            switch (position)
+            Vector2Int matrixCoordinates;
+
+            switch (matrixPosition)
             {
-                case MatrixPosition.UpLeft:
-                    {
-                        Vector2Int matrixCoordinates = new Vector2Int(0, 0);
-                        worldMatrixCoordinates = ConvertCoordinates(matrixCoordinates);
-                        return _matrix[matrixCoordinates.x, matrixCoordinates.y];
-                    }
-                case MatrixPosition.UpRight:
-                    {
-                        Vector2Int matrixCoordinates = new Vector2Int(0, Width - 1);
-                        worldMatrixCoordinates = ConvertCoordinates(matrixCoordinates);
-                        return _matrix[matrixCoordinates.x, matrixCoordinates.y];
-                    }
-                case MatrixPosition.Center:
-                    {
-                        Vector2Int matrixCoordinates = new Vector2Int(Height - 2, Width / 2);
-                        worldMatrixCoordinates = ConvertCoordinates(matrixCoordinates);
-                        return _matrix[matrixCoordinates.x, matrixCoordinates.y];
-                    }
-                case MatrixPosition.DownLeft:
-                    {
-                        Vector2Int matrixCoordinates = new Vector2Int(Height - 1, 0);
-                        worldMatrixCoordinates = ConvertCoordinates(matrixCoordinates);
-                        return _matrix[matrixCoordinates.x, matrixCoordinates.y];
-                    }
-                case MatrixPosition.DownRight:
-                    {
-                        Vector2Int matrixCoordinates = new Vector2Int(Height - 1, Width - 1);
-                        worldMatrixCoordinates = ConvertCoordinates(matrixCoordinates);
-                        return _matrix[matrixCoordinates.x, matrixCoordinates.y];
-                    }
-                default:
-                    {
-                        goto case MatrixPosition.Center;
-                    }
+                case MatrixPosition.UpLeft: matrixCoordinates = new Vector2Int(0, 0); break;
+
+                case MatrixPosition.UpRight: matrixCoordinates = new Vector2Int(0, Width - 1); break;
+
+                case MatrixPosition.Center: matrixCoordinates = new Vector2Int(Height - 2, Width / 2); break;
+
+                case MatrixPosition.DownLeft: matrixCoordinates = new Vector2Int(Height - 1, 0); break;
+
+                case MatrixPosition.DownRight: matrixCoordinates = new Vector2Int(Height - 1, Width - 1); break;
+
+                default: goto case MatrixPosition.Center;
             }
+
+            worldMatrixCoordinates = ConvertCoordinates(matrixCoordinates);
+            return _matrix[matrixCoordinates.x, matrixCoordinates.y];
         }
 
         public Vector3 GetPosition(MatrixPosition position)
         {
             switch (position)
             {
-                case MatrixPosition.UpLeft:
-                    {
-                        return _matrix[0, 0];
-                    }
-                case MatrixPosition.UpRight:
-                    {
-                        return _matrix[0, Width - 1];
-                    }
-                case MatrixPosition.Center:
-                    {
-                        return _matrix[Height - 2, Width / 2];
-                    }
-                case MatrixPosition.Down:
-                    {
-                        return _matrix[Height - 1, Width / 2];
-                    }
-                case MatrixPosition.DownLeft:
-                    {
-                        return _matrix[Height - 1, 0];
-                    }
-                case MatrixPosition.DownRight:
-                    {
-                        return _matrix[Height - 1, Width - 1];
-                    }
-                default:
-                    {
-                        goto case MatrixPosition.Center;
-                    }
+                case MatrixPosition.UpLeft: return _matrix[0, 0];
+
+                case MatrixPosition.UpRight: return _matrix[0, Width - 1];
+
+                case MatrixPosition.Center: return _matrix[Height - 2, Width / 2];
+
+                case MatrixPosition.Down: return _matrix[Height - 1, Width / 2];
+
+                case MatrixPosition.DownLeft: return _matrix[Height - 1, 0];
+
+                case MatrixPosition.DownRight: return _matrix[Height - 1, Width - 1];
+
+                default: goto case MatrixPosition.Center;
             }
         }
 
@@ -140,9 +107,7 @@ namespace General
             Vector3[] matrixRow = new Vector3[Width];
 
             for (int i = 0; i < Width; i++)
-            {
                 matrixRow[i] = _matrix[rowIndex, i];
-            }
 
             return matrixRow;
         }
