@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 446749866}
   - component: {fileID: 446749868}
   m_Layer: 5
-  m_Name: MoneyCounter
+  m_Name: MoneyDisplayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 593717926}
   - component: {fileID: 593717925}
   m_Layer: 5
-  m_Name: LifeCounter
+  m_Name: LifeDisplayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -811,6 +811,7 @@ Transform:
   - {fileID: 63567837}
   - {fileID: 637588022}
   - {fileID: 2091640525}
+  - {fileID: 1246844992}
   m_Father: {fileID: 1457702395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -838,8 +839,9 @@ GameObject:
   - component: {fileID: 948753736}
   - component: {fileID: 948753738}
   - component: {fileID: 948753737}
+  - component: {fileID: 948753739}
   m_Layer: 5
-  m_Name: DistanceCounter
+  m_Name: DistanceDisplayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -860,10 +862,10 @@ RectTransform:
   m_Father: {fileID: 1703405856}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4255556, y: 0.94000006}
-  m_AnchorMax: {x: 0.57585186, y: 0.98425627}
-  m_AnchoredPosition: {x: 0.019989014, y: 0}
-  m_SizeDelta: {x: -1, y: 0}
+  m_AnchorMin: {x: 0.2477849, y: 0.94000006}
+  m_AnchorMax: {x: 0.7533472, y: 0.98425627}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &948753737
 MonoBehaviour:
@@ -914,10 +916,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.75
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -964,6 +966,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948753735}
   m_CullTransparentMesh: 1
+--- !u!114 &948753739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948753735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312474b0dc90abe4da127bfec597d7bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1246844991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1246844992}
+  - component: {fileID: 1246844993}
+  m_Layer: 0
+  m_Name: DistanceService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1246844992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246844991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937335060}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1246844993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246844991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bacf5e5ff6876f4ebc3359291b14e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1414658730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,7 +1217,7 @@ GameObject:
   - component: {fileID: 1785736756}
   - component: {fileID: 1785736755}
   m_Layer: 5
-  m_Name: ChargeCounter
+  m_Name: ChargeDisplayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1434,9 +1492,9 @@ MonoBehaviour:
   _batteryConfig: {fileID: 11400000, guid: 09ff6330c9c5503459cc3ac7d93fd886, type: 2}
   _clientConfig: {fileID: 11400000, guid: 6a6ab063228d84d93a15f9dd25eb1fa2, type: 2}
   _pizzeriaGuyConfig: {fileID: 11400000, guid: cd3deaf12fbb7402e81f6f69859e269f, type: 2}
-  _birdsDensity: 10
-  _carsDensity: 25
-  _netGuysDensity: 10
+  _birdsDensity: 1
+  _carsDensity: 0
+  _netGuysDensity: 0
   _spawnDistance: 200
 --- !u!1 &2112761519
 GameObject:

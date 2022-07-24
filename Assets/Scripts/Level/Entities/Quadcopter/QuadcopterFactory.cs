@@ -9,10 +9,10 @@ namespace Entities
 {
     public class QuadcopterFactory : EntityFactory<Quadcopter, QuadcopterConfig>
     {
-        private LifeCounter _lifeCounter;
-        private MoneyCounter _moneyCounter;
+        private LifeDisplayer _lifeCounter;
+        private MoneyDisplayer _moneyCounter;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, MoneyCounter moneyCounter)
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter)
             : base(config, container) 
         {
             _lifeCounter = lifeCounter;
@@ -39,7 +39,7 @@ namespace Entities
             purse.Receive(_config);
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
-
+            
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter));
 

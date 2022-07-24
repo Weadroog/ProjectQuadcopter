@@ -60,8 +60,8 @@ namespace Entities
 
         public Quadcopter EnableQuadcopter(Container entityContainer)
         {
-            LifeCounter lifeCounter = FindObjectOfType<LifeCounter>();
-            MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
+            LifeDisplayer lifeCounter = FindObjectOfType<LifeDisplayer>();
+            MoneyDisplayer moneyCounter = FindObjectOfType<MoneyDisplayer>();
 
             _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter));
             _deliverer = _quadcopter.GetComponent<Deliverer>();
@@ -121,7 +121,7 @@ namespace Entities
 
         private IEnumerator CarSpawning(int line)
         {
-            float delay = 0.5f;
+            float delay = 0.5f; 
             float maxDistance = 15f;
             float minDistance = 5f;
             float previousHalfSize = 0;
@@ -159,9 +159,11 @@ namespace Entities
             }
         }
 
-        private IEnumerator AggressiveBirdsSpawning(int line, int row)
+        private IEnumerator BirdsSpawning(int line, int row)
         {
-            WaitForSeconds spawnDelay = new(Random.Range(0.15f * GlobalSpeedService.Speed / GlobalSpeedService.Speed, 0.5f * GlobalSpeedService.Speed / GlobalSpeedService.Speed));
+            float delay = 0.5f;
+            float maxDistance = 5f;
+            float minDistance = 2f;
 
             while (true)
             {
@@ -170,9 +172,16 @@ namespace Entities
                 if (_birdsDensity > Random.Range(0, 100))
                 {
                     GetPool<Bird>().Get(position + Vector3.forward * _spawnDistance);
+                    float speed = GlobalSpeedService.Speed + _birdConfig.SelfSpeed;
+                    float distanceBetweenBirds = Random.Range(minDistance, maxDistance);
+                    float acceleration = GlobalSpeedService.Acceleration;
+
+                    delay = (Mathf.Sqrt(speed * speed + 2 * acceleration * (distanceBetweenBirds)) - speed) / acceleration;
+
+                    yield return new WaitForSeconds(delay);
                 }
 
-                yield return spawnDelay;
+                yield return new WaitForSeconds(delay);
             }
         }
 
@@ -182,7 +191,7 @@ namespace Entities
             {
                 for (int i = 0; i < WayMatrix.Width; i++)
                 {
-                    StartCoroutine(AggressiveBirdsSpawning(i, row));
+                    StartCoroutine(BirdsSpawning(i, row));
                 }
             }
         }

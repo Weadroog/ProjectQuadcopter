@@ -1,22 +1,39 @@
 ﻿using UnityEngine;
-using Services;
+using System;
 
-namespace General
+namespace Services
 {
     public class DistanceService : MonoBehaviour
     {
-        private float _distance;
+        public static Action<double> OnChanged;
 
-        public string Distance { get; private set; }
+        private double _distance;
 
-        private void OnEnable() => UpdateService.OnUpdate += CountDistance;
-
-        private void CountDistance()
+        private void OnEnable()
         {
-            _distance += Time.deltaTime * GlobalSpeedService.Speed;
-            //Distance = $"{kilometers} {meters}"
+            UpdateService.OnFixedUpdate += UpdateDistance;
         }
 
-        private void OnDisable() => UpdateService.OnUpdate -= CountDistance;
+        public double Distance
+        {
+            private set
+            {
+                _distance = Math.Round(value, 0);
+
+                OnChanged?.Invoke(_distance);
+            }
+
+            get => _distance;
+        }
+
+        private void UpdateDistance()
+        {
+            Distance += GlobalSpeedService.Speed * Time.fixedDeltaTime;
+        }
+
+        private void OnDisable()
+        {
+            UpdateService.OnFixedUpdate -= UpdateDistance;
+        }
     }
 }
