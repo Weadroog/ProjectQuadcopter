@@ -3,20 +3,20 @@ using Services;
 
 namespace General
 {
-    public class DistanceMeter : MonoBehaviour
+    public class DistanceService : MonoBehaviour
     {
         private float _distance;
 
         public string Distance { get; private set; }
 
-        private void OnEnable() => UpdateService.OnUpdate += CalculateDistance;
+        private void OnEnable() => UpdateService.OnUpdate += CountDistance;
 
-        private void CalculateDistance()
+        private void CountDistance()
         {
             _distance += Time.deltaTime * GlobalSpeedService.Speed;
             //Distance = $"{kilometers} {meters}"
         }
 
-        private void OnDisable() => UpdateService.OnUpdate -= CalculateDistance;
+        private void OnDisable() => UpdateService.OnUpdate -= CountDistance;
     }
 }

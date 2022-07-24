@@ -25,7 +25,7 @@ namespace Reactions
         public override void React()
         {
             _immortalReaction.React();
-            _quadCopter.transform.position = _wayMatrix.GetPosition(MatrixPosition.Center) + Vector3.forward * _wayMatrix.DisappearPoint;
+            _quadCopter.transform.position = _wayMatrix.GetPosition(MatrixPosition.Center) + Vector3.forward * _wayMatrix.DisappearPoint / 2;
             _swipeController.SetPosition(MatrixPosition.Center);
             DOTween.Kill(_swipeController.transform);
             _quadCopter.transform.DOMove(_wayMatrix.GetPositionByArrayCoordinates(_swipeController.CurrentPosition), _takeNextDuration);

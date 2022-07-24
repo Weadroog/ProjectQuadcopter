@@ -18,7 +18,7 @@ namespace General
         public WayMatrix()
         {
             _matrix = new Vector2[Height, Width];
-            DisappearPoint = -75;
+            DisappearPoint = -70;
             Build();
         }
 
