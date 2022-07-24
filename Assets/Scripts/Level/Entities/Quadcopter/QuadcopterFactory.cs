@@ -22,12 +22,10 @@ namespace Entities
         public override Quadcopter GetCreated()
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
-            GlobalSpeedService.OnStartup += () => quadcopter.gameObject.SetActive(true);
 
             SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
             swipeController.Receive(_config);
             swipeController.enabled = false;
-            GlobalSpeedService.OnStartup += () => swipeController.enabled = true;
 
             Lifer lifer = quadcopter.gameObject.AddComponent<Lifer>();
             lifer.OnChanged += _lifeCounter.Display;
@@ -41,9 +39,14 @@ namespace Entities
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
-            quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter));
+            quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
 
-            GlobalSpeedService.OnStartup += new QuadcopterNextReaction(quadcopter, _config).React;
+            GlobalSpeedService.OnStartup += () =>
+            {
+                swipeController.enabled = true;
+                new QuadcopterStartReaction(quadcopter).React();
+            };
+            
 
             quadcopter.GetComponentInChildren<Camera>().transform.SetParent(_container.transform);
 

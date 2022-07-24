@@ -65,7 +65,6 @@ namespace Entities
 
             _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter));
             _deliverer = _quadcopter.GetComponent<Deliverer>();
-            _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
         }
 

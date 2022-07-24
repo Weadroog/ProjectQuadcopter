@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c35252cfba45e145be87092c9391df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadZone: 250
+  _deadZone: 125
 --- !u!1 &63567836
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f95dd36b220454d8b91aece6a23f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 25
+  _speed: 30
 --- !u!1 &146676116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,9 +1492,9 @@ MonoBehaviour:
   _batteryConfig: {fileID: 11400000, guid: 09ff6330c9c5503459cc3ac7d93fd886, type: 2}
   _clientConfig: {fileID: 11400000, guid: 6a6ab063228d84d93a15f9dd25eb1fa2, type: 2}
   _pizzeriaGuyConfig: {fileID: 11400000, guid: cd3deaf12fbb7402e81f6f69859e269f, type: 2}
-  _birdsDensity: 1
-  _carsDensity: 0
-  _netGuysDensity: 0
+  _birdsDensity: 5
+  _carsDensity: 25
+  _netGuysDensity: 15
   _spawnDistance: 200
 --- !u!1 &2112761519
 GameObject:

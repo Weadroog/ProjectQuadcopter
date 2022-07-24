@@ -10,10 +10,9 @@ namespace Services
 
         [SerializeField][Range(0, 100)]private float _speed;
 
-
         public static GlobalSpeedService Instance { get; private set; }
         public static float Speed { get; private set; }
-        public static float Acceleration => 1f;
+        public static float Acceleration => 0.1f;
 
         private void Awake() => Instance = this;
 

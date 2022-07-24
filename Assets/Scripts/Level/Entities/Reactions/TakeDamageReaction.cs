@@ -10,11 +10,15 @@ namespace Reactions
     {
         private Lifer _lifer;
         private SkinnedMeshRenderer _renderer;
+        private SwipeController _swipeController;
+        private QuadcopterNextReaction _nextReaction;
 
-        public TakeDamageReaction(Quadcopter quadcopter)
+        public TakeDamageReaction(Quadcopter quadcopter, QuadcopterConfig config)
         {
             _lifer = quadcopter.GetComponent<Lifer>();
             _renderer = quadcopter.GetComponentInChildren<SkinnedMeshRenderer>();
+            _swipeController = quadcopter.GetComponentInChildren<SwipeController>();
+            _nextReaction = new QuadcopterNextReaction(quadcopter, config);
         }
 
         public override void React()
@@ -27,7 +31,9 @@ namespace Reactions
         private IEnumerator Focus()
         {
             GlobalSpeedService.Instance.enabled = false;
+            _swipeController.enabled = false;
             yield return new WaitForSeconds(1);
+            _nextReaction.React();
             GlobalSpeedService.Instance.enabled = true;
             yield break;
         }

@@ -36,12 +36,11 @@ namespace Reactions
 
         private IEnumerator Immortaling()
         {
+            _collider.enabled = false;
             _renderer.enabled = true;
             float currentTime = 0;
             float flickeringSpeed = 5f;
             Color defaultColor = _renderer.material.color;
-
-            _collider.enabled = false;
 
             while (currentTime < _config.ImmortalModeTime)
             {
