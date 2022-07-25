@@ -17,7 +17,7 @@ namespace Entities
 
             bird.AddReaction<CollisionDetector, Quadcopter, Car>(new BirdKillingReaction(bird));
             bird.AddReaction<CollisionDetector, NetGuy>(new FreezingReaction());
-            bird.GetComponent<Animator>().keepAnimatorControllerStateOnDisable = true;
+            bird.GetComponentInChildren<Animator>().keepAnimatorControllerStateOnDisable = true;
 
             return bird;
         }

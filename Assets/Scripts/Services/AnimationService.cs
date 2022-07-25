@@ -15,9 +15,10 @@
             public const string DownStrafe = "DownStrafe";
             public const string LeftStrafe = "LeftStrafe";
             public const string RightStrafe = "RightStrafe";
-            public const string Fall = "Fall";
+            public const string Death = "Death";
             public const string Idle = "Idle";
             public const string Start = "Start";
+            public const string FearOfCollision = "FearOfCollision";
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Reactions
         {
             _bird = bird;
             _particleSystem = _bird.GetComponentInChildren<ParticleSystem>();
-            _animator = _bird.GetComponent<Animator>();
+            _animator = _bird.GetComponentInChildren<Animator>();
         }
 
         public override void React() 
         {
             _particleSystem.Play();
-            _animator.Play(AnimationService.States.Fall);
+            _animator.Play(AnimationService.States.Death);
         }
     }
 }
