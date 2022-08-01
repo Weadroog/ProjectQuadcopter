@@ -17,12 +17,12 @@ namespace Entities
 
         public override Pizza GetCreated()
         {
-            Debug.Log("creating pizza");
             Pizza pizza = Object.Instantiate(_config.PizzaPrefab);
             pizza.gameObject.SetActive(false);
-
             pizza.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction(pizza, _deliverer));
-            PizzaFlightReaction pizzaFlightReaction = new PizzaFlightReaction(pizza, _quadcopter);
+
+            PizzaFlightReaction pizzaFlightReaction = new PizzaFlightReaction(pizza, _quadcopter, _config.PizzaFlightTime);
+
             _deliverer.OnPizzaThrown += () => pizzaFlightReaction.React();
             return pizza;
         }

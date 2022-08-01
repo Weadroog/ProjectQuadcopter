@@ -8,7 +8,7 @@ namespace Entities
     public class PizzaConfig : Config, ICanDetect
     {
         [SerializeField] private Pizza _pizzaPrefab;
-        [SerializeField, Range(0.1f, 20)] private float _flightSpeed;
+        [SerializeField, Range(0.1f, 3)] private float _flightTime;
         [SerializeField, Range(0, 100), BoxGroup("Detection")] private float _xDetectionRange;
         [SerializeField, MinMaxSlider(-100, 100), BoxGroup("Detection")] private Vector2 _zDetectionRange;
         [SerializeField, MinMaxSlider(-100, 100), BoxGroup("Detection")] private Vector2 _yDetectionRange;
@@ -20,7 +20,7 @@ namespace Entities
         public float ZDetectionDistanceBackward => _zDetectionRange.y;
         public float YDetectionDistanceUp => _yDetectionRange.y;
         public float YDetectionDistanceDown => _yDetectionRange.x;
-        public float PizzaFlightSpeed => _flightSpeed;
+        public float PizzaFlightTime => _flightTime;
     }
 
 }
