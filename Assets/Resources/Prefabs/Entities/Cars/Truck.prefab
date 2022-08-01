@@ -763,9 +763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7556066367354074198}
   - component: {fileID: 8595072980695085330}
-  - component: {fileID: 8037760228629528885}
   - component: {fileID: 5066961233641141595}
-  - component: {fileID: -8251532785398780950}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -802,22 +800,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.7, y: 4.25, z: 6}
   m_Center: {x: -0.1, y: 0.4, z: 0.4}
---- !u!54 &8037760228629528885
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3602332726695316722}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &5066961233641141595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -830,26 +812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474d4813a0cdc4e4cb544f280848870c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &-8251532785398780950
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3602332726695316722}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7bb9d81ffd020de4fa870f90108f5964, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3649044190233531409
 GameObject:
   m_ObjectHideFlags: 0
