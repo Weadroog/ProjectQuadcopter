@@ -18,14 +18,16 @@ namespace Components
 
             private set
             {
-                if (value <= 0)
-                    OnDeath?.Invoke();
-
                 _lives = Mathf.Clamp(value, 0, _config.MaxLives);
+
+                if (IsDdeath)
+                    OnDeath?.Invoke();
 
                 OnChanged?.Invoke(_lives);
             }
         }
+
+        public bool IsDdeath => Lives <= 0;
 
         public void Restore() => Lives = _config.MaxLives;
 

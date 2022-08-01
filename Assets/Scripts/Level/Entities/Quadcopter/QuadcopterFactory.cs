@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using General;
 using Services;
+using Ads;
 using UI;
 using Components;
 using Reactions;
@@ -11,17 +12,22 @@ namespace Entities
     {
         private LifeDisplayer _lifeCounter;
         private MoneyDisplayer _moneyCounter;
+        private DefeatPanel _defeatPanel;
+        private AdsRewardedButton _rewardedButton;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter)
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton)
             : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _moneyCounter = moneyCounter;
+            _defeatPanel = defeatPanel;
+            _rewardedButton = rewardedButton;
         }
 
         public override Quadcopter GetCreated()
         {
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
+            TakeDamageReaction takeDamageReaction = new(quadcopter, _config);
 
             SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
             swipeController.Receive(_config);
@@ -31,6 +37,7 @@ namespace Entities
             lifer.OnChanged += _lifeCounter.Display;
             lifer.Receive(_config);
             lifer.Restore();
+            lifer.OnDeath += () => _defeatPanel.gameObject.SetActive(true);
 
             Purse purse = quadcopter.gameObject.AddComponent<Purse>();
             purse.OnChanged += _moneyCounter.Display;
@@ -49,6 +56,12 @@ namespace Entities
             
 
             quadcopter.GetComponentInChildren<Camera>().transform.SetParent(_container.transform);
+
+            _rewardedButton.OnShowCompleted += () =>
+            {
+                lifer.Restore();
+                new QuadcopterNextReaction(quadcopter, _config).React();
+            };
 
             return quadcopter;
         }

@@ -23,15 +23,19 @@ namespace Reactions
 
         public override void React()
         {
+            GlobalSpeedService.Instance.enabled = false;
+            _swipeController.enabled = false;
             _lifer.TakeDamage();
-            _lifer.StartCoroutine(Focus());
+
+            if (_lifer.IsDdeath == false)
+                _lifer.StartCoroutine(Focus());
+
             _renderer.enabled = false;
         }
 
         private IEnumerator Focus()
         {
-            GlobalSpeedService.Instance.enabled = false;
-            _swipeController.enabled = false;
+            //Фокусируемся на месте смерти.
             yield return new WaitForSeconds(1);
             _nextReaction.React();
             GlobalSpeedService.Instance.enabled = true;

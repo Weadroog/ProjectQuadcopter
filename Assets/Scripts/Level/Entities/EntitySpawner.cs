@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-using Random = UnityEngine.Random;
 using General;
 using Services;
+using Ads;
 using Chunk;
 using UI;
 using Components;
+using Random = UnityEngine.Random;
 
 namespace Entities
 {
@@ -58,12 +59,13 @@ namespace Entities
 
         }
 
-        public Quadcopter EnableQuadcopter(Container entityContainer)
+        public Quadcopter EnableQuadcopter(Container entityContainer, DefeatPanel defeatPanel)
         {
             LifeDisplayer lifeCounter = FindObjectOfType<LifeDisplayer>();
             MoneyDisplayer moneyCounter = FindObjectOfType<MoneyDisplayer>();
+            AdsRewardedButton rewardedButton = FindObjectOfType<AdsRewardedButton>();
 
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter));
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter, defeatPanel, rewardedButton));
             _deliverer = _quadcopter.GetComponent<Deliverer>();
             return _quadcopter;
         }
