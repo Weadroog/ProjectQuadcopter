@@ -12,14 +12,16 @@ namespace Entities
     {
         private LifeDisplayer _lifeCounter;
         private MoneyDisplayer _moneyCounter;
+        private Pizza _pizzaPrefab;
         private DefeatPanel _defeatPanel;
         private AdsRewardedButton _rewardedButton;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton)
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton, Pizza pizzaPrefab)
             : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _moneyCounter = moneyCounter;
+            _pizzaPrefab = pizzaPrefab;
             _defeatPanel = defeatPanel;
             _rewardedButton = rewardedButton;
         }
@@ -44,7 +46,17 @@ namespace Entities
             purse.Receive(_config);
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
-            
+            deliverer.Receive(_config);
+
+            Pizza pizza = Object.Instantiate(_pizzaPrefab);
+            pizza.transform.SetParent(quadcopter.transform);
+            pizza.transform.localPosition = _config.PizzaConnectionPoint;
+            pizza.gameObject.SetActive(false);
+
+            deliverer.OnDeliverySequenceFailed += () => pizza.gameObject.SetActive(false);
+            deliverer.OnSuccessfulDelivery += () => pizza.gameObject.SetActive(false);
+            deliverer.OnPizzaGrabbed += () => pizza.gameObject.SetActive(true);
+
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd82a059f5b3245c7a58459455ca05de, type: 3}
+  m_Name: PizzaConfig
+  m_EditorClassIdentifier: 
+  _pizzaPrefab: {fileID: 8595192218742284104, guid: 34f1c64648cee4d26832e430c36dd934,
+    type: 3}
+  _flightTime: 1
+  _xDetectionRange: 1
+  _zDetectionRange: {x: -1, y: 1}
+  _yDetectionRange: {x: -1, y: 1}

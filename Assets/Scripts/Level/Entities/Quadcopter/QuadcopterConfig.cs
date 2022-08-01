@@ -13,6 +13,7 @@ namespace Entities
         [SerializeField, Range(1, 5)] private int _charge;
         [SerializeField, Range(1, 15)] private int _chargeDecreaseTime;
         [SerializeField, Range(1, 15)] private int _money;
+        [SerializeField] private Vector3 _pizzaConnectionPoint;
 
         public Quadcopter Prefab => _prefab;
         public int MaxLives => _lives;
@@ -21,5 +22,6 @@ namespace Entities
         public int ChargeDecreaseTime => _chargeDecreaseTime;
         public float MotionDuration => _motionDuration / 10;
         public int Money => _money;
+        public Vector3 PizzaConnectionPoint => _pizzaConnectionPoint;
     }
 }

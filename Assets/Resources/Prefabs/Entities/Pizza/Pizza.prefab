@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1073904602436724016}
   - component: {fileID: 4561187821502322891}
   - component: {fileID: 8566363209824726992}
-  - component: {fileID: 5886073294840374202}
   - component: {fileID: 3902378016933384890}
+  - component: {fileID: 8595192218742284104}
   m_Layer: 0
   m_Name: Pizza
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 196031a5e8f024e9ea3f46f25053978f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,18 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5886073294840374202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093070613073649294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89dc61e9a9c17414fad0b300c3a82430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &3902378016933384890
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -110,3 +98,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 2.0000002, z: 1.0000002}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &8595192218742284104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093070613073649294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a6851141e73465d861fb56f1030da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
