@@ -22,7 +22,7 @@ namespace Components
         public void GrabPizza()
         {
             _isCarryingPizza = true;
-            OnPizzaGrabbed.Invoke();
+            OnPizzaGrabbed?.Invoke();
         }
 
         public void ThrowPizza() => OnPizzaThrown?.Invoke();

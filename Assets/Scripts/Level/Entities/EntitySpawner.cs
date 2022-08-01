@@ -68,7 +68,7 @@ namespace Entities
             MoneyDisplayer moneyCounter = FindObjectOfType<MoneyDisplayer>();
             AdsRewardedButton rewardedButton = FindObjectOfType<AdsRewardedButton>();
 
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter, defeatPanel, rewardedButton, _pizzaConfig.PizzaPrefab));
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter, defeatPanel, rewardedButton));
             _deliverer = _quadcopter.GetComponent<Deliverer>();
             return _quadcopter;
         }

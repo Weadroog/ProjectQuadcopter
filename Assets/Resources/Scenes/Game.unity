@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c35252cfba45e145be87092c9391df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadZone: 125
+  _deadZone: 62
 --- !u!1 &63567836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,6 +1937,7 @@ MonoBehaviour:
   _batteryConfig: {fileID: 11400000, guid: 09ff6330c9c5503459cc3ac7d93fd886, type: 2}
   _clientConfig: {fileID: 11400000, guid: 6a6ab063228d84d93a15f9dd25eb1fa2, type: 2}
   _pizzeriaGuyConfig: {fileID: 11400000, guid: cd3deaf12fbb7402e81f6f69859e269f, type: 2}
+  _pizzaConfig: {fileID: 11400000, guid: 2b5785f0d6e8ed144a164aa7ca58d572, type: 2}
   _birdsDensity: 5
   _carsDensity: 25
   _netGuysDensity: 15

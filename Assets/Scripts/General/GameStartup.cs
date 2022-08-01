@@ -32,7 +32,7 @@ namespace General
             _entitySpawner.EnableBirds(entityContainer);
             _entitySpawner.EnableNetGuys(entityContainer);
             //_entitySpawner.EnableBatteries(entityContainer);
-            //_entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
+            _entitySpawner.EnableDelivery(entityContainer, _chunkGenerator);
             GlobalSpeedService.Instance.enabled = false;
             _defeatPanel.gameObject.SetActive(false);
         }

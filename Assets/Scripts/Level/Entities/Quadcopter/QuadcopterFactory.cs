@@ -12,16 +12,14 @@ namespace Entities
     {
         private LifeDisplayer _lifeCounter;
         private MoneyDisplayer _moneyCounter;
-        private Pizza _pizzaPrefab;
         private DefeatPanel _defeatPanel;
         private AdsRewardedButton _rewardedButton;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton, Pizza pizzaPrefab)
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton)
             : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _moneyCounter = moneyCounter;
-            _pizzaPrefab = pizzaPrefab;
             _defeatPanel = defeatPanel;
             _rewardedButton = rewardedButton;
         }
@@ -48,9 +46,7 @@ namespace Entities
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             deliverer.Receive(_config);
 
-            Pizza pizza = Object.Instantiate(_pizzaPrefab);
-            pizza.transform.SetParent(quadcopter.transform);
-            pizza.transform.localPosition = _config.PizzaConnectionPoint;
+            Pizza pizza = quadcopter.GetComponentInChildren<Pizza>();
             pizza.gameObject.SetActive(false);
 
             deliverer.OnDeliverySequenceFailed += () => pizza.gameObject.SetActive(false);
