@@ -20,6 +20,8 @@ namespace Entities
         private Client _client;
         private bool _isClientRequested;
         private Deliverer _deliverer;
+        private Pizza _pizza;
+        private PizzaGuy _pizzaGuy;
 
         [SerializeField, BoxGroup("Configurations")] private QuadcopterConfig _quadcopterConfig;
         [SerializeField, BoxGroup("Configurations")] private BirdConfig _birdConfig;
@@ -28,6 +30,7 @@ namespace Entities
         [SerializeField, BoxGroup("Configurations")] private BatteryConfig _batteryConfig;
         [SerializeField, BoxGroup("Configurations")] private ClientConfig _clientConfig;
         [SerializeField, BoxGroup("Configurations")] private PizzaGuyConfig _pizzeriaGuyConfig;
+        [SerializeField, BoxGroup("Configurations")] private PizzaConfig _pizzaConfig;
 
         [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _aggressiveBirdDensity;
         [SerializeField, Range(0, 100), BoxGroup("SpawnDensity")] private int _carDensity;
@@ -56,7 +59,7 @@ namespace Entities
             LifeCounter lifeCounter = FindObjectOfType<LifeCounter>();
             MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
 
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter));
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter, _pizzaConfig.PizzaPrefab));
             _deliverer = _quadcopter.GetComponent<Deliverer>();
             _quadcopter.gameObject.SetActive(false);
             return _quadcopter;
@@ -85,13 +88,21 @@ namespace Entities
 
         public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
         {
+            EnablePizza(entityContainer);
             EnablePizzeriaGuy(entityContainer, chunkGenerator);
             EnableClient(entityContainer);
         }
 
+        private void EnablePizza(Container entityContainer)
+        {
+            _pizza = new PizzaFactory(_pizzaConfig, _deliverer, _quadcopter).GetCreated();
+            _pizza.transform.SetParent(entityContainer.transform);
+        }
+
         private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
         {
-            _pools[typeof(PizzaGuy)] = new Pool<PizzaGuy>(new PizzaGuyFactory(_pizzeriaGuyConfig, _deliverer), entityContainer, 2);
+            _pizzaGuy = new PizzaGuyFactory(_pizzeriaGuyConfig, _deliverer, _pizza, _quadcopter).GetCreated();
+            _pizzaGuy.transform.SetParent(entityContainer.transform);
             chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
         }
 
@@ -106,7 +117,9 @@ namespace Entities
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
         {
-            PizzaGuy pizzeriaGuy = GetPool<PizzaGuy>().Get(dispensePoint.transform.position);
+            PizzaGuy pizzeriaGuy = _pizzaGuy;
+            pizzeriaGuy.gameObject.SetActive(true);
+            pizzeriaGuy.transform.position = (dispensePoint.transform.position);
             BoxCollider pizzeriaGuyCollider = pizzeriaGuy.GetComponent<BoxCollider>();
             pizzeriaGuyCollider.center = new Vector3(-1 * Mathf.Abs(dispensePoint.transform.position.x) + WayMatrix.HorizontalSpacing / 2, WayMatrix.VerticalSpacing / 2, 0);
             pizzeriaGuy.transform.eulerAngles = Vector3.up * (pizzeriaGuy.transform.position.x < 0 ? 180 : 0);

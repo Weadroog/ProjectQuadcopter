@@ -11,11 +11,13 @@ namespace Entities
     {
         private LifeCounter _lifeCounter;
         private MoneyCounter _moneyCounter;
+        private Pizza _pizzaPrefab;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, MoneyCounter moneyCounter) : base(config, container) 
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeCounter lifeCounter, MoneyCounter moneyCounter, Pizza pizzaPrefab) : base(config, container) 
         {
             _lifeCounter = lifeCounter;
             _moneyCounter = moneyCounter;
+            _pizzaPrefab = pizzaPrefab;
         }
 
         public override Quadcopter GetCreated()
@@ -38,6 +40,16 @@ namespace Entities
             purse.Receive(_config);
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
+            deliverer.Receive(_config);
+
+            Pizza pizza = Object.Instantiate(_pizzaPrefab);
+            pizza.transform.SetParent(quadcopter.transform);
+            pizza.transform.localPosition = _config.PizzaConnectionPoint;
+            pizza.gameObject.SetActive(false);
+
+            deliverer.OnDeliverySequenceFailed += () => pizza.gameObject.SetActive(false);
+            deliverer.OnSuccessfulDelivery += () => pizza.gameObject.SetActive(false);
+            deliverer.OnPizzaGrabbed += () => pizza.gameObject.SetActive(true);
 
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));

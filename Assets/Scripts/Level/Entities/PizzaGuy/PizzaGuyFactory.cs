@@ -7,26 +7,27 @@ namespace Entities
     public class PizzaGuyFactory : EntityFactory<PizzaGuy, PizzaGuyConfig>
     {
         private Deliverer _deliverer;
+        private Pizza _flyingPizza;
 
-        public PizzaGuyFactory(PizzaGuyConfig config, Deliverer deliverer) : base(config)
+        public PizzaGuyFactory(PizzaGuyConfig config, Deliverer deliverer, Pizza pizza, Quadcopter quadcopter) : base(config)
         {
             _deliverer = deliverer;
+            _flyingPizza = pizza;
         }
 
         public override PizzaGuy GetCreated()
         {
             PizzaGuy pizzaGuy = Object.Instantiate(_config.Prefab);
 
+            PizzaPoint pizzaPoint = pizzaGuy.gameObject.GetComponentInChildren<PizzaPoint>();
+
+            pizzaGuy.gameObject.SetActive(false);
             pizzaGuy.gameObject.AddComponent<Disappearer>().OnDisappear += () => _deliverer.DropPizza();
 
             _deliverer.OnPizzaGrabbed += () => pizzaGuy.gameObject.SetActive(false);
 
-            PizzaEquipper pizzaEquipper = pizzaGuy.gameObject.AddComponent<PizzaEquipper>();
-            pizzaEquipper.Deliverer = _deliverer;
-            pizzaEquipper.Receive(_config);
-
             BoxDetector boxDetector = pizzaGuy
-                .AddReaction<BoxDetector, Quadcopter>(new GrabPizzaReaction(pizzaEquipper.EquipedPizza, _deliverer));//new PizzaThrowingReaction(pizzaEquipper.EquipedPizza));
+                .AddReaction<BoxDetector, Quadcopter>(new PizzaThrowingReaction(_deliverer, _flyingPizza, pizzaPoint));//new GrabPizzaReaction(pizzaEquipper.EquipedPizza, _deliverer, _config.PizzaFlightSpeed));//new PizzaThrowingReaction(pizzaEquipper.EquipedPizza));
 
             boxDetector.Receive(_config);
 
