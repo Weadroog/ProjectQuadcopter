@@ -12,7 +12,9 @@ namespace Entities
         [SerializeField, Range(0, 10)] private float _immortalModeTime;
         [SerializeField, Range(1, 5)] private int _charge;
         [SerializeField, Range(1, 15)] private int _chargeDecreaseTime;
-        [SerializeField, Range(1, 15)] private int _money;
+        [SerializeField, Range(0, 15)] private int _money;
+        [SerializeField, Range(1, 100)] private int _successfulDeliveryReward;
+        [SerializeField, Range(1, 100)] private int _fineForFailedDelivery;
         [SerializeField] private Vector3 _pizzaConnectionPoint;
 
         public Quadcopter Prefab => _prefab;
@@ -22,6 +24,8 @@ namespace Entities
         public int ChargeDecreaseTime => _chargeDecreaseTime;
         public float MotionDuration => _motionDuration / 10;
         public int Money => _money;
+        public int SuccessfulDeliveryReward => _successfulDeliveryReward;
+        public int FineForFailedDelivery => _fineForFailedDelivery;
         public Vector3 PizzaConnectionPoint => _pizzaConnectionPoint;
     }
 }

@@ -42,9 +42,12 @@ namespace Entities
             Purse purse = quadcopter.gameObject.AddComponent<Purse>();
             purse.OnChanged += _moneyCounter.Display;
             purse.Receive(_config);
+            purse.SetInitialAmount();
 
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             deliverer.Receive(_config);
+            deliverer.OnSuccessfulDelivery += () => purse.AddMoney(_config.SuccessfulDeliveryReward);
+            deliverer.OnDeliverySequenceFailed += () => purse.SubtractMoney(_config.FineForFailedDelivery);
 
             Pizza pizza = quadcopter.GetComponentInChildren<Pizza>();
             pizza.gameObject.SetActive(false);
