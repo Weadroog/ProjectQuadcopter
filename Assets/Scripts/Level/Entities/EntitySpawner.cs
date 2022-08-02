@@ -46,9 +46,6 @@ namespace Entities
         {
             _chunkGenerator.OnSpawnChunk += SettleWindows;
 
-            if (IsEnabled<PizzaGuy>() && IsEnabled<Client>())
-                _deliverer.OnPizzeriaRequested += _chunkGenerator.RequestPizzeria;
-
             GlobalSpeedService.OnStartup += () =>
             {
                 if (IsEnabled<Car>())
@@ -96,6 +93,7 @@ namespace Entities
 
         public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
         {
+            _deliverer.OnPizzeriaRequested += _chunkGenerator.RequestPizzeria;
             EnablePizzaGuy(entityContainer, chunkGenerator);
             EnableClient(entityContainer);
         }
@@ -127,6 +125,7 @@ namespace Entities
             _client.gameObject.SetActive(false);
             _client.transform.SetParent(entityContainer.transform);
             _deliverer.OnPizzaGrabbed += () => _isClientRequested = true;
+            _deliverer.OnDeliverySequenceFailed += () => _isClientRequested = false;
         }
 
         private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
@@ -256,8 +255,7 @@ namespace Entities
         {
             _chunkGenerator.OnSpawnChunk -= SettleWindows;
 
-            if (IsEnabled<PizzaGuy>() && IsEnabled<Client>())
-                _deliverer.OnPizzeriaRequested -= _chunkGenerator.RequestPizzeria;
+            _deliverer.OnPizzeriaRequested -= _chunkGenerator.RequestPizzeria;
 
             GlobalSpeedService.OnStartup -= () =>
             {
