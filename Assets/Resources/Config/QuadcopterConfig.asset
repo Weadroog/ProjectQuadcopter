@@ -19,4 +19,6 @@ MonoBehaviour:
   _charge: 3
   _chargeDecreaseTime: 10
   _money: 0
+  _successfulDeliveryReward: 10
+  _fineForFailedDelivery: 7
   _pizzaConnectionPoint: {x: 0, y: -0.65, z: 0}
