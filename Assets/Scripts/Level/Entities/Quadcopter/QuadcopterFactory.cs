@@ -29,6 +29,8 @@ namespace Entities
             Quadcopter quadcopter = Object.Instantiate(_config.Prefab, _container.transform);
             TakeDamageReaction takeDamageReaction = new(quadcopter, _config);
 
+            MoneyService.SetInitialAmount();
+
             SwipeController swipeController = quadcopter.gameObject.AddComponent<SwipeController>();
             swipeController.Receive(_config);
             swipeController.enabled = false;
@@ -39,15 +41,10 @@ namespace Entities
             lifer.Restore();
             lifer.OnDeath += () => _defeatPanel.gameObject.SetActive(true);
 
-            Purse purse = quadcopter.gameObject.AddComponent<Purse>();
-            purse.OnChanged += _moneyCounter.Display;
-            purse.Receive(_config);
-            purse.SetInitialAmount();
-
             Deliverer deliverer = quadcopter.gameObject.AddComponent<Deliverer>();
             deliverer.Receive(_config);
-            deliverer.OnSuccessfulDelivery += () => purse.AddMoney(_config.SuccessfulDeliveryReward);
-            deliverer.OnDeliverySequenceFailed += () => purse.SubtractMoney(_config.FineForFailedDelivery);
+            deliverer.OnSuccessfulDelivery += () => MoneyService.AddMoney(_config.SuccessfulDeliveryReward);
+            deliverer.OnDeliverySequenceFailed += () => MoneyService.SubtractMoney(_config.FineForFailedDelivery);
 
             Pizza pizza = quadcopter.GetComponentInChildren<Pizza>();
             pizza.gameObject.SetActive(false);
