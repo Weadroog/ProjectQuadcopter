@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabs:
   - {fileID: 3653145402677353420, guid: 786faa769c25448e1bf9036a12d8408c, type: 3}
-  _pizzaPrefabs:
-  - {fileID: 5886073294840374202, guid: 34f1c64648cee4d26832e430c36dd934, type: 3}
-  _pizzaFlightSpeed: 1
-  _xDetectionRange: 12
+  _pizzaFlightSpeed: 5
+  _xDetectionRange: 20
   _zDetectionRange: {x: 0, y: 40}
   _yDetectionRange: {x: 0, y: 10}

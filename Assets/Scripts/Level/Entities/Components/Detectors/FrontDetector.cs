@@ -29,10 +29,10 @@ namespace Components
 
         private bool IsTargetInRadius(out Entity target)
         {
-            Ray ray = new Ray(transform.position, Vector3.back);
-            Debug.DrawRay(ray.origin, ray.direction * _config.XDetectionDistanceLeft, Color.red);
+            Ray ray = new(transform.position, Vector3.back);
+            Debug.DrawRay(ray.origin, ray.direction * _config.ZDetectionDistanceForward, Color.red);
 
-            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _config.XDetectionDistanceLeft))
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit detectionInfo, _config.ZDetectionDistanceForward))
             {
                 if (detectionInfo.collider.TryGetComponent(out target))
                 {
