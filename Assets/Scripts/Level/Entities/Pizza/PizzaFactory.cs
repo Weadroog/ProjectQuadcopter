@@ -20,8 +20,16 @@ namespace Entities
             Pizza pizza = Object.Instantiate(_config.PizzaPrefab);
             pizza.gameObject.SetActive(false);
             pizza.AddReaction<CollisionDetector, Quadcopter>(new GrabPizzaReaction(pizza, _deliverer));
-            _deliverer.OnPizzaThrown += new PizzaFlightReaction(pizza, _quadcopter, _config.PizzaFlightTime).React;
-            return pizza;
+
+            PizzaFlightReaction flightReaction = new PizzaFlightReaction(pizza, _quadcopter, _config.PizzaFlightTime);
+            _deliverer.OnPizzaThrown += flightReaction.Enable;
+            _deliverer.OnPizzaGrabbed += flightReaction.Disable;
+            _deliverer.OnDeliverySequenceFailed += () =>
+            {
+                pizza.gameObject.SetActive(false);
+                flightReaction.Disable();
+            };
+            return pizza;   
         }
     }
 }

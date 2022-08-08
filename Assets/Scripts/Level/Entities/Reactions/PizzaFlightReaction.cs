@@ -17,13 +17,18 @@ namespace Reactions
             _pizzaFlightTime = flightTime;
         }
 
-        public override void React() => UpdateService.OnFixedUpdate += MovePizza;
+        public override void React() { }
+
+        public void Enable() => UpdateService.OnFixedUpdate += MovePizza;
+        
+
+        public void Disable() => UpdateService.OnFixedUpdate -= MovePizza;
+        
         
         private void MovePizza()
         {
             if(_pizza.transform.position != _quadcopter.transform.position)
                 _pizza.transform.DOMove(_quadcopter.transform.position, _pizzaFlightTime);
-            else UpdateService.OnFixedUpdate -= MovePizza;
         }
     }
 
