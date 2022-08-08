@@ -8,6 +8,7 @@ namespace Components
     public class Deliverer : ConfigReceiver<QuadcopterConfig>
     {
         private bool _isCarryingPizza = false;
+        private bool _isPizzaThrown = false;
 
         public event Action OnSuccessfulDelivery;
         public event Action OnDeliverySequenceFailed;
@@ -16,16 +17,22 @@ namespace Components
         public event Action OnPizzeriaRequested;
 
         public bool IsCarryingPizza => _isCarryingPizza;
+        public bool IsPizzaThrown => _isPizzaThrown;
 
         private void Start() => OnPizzeriaRequested?.Invoke();
-        
+
         public void GrabPizza()
         {
             _isCarryingPizza = true;
+            _isPizzaThrown = false;
             OnPizzaGrabbed?.Invoke();
         }
 
-        public void ThrowPizza() => OnPizzaThrown?.Invoke();
+        public void ThrowPizza()
+        {
+            _isPizzaThrown = true;
+            OnPizzaThrown?.Invoke();
+        }
         
         public void DropPizza(bool isDeliverySuccseeded = false)
         {
@@ -34,8 +41,10 @@ namespace Components
             else
                 OnDeliverySequenceFailed?.Invoke();
 
-            OnPizzeriaRequested?.Invoke();
+            _isPizzaThrown = false;
             _isCarryingPizza = false;
+
+            OnPizzeriaRequested?.Invoke();
         }
 
         public void SetPizzaCarryingStatus(bool isCarryingPizza) => _isCarryingPizza = isCarryingPizza;

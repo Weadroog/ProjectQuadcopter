@@ -15,11 +15,12 @@ namespace Reactions
 
         public override void React()
         {
-            if (_deliverer.IsCarryingPizza)
+            if (_deliverer.IsCarryingPizza || _deliverer.IsPizzaThrown)
             {
                 _deliverer.DropPizza();
                 Debug.Log("Уронили питсу");
             }
+            
         }
     }
 }
