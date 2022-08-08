@@ -7,7 +7,6 @@ namespace Entities
     public class ClientConfig : Config, ICanMove, ICanDetect
     {
         [SerializeField] private Client[] _prefabs;
-        [SerializeField] [Range(1, 30)] private int _bypassDistance;
 
         public Client Prefab => _prefabGetter.Get(_prefabs);
         public float SelfSpeed => 0;
