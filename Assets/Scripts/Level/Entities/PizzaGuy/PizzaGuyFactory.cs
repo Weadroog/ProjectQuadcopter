@@ -25,9 +25,10 @@ namespace Entities
             pizzaGuy.gameObject.AddComponent<Disappearer>().OnDisappear += () => _deliverer.DropPizza();
 
             _deliverer.OnPizzaGrabbed += () => pizzaGuy.gameObject.SetActive(false);
+            _deliverer.OnDeliverySequenceFailed += () => pizzaGuy.gameObject.SetActive(false);
 
             BoxDetector boxDetector = pizzaGuy
-                .AddReaction<BoxDetector, Quadcopter>(new PizzaThrowingReaction(_deliverer, _flyingPizza, pizzaPoint));//new GrabPizzaReaction(pizzaEquipper.EquipedPizza, _deliverer, _config.PizzaFlightSpeed));//new PizzaThrowingReaction(pizzaEquipper.EquipedPizza));
+                .AddReaction<BoxDetector, Quadcopter>(new PizzaThrowingReaction(_deliverer, _flyingPizza, pizzaPoint, pizzaGuy));
 
             boxDetector.Receive(_config);
 
