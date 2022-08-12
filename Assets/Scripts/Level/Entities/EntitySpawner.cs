@@ -44,18 +44,9 @@ namespace Entities
         private void OnEnable()
         {
             _chunkGenerator.OnSpawnChunk += SettleWindows;
-
-            GlobalSpeedService.OnStartup += () =>
-            {
-                if (IsEnabled<Car>())
-                    SpawnCars();
-
-                if (IsEnabled<Bird>())
-                    SpawnBirds();
-            };
-
-            GlobalSpeedService.OnStop += () => StopAllCoroutines();
-
+            GlobalSpeedService.OnStartup += SpawnCars;
+            GlobalSpeedService.OnStartup += SpawnBirds;
+            GlobalSpeedService.OnStop += StopAllCoroutines;
         }
 
         public Quadcopter EnableQuadcopter(Container entityContainer, DefeatPanel defeatPanel)
@@ -159,9 +150,10 @@ namespace Entities
 
         public void SpawnCars()
         {
-            for (int line = 0; line < WayMatrix.Width; line++)
+            if (IsEnabled<Car>())
             {
-                StartCoroutine(CarSpawning(line));
+                for (int line = 0; line < WayMatrix.Width; line++)
+                    StartCoroutine(CarSpawning(line));
             }
         }
 
@@ -193,13 +185,12 @@ namespace Entities
 
         public void SpawnBirds()
         {
-            for (int row = 0; row < 2; row++)
+            if (IsEnabled<Bird>())
             {
-                for (int i = 0; i < WayMatrix.Width; i++)
-                {
-                    StartCoroutine(BirdsSpawning(i, row));
-                }
-            }
+                for (int row = 0; row < 2; row++)
+                    for (int i = 0; i < WayMatrix.Width; i++)
+                        StartCoroutine(BirdsSpawning(i, row));
+            } 
         }
 
         private void SettleWindows(IEnumerable<Window> windows)
@@ -215,6 +206,7 @@ namespace Entities
                 if (IsEnabled<Client>() && _isClientRequested)
                 {
                     Client client = GetPool<Client>().Get(window.GetSpawnPoint());
+                    client.GetComponentInChildren<Animator>().SetFloat(AnimationService.Parameters.Side, Mathf.Clamp(client.transform.position.x, -1, 1));
                     _isClientRequested = false;
                 }
                 else if (IsEnabled<NetGuy>())
@@ -238,19 +230,11 @@ namespace Entities
         private void OnDisable()
         {
             _chunkGenerator.OnSpawnChunk -= SettleWindows;
-
+            _chunkGenerator.OnSpawnChunk += SettleWindows;
+            GlobalSpeedService.OnStartup += SpawnCars;
+            GlobalSpeedService.OnStartup += SpawnBirds;
+            GlobalSpeedService.OnStop += StopAllCoroutines;
             _deliverer.OnPizzeriaRequested -= _chunkGenerator.RequestPizzeria;
-
-            GlobalSpeedService.OnStartup -= () =>
-            {
-                if (IsEnabled<Car>())
-                    SpawnCars();
-
-                if (IsEnabled<Bird>())
-                    SpawnBirds();
-            };
-
-            GlobalSpeedService.OnStop -= () => StopAllCoroutines();
         }
     }
 }

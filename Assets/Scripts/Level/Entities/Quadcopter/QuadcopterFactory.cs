@@ -65,6 +65,7 @@ namespace Entities
 
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));
+            quadcopter.AddReaction<CollisionDetector, Pizza>(new GrabPizzaReaction(pizza, deliverer));
 
             GlobalSpeedService.OnStartup += () =>
             {
