@@ -18,7 +18,6 @@ namespace Reactions
             if (_deliverer.IsCarryingPizza || _deliverer.IsPizzaThrown)
             {
                 _deliverer.DropPizza();
-                Debug.Log("Уронили питсу");
             }
             
         }

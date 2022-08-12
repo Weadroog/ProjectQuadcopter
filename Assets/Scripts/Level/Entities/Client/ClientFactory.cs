@@ -19,8 +19,7 @@ namespace Entities
 
             client.gameObject.AddComponent<Disappearer>().OnDisappear += () => _deliverer.DropPizza();
 
-            CollisionDetector collisionDetector = client.AddReaction<CollisionDetector, Quadcopter>(new SuccessfulDeliveryReaction(client, _deliverer));
-            collisionDetector.Receive(_config);
+            client.AddReaction<BoxDetector, Quadcopter>(new SuccessfulDeliveryReaction(client, _deliverer)).Receive(_config);
 
             client.gameObject
                 .AddComponent<Mover>()
@@ -28,7 +27,6 @@ namespace Entities
 
             _deliverer.OnDeliverySequenceFailed += () => {
                 client.gameObject.SetActive(false);
-                Debug.Log("Клиент больше не ждет пиццу");
             };
             return client;
         }

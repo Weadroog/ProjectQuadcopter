@@ -22,16 +22,14 @@ namespace Reactions
 
         public override void React()
         {
-            Debug.Log($"Бросаем пиццу в {_detectableEntity.name} (спавнпоинт: {_pizzaPoint.transform.position}, пицца: {_flyingPizza.gameObject.name})");
-            _pizzaGuy.StartCoroutine(ThrowingRoutine());
+            _pizzaGuy.StartCoroutine(Throwing());
         }
 
 
-        private IEnumerator ThrowingRoutine()
+        private IEnumerator Throwing()
         {
             _flyingPizza.transform.position = _pizzaPoint.transform.position;
             yield return new WaitForEndOfFrame();
-            Debug.Log($"положение пиццы {_flyingPizza.transform.position}");
             _flyingPizza.gameObject.SetActive(true);
             _deliverer.ThrowPizza();
         }

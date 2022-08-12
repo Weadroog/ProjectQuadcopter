@@ -12,11 +12,7 @@ namespace Reactions
             _deliverer = deliverer;
         }
 
-        public override void React()
-        {
-            Debug.Log("Сбросили питсу: пролетели клиента");
-            _deliverer.DropPizza();
-        }
+        public override void React() => _deliverer.DropPizza();
     }
 
 }

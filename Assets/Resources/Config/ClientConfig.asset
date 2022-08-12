@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: ClientConfig
   m_EditorClassIdentifier: 
   _prefabs:
-  - {fileID: 828858362942317433, guid: a2367d6b3f06d495c95529a0f1f47106, type: 3}
-  _bypassDistance: 20
-  _detectFloorsUp: 2
-  _detectFloorsDown: 2
+  - {fileID: -621389816603593634, guid: f40fb3a73ee6dd240ac2e99a112350d7, type: 3}
+  - {fileID: -621389816603593634, guid: f11e9b24385e09245977d121825246fa, type: 3}
+  - {fileID: -621389816603593634, guid: 96e5be2161fd1944ebd9f68de5b8293e, type: 3}
+  - {fileID: -621389816603593634, guid: cd98e31c942ebb941b5faf9a310251ca, type: 3}
+  - {fileID: -621389816603593634, guid: 5e8aac0ce4e2e5f49a0104d2a5306ebf, type: 3}
+  - {fileID: -621389816603593634, guid: 9f9e44dc127402542bc7867226286efb, type: 3}
+  - {fileID: -621389816603593634, guid: f258c506f8849d84a97f9182fa99e2a3, type: 3}
+  - {fileID: -621389816603593634, guid: 915e3d8da33779c479ac7dc854289772, type: 3}
+  _xDetectionRange: {x: -8, y: 8}
+  _zDetectionRange: {x: -10, y: 0}
+  _yDetectionRange: {x: -1, y: 1}

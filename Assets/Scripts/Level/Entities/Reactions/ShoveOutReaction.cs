@@ -16,7 +16,7 @@ namespace Reactions
         {
             _netGuy = netGuy;
             _config = config;
-            _animator = netGuy.GetComponent<Animator>();
+            _animator = netGuy.GetComponentInChildren<Animator>();
         }
 
         private void CalculateShoveOuteTime()

@@ -39,12 +39,12 @@ namespace Components
         {
             if (_target != null)
             {
-                _xDetectionDistance[0] = _config.XDetectionDistanceLeft;
-                _xDetectionDistance[1] = _config.XDetectionDistanceRight;
-                _yDetectionDistance[0] = _config.YDetectionDistanceDown;
-                _yDetectionDistance[1] = _config.YDetectionDistanceUp;
-                _zDetectionDistance[0] = _config.ZDetectionDistanceBackward;
-                _zDetectionDistance[1] = _config.ZDetectionDistanceForward;
+                _xDetectionDistance[0] = Mathf.Abs(_config.XDetectionDistanceLeft);
+                _xDetectionDistance[1] = Mathf.Abs(_config.XDetectionDistanceRight);
+                _yDetectionDistance[0] = Mathf.Abs(_config.YDetectionDistanceDown);
+                _yDetectionDistance[1] = Mathf.Abs(_config.YDetectionDistanceUp);
+                _zDetectionDistance[0] = Mathf.Abs(_config.ZDetectionDistanceBackward);
+                _zDetectionDistance[1] = Mathf.Abs(_config.ZDetectionDistanceForward);
             }
 
             Vector3 distance = _target.transform.position - transform.position;

@@ -17,7 +17,6 @@ namespace Reactions
 
         public override void React()
         {
-            Debug.Log("Забрали пиццу");
             _flyingPizza.gameObject.SetActive(false);
             _deliverer.GrabPizza();
         }

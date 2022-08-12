@@ -19,7 +19,6 @@ namespace Entities
         private readonly WayMatrix _wayMatrix = new();
         private ChunkGenerator _chunkGenerator;
         private Quadcopter _quadcopter;
-        private Client _client;
         private bool _isClientRequested;
         private Deliverer _deliverer;
         private Pizza _pizza;
@@ -62,10 +61,9 @@ namespace Entities
         public Quadcopter EnableQuadcopter(Container entityContainer, DefeatPanel defeatPanel)
         {
             LifeDisplayer lifeCounter = FindObjectOfType<LifeDisplayer>();
-            MoneyDisplayer moneyCounter = FindObjectOfType<MoneyDisplayer>();
             AdsRewardedButton rewardedButton = FindObjectOfType<AdsRewardedButton>();
 
-            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, moneyCounter, defeatPanel, rewardedButton));
+            _quadcopter = GetCreatedEntity(new QuadcopterFactory(_quadcopterConfig, entityContainer, lifeCounter, defeatPanel, rewardedButton));
             _deliverer = _quadcopter.GetComponent<Deliverer>();
             return _quadcopter;
         }
@@ -94,41 +92,32 @@ namespace Entities
         public void EnableDelivery(Container entityContainer, ChunkGenerator chunkGenerator)
         {
             _deliverer.OnPizzeriaRequested += _chunkGenerator.RequestPizzeria;
-            EnablePizzaGuy(entityContainer, chunkGenerator);
-            EnableClient(entityContainer);
-        }
-
-        private void EnablePizzaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
-        { 
             EnablePizza(entityContainer);
-            EnablePizzeriaGuy(entityContainer, chunkGenerator);
+            EnablePizzaGuy(entityContainer, chunkGenerator);
             EnableClient(entityContainer);
         }
 
         private void EnablePizza(Container entityContainer)
         {
-            _pizza = new PizzaFactory(_pizzaConfig, _deliverer, _quadcopter).GetCreated();
+            _pizza = new PizzaFactory(_pizzaConfig, _deliverer).GetCreated();
             _pizza.transform.SetParent(entityContainer.transform);
         }
 
-        private void EnablePizzeriaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
+        private void EnablePizzaGuy(Container entityContainer, ChunkGenerator chunkGenerator)
         {
             _pizzaGuy = new PizzaGuyFactory(_pizzeriaGuyConfig, _deliverer, _pizza, _quadcopter).GetCreated();
             _pizzaGuy.transform.SetParent(entityContainer.transform);
-            chunkGenerator.OnPizzeriaSpawned += SpawnPizzeriaGuy;
+            chunkGenerator.OnPizzeriaSpawned += SpawnPizzaGuy;
         }
 
         private void EnableClient(Container entityContainer)
         {
-            ClientFactory clientFactory = new ClientFactory(_clientConfig, _deliverer);
-            _client = clientFactory.GetCreated();
-            _client.gameObject.SetActive(false);
-            _client.transform.SetParent(entityContainer.transform);
+            _pools[typeof(Client)] = new Pool<Client>(new ClientFactory(_clientConfig, _deliverer), entityContainer, 10);
             _deliverer.OnPizzaGrabbed += () => _isClientRequested = true;
             _deliverer.OnDeliverySequenceFailed += () => _isClientRequested = false;
         }
 
-        private void SpawnPizzeriaGuy(PizzaDispensePoint dispensePoint)
+        private void SpawnPizzaGuy(PizzaDispensePoint dispensePoint)
         {
             PizzaGuy pizzeriaGuy = _pizzaGuy;
             pizzeriaGuy.gameObject.SetActive(true);
@@ -223,16 +212,13 @@ namespace Entities
                     continue;
                 }
 
-                if (_client != null && _isClientRequested)
+                if (IsEnabled<Client>() && _isClientRequested)
                 {
-                    _client.gameObject.SetActive(true);
-                    _client.transform.position = window.GetSpawnPoint();
-                    _client.transform.eulerAngles = Vector3.up * (_client.transform.position.x < 0 ? 180 : 0);
-                    Debug.Log("Появился клиент!");
+                    Client client = GetPool<Client>().Get(window.GetSpawnPoint());
                     _isClientRequested = false;
                 }
-
-                else if (IsEnabled<NetGuy>()) GetPool<NetGuy>().Get(window.GetSpawnPoint());
+                else if (IsEnabled<NetGuy>())
+                    GetPool<NetGuy>().Get(window.GetSpawnPoint());
 
                 window.Open();
             }

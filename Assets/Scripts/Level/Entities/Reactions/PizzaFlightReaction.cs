@@ -1,6 +1,6 @@
+using System.Collections;
+using UnityEngine;
 using Entities;
-using DG.Tweening;
-using Services;
 
 namespace Reactions
 {
@@ -17,18 +17,18 @@ namespace Reactions
             _pizzaFlightTime = flightTime;
         }
 
-        public override void React() { }
+        public override void React() => _pizza.StartCoroutine(Flight());
 
-        public void Enable() => UpdateService.OnFixedUpdate += MovePizza;
-        
-
-        public void Disable() => UpdateService.OnFixedUpdate -= MovePizza;
-        
-        
-        private void MovePizza()
+        private IEnumerator Flight()
         {
-            if(_pizza.transform.position != _quadcopter.transform.position)
-                _pizza.transform.DOMove(_quadcopter.transform.position, _pizzaFlightTime);
+            while (_pizza.transform.position != _quadcopter.transform.position)
+            {
+                _pizza.transform.position = Vector3
+                    .MoveTowards(_pizza.transform.position, _quadcopter.transform.position, _pizzaFlightTime * Time.deltaTime);
+
+                yield return null;
+            }
+            yield break;
         }
     }
 

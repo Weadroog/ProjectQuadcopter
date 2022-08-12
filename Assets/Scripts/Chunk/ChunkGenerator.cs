@@ -66,7 +66,6 @@ namespace Chunk
             PizzeriaDistrict pizzeria = null;
             if (_isPizzeriaRequested)
             {
-                Debug.Log("Появилась пиццерия");
                 pizzeria = _pizzeriaPool.Get(position);
                 pieceOfChunk = pizzeria;
                 _isPizzeriaRequested = false;

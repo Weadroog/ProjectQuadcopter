@@ -7,14 +7,14 @@ namespace Components
 {
     public class Deliverer : ConfigReceiver<QuadcopterConfig>
     {
-        private bool _isCarryingPizza = false;
-        private bool _isPizzaThrown = false;
-
         public event Action OnSuccessfulDelivery;
         public event Action OnDeliverySequenceFailed;
         public event Action OnPizzaThrown;
         public event Action OnPizzaGrabbed;
         public event Action OnPizzeriaRequested;
+
+        private bool _isCarryingPizza = false;
+        private bool _isPizzaThrown = false;
 
         public bool IsCarryingPizza => _isCarryingPizza;
         public bool IsPizzaThrown => _isPizzaThrown;

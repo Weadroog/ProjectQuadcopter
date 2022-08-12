@@ -15,6 +15,6 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 1637066925607362624, guid: 35b4309d921de97459bcbc7ccbc8d966, type: 3}
   _selfSpeed: 40
-  _xDetectionRange: {x: 0, y: 0}
+  _xDetectionRange: {x: -1, y: 1}
   _zDetectionRange: {x: -50, y: 0}
-  _yDetectionRange: {x: 0, y: 0}
+  _yDetectionRange: {x: -1, y: 1}

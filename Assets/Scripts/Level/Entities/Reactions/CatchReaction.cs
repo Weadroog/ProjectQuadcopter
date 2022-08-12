@@ -16,7 +16,7 @@ namespace Reactions
         {
             _netGuy = netGuy;
             _config = config;
-            _animator = netGuy.GetComponent<Animator>();
+            _animator = netGuy.GetComponentInChildren<Animator>();
             _animation = netGuy.GetComponentInChildren<Animation>();
         }
 
@@ -24,7 +24,7 @@ namespace Reactions
 
         private IEnumerator ShoveIn()
         {
-            _animation.Play();
+            //_animation.Play();
             float currentSide = -Mathf.Clamp(_netGuy.transform.position.x, -1, 1);
             float targetSide = 0;
 

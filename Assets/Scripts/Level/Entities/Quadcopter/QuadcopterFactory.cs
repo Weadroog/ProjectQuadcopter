@@ -5,21 +5,20 @@ using Ads;
 using UI;
 using Components;
 using Reactions;
+using DG.Tweening;
 
 namespace Entities
 {
     public class QuadcopterFactory : EntityFactory<Quadcopter, QuadcopterConfig>
     {
         private LifeDisplayer _lifeCounter;
-        private MoneyDisplayer _moneyCounter;
         private DefeatPanel _defeatPanel;
         private AdsRewardedButton _rewardedButton;
 
-        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, MoneyDisplayer moneyCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton)
+        public QuadcopterFactory(QuadcopterConfig config, Container container, LifeDisplayer lifeCounter, DefeatPanel defeatPanel, AdsRewardedButton rewardedButton)
             : base(config, container) 
         {
             _lifeCounter = lifeCounter;
-            _moneyCounter = moneyCounter;
             _defeatPanel = defeatPanel;
             _rewardedButton = rewardedButton;
         }
@@ -49,9 +48,20 @@ namespace Entities
             Pizza pizza = quadcopter.GetComponentInChildren<Pizza>();
             pizza.gameObject.SetActive(false);
 
-            deliverer.OnDeliverySequenceFailed += () => pizza.gameObject.SetActive(false);
-            deliverer.OnSuccessfulDelivery += () => pizza.gameObject.SetActive(false);
-            deliverer.OnPizzaGrabbed += () => pizza.gameObject.SetActive(true);
+            deliverer.OnDeliverySequenceFailed += () => pizza.transform
+            .DOPunchScale(Vector3.one, 0.2f, 2)
+            .OnComplete(() => pizza.gameObject.SetActive(false));
+
+            deliverer.OnSuccessfulDelivery += () => pizza.transform
+            .DOPunchScale(Vector3.one, 0.2f, 2)
+            .OnComplete(() => pizza.gameObject.SetActive(false));
+
+            deliverer.OnPizzaGrabbed += () =>
+            {
+                pizza.gameObject.SetActive(true); 
+                pizza.transform.DOPunchScale(Vector3.one, 0.2f, 2);
+            };
+            
 
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new PizzaFallenReaction(deliverer));
             quadcopter.AddReaction<CollisionDetector, Bird, Car, Net>(new TakeDamageReaction(quadcopter, _config));

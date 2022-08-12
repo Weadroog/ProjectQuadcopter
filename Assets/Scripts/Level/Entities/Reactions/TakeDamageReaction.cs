@@ -10,6 +10,7 @@ namespace Reactions
     {
         private Lifer _lifer;
         private SkinnedMeshRenderer _renderer;
+        private Collider _collider;
         private SwipeController _swipeController;
         private QuadcopterNextReaction _nextReaction;
 
@@ -17,6 +18,7 @@ namespace Reactions
         {
             _lifer = quadcopter.GetComponent<Lifer>();
             _renderer = quadcopter.GetComponentInChildren<SkinnedMeshRenderer>();
+            _collider = quadcopter.GetComponent<Collider>();
             _swipeController = quadcopter.GetComponentInChildren<SwipeController>();
             _nextReaction = new QuadcopterNextReaction(quadcopter, config);
         }
@@ -31,6 +33,7 @@ namespace Reactions
                 _lifer.StartCoroutine(Focus());
 
             _renderer.enabled = false;
+            _collider.enabled = false;
         }
 
         private IEnumerator Focus()

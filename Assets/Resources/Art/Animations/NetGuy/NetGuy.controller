@@ -62,7 +62,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -85,7 +85,7 @@ BlendTree:
   m_Name: LeanOuting
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d19d47c4c8e49854d880b7d26745c360, type: 2}
+    m_Motion: {fileID: 7400000, guid: 434d9cfb321566d45937d3825869d60e, type: 2}
     m_Threshold: -1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -93,7 +93,7 @@ BlendTree:
     m_DirectBlendParameter: LeanOutingSide
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: f832c18a5c58dd447958cc9efc93fe1b, type: 2}
+    m_Motion: {fileID: 7400000, guid: cce2574027922674c96b9b43d1c52264, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -101,7 +101,7 @@ BlendTree:
     m_DirectBlendParameter: LeanOutingSide
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 4caddd85f19008845a25493511eed266, type: 2}
+    m_Motion: {fileID: 7400000, guid: bf1e72857b6394943824b8b89453996e, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1

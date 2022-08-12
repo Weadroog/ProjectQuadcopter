@@ -8,7 +8,7 @@ namespace Components
 {
     public class NetEquiper : ConfigReceiver<NetGuyConfig>
     {
-        private NetPoint _netPoint;
+        private List<NetPoint> _netPoints = new();
         private List<Net> _nets = new();
         private Net _equipedNet;
 
@@ -27,11 +27,11 @@ namespace Components
         public override void Receive(NetGuyConfig config)
         {
             base.Receive(config);
-            _netPoint = GetComponentInChildren<NetPoint>();
+            _netPoints.AddRange(GetComponentsInChildren<NetPoint>());
 
-            for (int i = 0; i < _config.NetPrefabsCount; i++)
+            for (int i = 0; i < _netPoints.Count; i++)
             {
-                Net net = Instantiate(_config.NetPrefab, _netPoint.transform);
+                Net net = Instantiate(_config.NetPrefab, _netPoints[i].transform);
                 net.AddReaction<CollisionDetector, Quadcopter>(new CatchReaction(GetComponent<NetGuy>(), config));
                 _nets.Add(net);
             }

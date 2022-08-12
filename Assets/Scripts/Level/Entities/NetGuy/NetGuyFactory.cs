@@ -12,14 +12,14 @@ namespace Entities
         public override NetGuy GetCreated()
         {
             NetGuy netGuy = Object.Instantiate(_config.NetGuyPrefab);
-            Animator animator =  netGuy.GetComponent<Animator>();
+            Animator animator =  netGuy.GetComponentInChildren<Animator>();
             animator.keepAnimatorControllerStateOnDisable = true;
 
             netGuy.gameObject.AddComponent<Mover>().Receive(_config);
 
             netGuy.gameObject
                 .AddComponent<Disappearer>()
-                .OnDisappear += () => netGuy.GetComponent<Animator>().SetFloat(AnimationService.Parameters.Side, 0);
+                .OnDisappear += () => netGuy.GetComponentInChildren<Animator>().SetFloat(AnimationService.Parameters.Side, 0);
 
             netGuy
                 .AddReaction<BoxDetector, Quadcopter>(new ShoveOutReaction(netGuy, _config))
