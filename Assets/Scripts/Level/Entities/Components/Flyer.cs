@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
 using General;
 using Services;
 using Entities;
@@ -19,7 +18,7 @@ namespace Components
             UpdateService.OnUpdate += SetTarget;
         }
 
-        private void SetTarget() => _flightTweener.ChangeEndValue(_quadcopter.transform.position, true).Restart();
+        private void SetTarget() => _flightTweener?.ChangeEndValue(_quadcopter.transform.position, true).Restart();
 
         private void OnDisable()
         {
