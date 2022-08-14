@@ -187,7 +187,7 @@ namespace Entities
         {
             if (IsEnabled<Bird>())
             {
-                for (int row = 0; row < 2; row++)
+                for (int row = 0; row < 3; row++)
                     for (int i = 0; i < WayMatrix.Width; i++)
                         StartCoroutine(BirdsSpawning(i, row));
             } 

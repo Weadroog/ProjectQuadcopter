@@ -8,7 +8,7 @@ namespace Entities
     {
         [SerializeField] private Quadcopter _prefab;
         [SerializeField, Range(0, 10)] private float _motionDuration;
-        [SerializeField, Range(1, 5)] private int _lives;
+        [SerializeField, Range(1, 1000)] private int _lives;
         [SerializeField, Range(0, 10)] private float _immortalModeTime;
         [SerializeField, Range(1, 5)] private int _charge;
         [SerializeField, Range(1, 15)] private int _chargeDecreaseTime;

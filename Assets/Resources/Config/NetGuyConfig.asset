@@ -26,4 +26,4 @@ MonoBehaviour:
   _shoveInSpeed: 2
   _xDetectionRange: {x: -10, y: 10}
   _yDetectionRange: {x: -1, y: 1}
-  _zDetectionRange: {x: -20, y: 0}
+  _zDetectionRange: {x: -40, y: 0}
