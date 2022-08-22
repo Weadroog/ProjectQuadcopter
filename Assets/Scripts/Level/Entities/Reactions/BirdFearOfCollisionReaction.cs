@@ -10,6 +10,10 @@ namespace Reactions
 
         public BirdFearOfCollisionReaction(Bird bird) => _animator = bird.GetComponentInChildren<Animator>();
 
-        public override void React() => _animator.Play(AnimationService.States.FearOfCollision);
+        public override void React()
+        {
+            _animator.Play(AnimationService.States.FearOfCollision);
+            Debug.Log("ScreamingBird!");
+        } 
     }
 }
